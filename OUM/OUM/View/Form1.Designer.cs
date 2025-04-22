@@ -1,4 +1,6 @@
-﻿namespace OUM
+﻿using OUM.View;
+
+namespace OUM
 {
     partial class Form1
     {

@@ -47,7 +47,7 @@ namespace OUM
             bool logined =viewModel.AdminLogin();
             if (logined)
             {
-                Form2 form2 = new Form2();
+                StudentPage form2 = new StudentPage();
                 form2.Show();
             }
             else

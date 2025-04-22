@@ -103,6 +103,7 @@ namespace OUM
             passWordTextBox.Location = new Point(239, 377);
             passWordTextBox.Multiline = true;
             passWordTextBox.Name = "passWordTextBox";
+            passWordTextBox.PasswordChar = '*';
             passWordTextBox.Size = new Size(467, 43);
             passWordTextBox.TabIndex = 5;
             // 

@@ -12,6 +12,7 @@ namespace OUM.View
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new LoginPage());
+
         }
     }
 }

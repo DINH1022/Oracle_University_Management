@@ -10,8 +10,14 @@
 
   <ItemGroup>
     <Folder Include="Model\" />
-    <Folder Include="Service\DataAccess\" />
-    <Folder Include="ViewModel\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fody" Version="6.9.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.8.0" />
   </ItemGroup>
 
   <ItemGroup>

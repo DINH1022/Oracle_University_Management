@@ -110,6 +110,7 @@
             EmpBtn.TabIndex = 1;
             EmpBtn.Text = "Quản Lý Nhân Viên";
             EmpBtn.UseVisualStyleBackColor = false;
+            EmpBtn.Click += btnQuanLyNhanVien_Click;
             // 
             // StudentBtn
             // 

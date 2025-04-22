@@ -30,6 +30,11 @@ namespace OUM.View
             LoadControl(new ManageStudentControl());
         }
 
+        private void btnQuanLyNhanVien_Click(object sender, EventArgs e)
+        {
+            LoadControl(new ManageEmployeeControl());
+        }
+
         private void LogoutBtn_Click(object sender, EventArgs e)
         {
             this.Close();

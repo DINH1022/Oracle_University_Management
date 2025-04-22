@@ -1,4 +1,4 @@
-namespace OUM
+namespace OUM.View
 {
     internal static class Program
     {

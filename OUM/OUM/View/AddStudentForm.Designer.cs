@@ -33,9 +33,7 @@
             label2 = new Label();
             label1 = new Label();
             panel3 = new Panel();
-            CancelBtn = new Button();
-            resetBtn = new Button();
-            button1 = new Button();
+            panel13 = new Panel();
             panel11 = new Panel();
             comboBox3 = new ComboBox();
             label10 = new Label();
@@ -60,9 +58,14 @@
             panel4 = new Panel();
             textBox1 = new TextBox();
             label3 = new Label();
+            panel12 = new Panel();
+            CancelBtn = new Button();
+            resetBtn = new Button();
+            button1 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
+            panel13.SuspendLayout();
             panel11.SuspendLayout();
             panel10.SuspendLayout();
             panel9.SuspendLayout();
@@ -71,6 +74,7 @@
             panel6.SuspendLayout();
             panel5.SuspendLayout();
             panel4.SuspendLayout();
+            panel12.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -80,21 +84,23 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 109);
+            panel1.Size = new Size(944, 109);
             panel1.TabIndex = 0;
             // 
             // panel2
             // 
+            panel2.BackColor = Color.LightGoldenrodYellow;
             panel2.Controls.Add(label2);
             panel2.Controls.Add(label1);
-            panel2.Location = new Point(40, 12);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(679, 80);
+            panel2.Size = new Size(944, 109);
             panel2.TabIndex = 0;
             // 
             // label2
             // 
-            label2.Location = new Point(3, 44);
+            label2.Location = new Point(19, 59);
             label2.Name = "label2";
             label2.Size = new Size(602, 20);
             label2.TabIndex = 1;
@@ -105,7 +111,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(3, 16);
+            label1.Location = new Point(19, 31);
             label1.Name = "label1";
             label1.Size = new Size(160, 28);
             label1.TabIndex = 1;
@@ -114,61 +120,36 @@
             // panel3
             // 
             panel3.BackColor = Color.White;
-            panel3.Controls.Add(CancelBtn);
-            panel3.Controls.Add(resetBtn);
-            panel3.Controls.Add(button1);
-            panel3.Controls.Add(panel11);
-            panel3.Controls.Add(panel10);
-            panel3.Controls.Add(panel9);
-            panel3.Controls.Add(panel8);
-            panel3.Controls.Add(panel7);
-            panel3.Controls.Add(panel6);
-            panel3.Controls.Add(panel5);
-            panel3.Controls.Add(panel4);
+            panel3.Controls.Add(panel13);
+            panel3.Controls.Add(panel12);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(0, 109);
             panel3.Name = "panel3";
-            panel3.Size = new Size(800, 341);
+            panel3.Size = new Size(944, 479);
             panel3.TabIndex = 1;
             panel3.Paint += panel3_Paint;
             // 
-            // CancelBtn
+            // panel13
             // 
-            CancelBtn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CancelBtn.Location = new Point(374, 272);
-            CancelBtn.Name = "CancelBtn";
-            CancelBtn.Size = new Size(116, 45);
-            CancelBtn.TabIndex = 8;
-            CancelBtn.Text = "Hủy";
-            CancelBtn.UseVisualStyleBackColor = true;
-            CancelBtn.Click += Cancel_Click;
-            // 
-            // resetBtn
-            // 
-            resetBtn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            resetBtn.Location = new Point(507, 272);
-            resetBtn.Name = "resetBtn";
-            resetBtn.Size = new Size(116, 45);
-            resetBtn.TabIndex = 7;
-            resetBtn.Text = "Làm mới";
-            resetBtn.UseVisualStyleBackColor = true;
-            resetBtn.Click += button2_Click;
-            // 
-            // button1
-            // 
-            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(638, 272);
-            button1.Name = "button1";
-            button1.Size = new Size(116, 45);
-            button1.TabIndex = 6;
-            button1.Text = "Thêm";
-            button1.UseVisualStyleBackColor = true;
+            panel13.Controls.Add(panel11);
+            panel13.Controls.Add(panel10);
+            panel13.Controls.Add(panel9);
+            panel13.Controls.Add(panel8);
+            panel13.Controls.Add(panel7);
+            panel13.Controls.Add(panel6);
+            panel13.Controls.Add(panel5);
+            panel13.Controls.Add(panel4);
+            panel13.Dock = DockStyle.Fill;
+            panel13.Location = new Point(0, 0);
+            panel13.Name = "panel13";
+            panel13.Size = new Size(944, 420);
+            panel13.TabIndex = 10;
             // 
             // panel11
             // 
             panel11.Controls.Add(comboBox3);
             panel11.Controls.Add(label10);
-            panel11.Location = new Point(40, 248);
+            panel11.Location = new Point(19, 276);
             panel11.Name = "panel11";
             panel11.Size = new Size(230, 28);
             panel11.TabIndex = 5;
@@ -199,7 +180,7 @@
             // 
             panel10.Controls.Add(comboBox2);
             panel10.Controls.Add(label9);
-            panel10.Location = new Point(326, 131);
+            panel10.Location = new Point(305, 153);
             panel10.Name = "panel10";
             panel10.Size = new Size(230, 28);
             panel10.TabIndex = 4;
@@ -230,9 +211,9 @@
             // 
             panel9.Controls.Add(textBox4);
             panel9.Controls.Add(label8);
-            panel9.Location = new Point(40, 193);
+            panel9.Location = new Point(19, 215);
             panel9.Name = "panel9";
-            panel9.Size = new Size(714, 38);
+            panel9.Size = new Size(748, 38);
             panel9.TabIndex = 5;
             // 
             // textBox4
@@ -242,7 +223,7 @@
             textBox4.Location = new Point(62, 0);
             textBox4.Multiline = true;
             textBox4.Name = "textBox4";
-            textBox4.Size = new Size(652, 38);
+            textBox4.Size = new Size(686, 38);
             textBox4.TabIndex = 1;
             // 
             // label8
@@ -261,7 +242,7 @@
             // 
             panel8.Controls.Add(textBox3);
             panel8.Controls.Add(label7);
-            panel8.Location = new Point(40, 131);
+            panel8.Location = new Point(19, 153);
             panel8.Name = "panel8";
             panel8.Size = new Size(254, 38);
             panel8.TabIndex = 2;
@@ -292,7 +273,7 @@
             // 
             panel7.Controls.Add(label6);
             panel7.Controls.Add(dateTimePicker1);
-            panel7.Location = new Point(326, 19);
+            panel7.Location = new Point(305, 32);
             panel7.Name = "panel7";
             panel7.Size = new Size(462, 28);
             panel7.TabIndex = 4;
@@ -321,7 +302,7 @@
             // 
             panel6.Controls.Add(comboBox1);
             panel6.Controls.Add(label5);
-            panel6.Location = new Point(326, 78);
+            panel6.Location = new Point(305, 91);
             panel6.Name = "panel6";
             panel6.Size = new Size(230, 28);
             panel6.TabIndex = 3;
@@ -353,7 +334,7 @@
             // 
             panel5.Controls.Add(textBox2);
             panel5.Controls.Add(label4);
-            panel5.Location = new Point(40, 78);
+            panel5.Location = new Point(19, 91);
             panel5.Name = "panel5";
             panel5.Size = new Size(254, 38);
             panel5.TabIndex = 2;
@@ -384,7 +365,7 @@
             // 
             panel4.Controls.Add(textBox1);
             panel4.Controls.Add(label3);
-            panel4.Location = new Point(40, 19);
+            panel4.Location = new Point(19, 32);
             panel4.Name = "panel4";
             panel4.Size = new Size(254, 38);
             panel4.TabIndex = 0;
@@ -411,19 +392,73 @@
             label3.Text = "MSSV";
             label3.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // panel12
+            // 
+            panel12.Controls.Add(CancelBtn);
+            panel12.Controls.Add(resetBtn);
+            panel12.Controls.Add(button1);
+            panel12.Dock = DockStyle.Bottom;
+            panel12.Location = new Point(0, 420);
+            panel12.Name = "panel12";
+            panel12.Size = new Size(944, 59);
+            panel12.TabIndex = 9;
+            // 
+            // CancelBtn
+            // 
+            CancelBtn.BackColor = Color.Gainsboro;
+            CancelBtn.Dock = DockStyle.Right;
+            CancelBtn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            CancelBtn.Location = new Point(596, 0);
+            CancelBtn.Margin = new Padding(6);
+            CancelBtn.Name = "CancelBtn";
+            CancelBtn.Size = new Size(116, 59);
+            CancelBtn.TabIndex = 8;
+            CancelBtn.Text = "Hủy";
+            CancelBtn.UseVisualStyleBackColor = false;
+            CancelBtn.Click += Cancel_Click;
+            // 
+            // resetBtn
+            // 
+            resetBtn.BackColor = Color.Gainsboro;
+            resetBtn.Dock = DockStyle.Right;
+            resetBtn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            resetBtn.Location = new Point(712, 0);
+            resetBtn.Margin = new Padding(6);
+            resetBtn.Name = "resetBtn";
+            resetBtn.Size = new Size(116, 59);
+            resetBtn.TabIndex = 7;
+            resetBtn.Text = "Làm mới";
+            resetBtn.UseVisualStyleBackColor = false;
+            resetBtn.Click += button2_Click;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.Gainsboro;
+            button1.Dock = DockStyle.Right;
+            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.Location = new Point(828, 0);
+            button1.Margin = new Padding(6);
+            button1.Name = "button1";
+            button1.Size = new Size(116, 59);
+            button1.TabIndex = 6;
+            button1.Text = "Thêm";
+            button1.UseVisualStyleBackColor = false;
+            // 
             // AddStudentForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(944, 588);
             Controls.Add(panel3);
             Controls.Add(panel1);
+            MaximizeBox = false;
             Name = "AddStudentForm";
             Text = "AddStudentForm";
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
+            panel13.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel10.ResumeLayout(false);
             panel9.ResumeLayout(false);
@@ -436,6 +471,7 @@
             panel5.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            panel12.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -473,5 +509,7 @@
         private Label label9;
         private Button resetBtn;
         private Button CancelBtn;
+        private Panel panel13;
+        private Panel panel12;
     }
 }

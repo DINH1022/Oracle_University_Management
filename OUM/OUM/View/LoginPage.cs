@@ -2,9 +2,9 @@ using OUM.View;
 
 namespace OUM
 {
-    public partial class Form1 : Form
+    public partial class LoginPage : Form
     {
-        public Form1()
+        public LoginPage()
         {
             InitializeComponent();
         }
@@ -37,8 +37,9 @@ namespace OUM
 
         private void LoginBtn_MouseClick(object sender, MouseEventArgs e)
         {
-            StudentPage form2 = new StudentPage();
-            form2.Show();
+            this.Hide();
+            NavPage navPage = new NavPage();
+            navPage.Show();
             
         }
     }

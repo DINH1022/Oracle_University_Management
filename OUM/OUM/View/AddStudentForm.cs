@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace OUM.View
 {
-    public partial class Form2 : Form
+    public partial class AddStudentForm : Form
     {
-        public Form2()
+        public AddStudentForm()
         {
             InitializeComponent();
         }
@@ -22,7 +22,17 @@ namespace OUM.View
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
         {
 
         }
@@ -32,19 +42,10 @@ namespace OUM.View
 
         }
 
-        private void Form2_Load(object sender, EventArgs e)
+        private void Cancel_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-
+            StudentPage studentPage = new StudentPage();
+            studentPage.Show();
         }
     }
 }

@@ -1,12 +1,19 @@
-using OUM.View;
+﻿using OUM.View;
+using OUM.ViewModel;
 
 namespace OUM
 {
     public partial class Form1 : Form
     {
+        AdminViewModel viewModel;
         public Form1()
         {
             InitializeComponent();
+            viewModel = new AdminViewModel();
+            userNameTextBox.DataBindings.Add("Text", viewModel, "username", false, DataSourceUpdateMode.OnPropertyChanged);
+            passWordTextBox.DataBindings.Add("Text", viewModel, "password", false, DataSourceUpdateMode.OnPropertyChanged);
+
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -37,8 +44,20 @@ namespace OUM
 
         private void LoginBtn_MouseClick(object sender, MouseEventArgs e)
         {
-            Form2 form2 = new Form2();
-            form2.Show();
+            bool logined =viewModel.AdminLogin();
+            if (logined)
+            {
+                Form2 form2 = new Form2();
+                form2.Show();
+            }
+            else
+            {
+                MessageBox.Show("Đăng nhập thất bại. Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu.", 
+                    "Lỗi đăng nhập",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                    );
+            }
         }
     }
 }

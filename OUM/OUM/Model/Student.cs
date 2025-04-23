@@ -8,7 +8,7 @@ namespace OUM.Model
 {
     public class Student
     {
-        public int id { get; set; }
+        public string id { get; set; }
         public string name { get; set; }
         public string gender { get; set; }
         public DateTime dob { get; set; }
@@ -18,7 +18,7 @@ namespace OUM.Model
 
         public string address { get; set; }
 
-        public Student (int id, string name, string gender, DateTime dob, string phone, string department, string status, string address)
+        public Student (string id, string name, string gender, DateTime dob, string phone, string department, string status, string address)
         {
             this.id = id;
             this.name = name;

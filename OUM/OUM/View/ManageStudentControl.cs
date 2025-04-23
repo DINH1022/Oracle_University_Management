@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OUM.Model;
+using OUM.Service.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,12 +17,34 @@ namespace OUM.View
         public ManageStudentControl()
         {
             InitializeComponent();
+            this.Load += Data_Load;
         }
 
         private void addBtn_Click(object sender, EventArgs e)
         {
             AddStudentForm addStudentForm = new AddStudentForm();
             addStudentForm.ShowDialog();
+        }
+
+        private void Data_Load(object sender, EventArgs e)
+        {
+            OracleDAO dao = new OracleDAO();
+            List<Student> students = dao.GetListStudents();
+
+            dataGridView1.AutoGenerateColumns = true;
+            dataGridView1.DataSource = students;
+
+            if (dataGridView1.Columns.Count > 0)
+            {
+                dataGridView1.Columns["id"].HeaderText = "Mã SV";
+                dataGridView1.Columns["name"].HeaderText = "Họ tên";
+                dataGridView1.Columns["gender"].HeaderText = "Giới tính";
+                dataGridView1.Columns["dob"].HeaderText = "Ngày sinh";
+                dataGridView1.Columns["phone"].HeaderText = "Điện thoại";
+                dataGridView1.Columns["department"].HeaderText = "Khoa";
+                dataGridView1.Columns["status"].HeaderText = "Tình trạng";
+                dataGridView1.Columns["address"].HeaderText = "Địa chỉ";
+            }
         }
     }
 

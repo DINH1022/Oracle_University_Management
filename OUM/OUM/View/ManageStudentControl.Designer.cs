@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             panel2 = new Panel();
+            dataGridView1 = new DataGridView();
             panel1 = new Panel();
             addBtn = new Button();
             panel4 = new Panel();
@@ -42,6 +43,7 @@
             oracleDAOBindingSource = new BindingSource(components);
             oracleDAOBindingSource1 = new BindingSource(components);
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
@@ -53,6 +55,7 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(dataGridView1);
             panel2.Controls.Add(panel1);
             panel2.Controls.Add(panel3);
             panel2.Dock = DockStyle.Fill;
@@ -60,6 +63,20 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1076, 512);
             panel2.TabIndex = 5;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.DataSource = oracleDAOBindingSource;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.Location = new Point(0, 112);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(1076, 400);
+            dataGridView1.TabIndex = 2;
             // 
             // panel1
             // 
@@ -156,6 +173,7 @@
             Name = "ManageStudentControl";
             Size = new Size(1076, 512);
             panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
@@ -181,5 +199,6 @@
         private Button addBtn;
         private BindingSource oracleDAOBindingSource;
         private BindingSource oracleDAOBindingSource1;
+        private DataGridView dataGridView1;
     }
 }

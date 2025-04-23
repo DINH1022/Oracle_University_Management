@@ -101,5 +101,49 @@ namespace OUM.Service.DataAccess
             return employees;
         }
 
+        public List<Student> GetListStudents()
+        {
+            List<Student> students = new List<Student>();
+
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "SELECT MASV, HOTEN, PHAI, NGSINH, DT, KHOA, TINHTRANG FROM SINHVIEN";
+
+                    using (var command = new OracleCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Student s = new Student(
+
+                                id: reader["MASV"].ToString(),
+                                name : reader["HOTEN"].ToString(),
+                                gender: reader["PHAI"].ToString(),
+                                dob: reader["NGSINH"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["NGSINH"]),
+                                phone: reader["DT"]?.ToString() ?? "",
+                                department: reader["KHOA"]?.ToString() ?? "",
+                                status : reader["TINHTRANG"]?.ToString() ?? "",
+                                address: ""
+                            );
+
+                            students.Add(s);
+                        }
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Lỗi khi lấy danh sách sinh viên: " + ex.Message);
+                }
+            }
+
+            return students;
+        }
+
     }
 }

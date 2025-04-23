@@ -34,7 +34,6 @@ namespace OUM.View
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = employees;
 
-            // Tùy chọn: đổi tên cột
             if (dataGridView1.Columns.Count > 0)
             {
                 dataGridView1.Columns["manld"].HeaderText = "Mã nld";

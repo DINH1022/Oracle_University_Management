@@ -30,6 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             panel2 = new Panel();
+            dataGridView1 = new DataGridView();
+            bindingSource1 = new BindingSource(components);
             panel1 = new Panel();
             addBtn = new Button();
             panel4 = new Panel();
@@ -38,17 +40,20 @@
             panel3 = new Panel();
             label1 = new Label();
             saveFileDialog1 = new SaveFileDialog();
-            bindingSource1 = new BindingSource(components);
+            oracleDAOBindingSource = new BindingSource(components);
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).BeginInit();
             SuspendLayout();
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(dataGridView1);
             panel2.Controls.Add(panel1);
             panel2.Controls.Add(panel3);
             panel2.Dock = DockStyle.Fill;
@@ -56,6 +61,20 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1006, 379);
             panel2.TabIndex = 6;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.DataSource = oracleDAOBindingSource;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.Location = new Point(0, 112);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(1006, 267);
+            dataGridView1.TabIndex = 2;
             // 
             // panel1
             // 
@@ -136,6 +155,10 @@
             label1.TabIndex = 0;
             label1.Text = "Danh Sách Nhân Viên";
             // 
+            // oracleDAOBindingSource
+            // 
+            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
+            // 
             // ManageEmployeeControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -144,12 +167,14 @@
             Name = "ManageEmployeeControl";
             Size = new Size(1006, 379);
             panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).EndInit();
             ResumeLayout(false);
         }
 
@@ -165,5 +190,7 @@
         private Label label1;
         private SaveFileDialog saveFileDialog1;
         private BindingSource bindingSource1;
+        private DataGridView dataGridView1;
+        private BindingSource oracleDAOBindingSource;
     }
 }

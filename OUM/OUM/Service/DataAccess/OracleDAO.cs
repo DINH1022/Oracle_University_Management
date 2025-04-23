@@ -1,4 +1,5 @@
 ﻿using Oracle.ManagedDataAccess.Client;
+using OUM.Model;
 using OUM.Session;
 using System;
 using System.Collections.Generic;
@@ -54,5 +55,51 @@ namespace OUM.Service.DataAccess
                 }
             }
         }
-    }   
+
+
+        public List<Employee> GetListEmployees()
+        {
+            List<Employee> employees = new List<Employee>();
+
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = "SELECT MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO FROM NHANVIEN";
+
+                    using (var command = new OracleCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Employee emp = new Employee(
+                                manld: reader["MANLD"].ToString(),
+                                name: reader["HOTEN"].ToString(),
+                                gender: reader["PHAI"].ToString(),
+                                dob: reader["NGSINH"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["NGSINH"]),
+                                salary: reader["LUONG"] == DBNull.Value ? 0 : Convert.ToDouble(reader["LUONG"]),
+                                allowance: reader["PHUCAP"] == DBNull.Value ? 0 : Convert.ToDouble(reader["PHUCAP"]),
+                                phone: reader["DT"]?.ToString() ?? "",
+                                madv: reader["MADV"]?.ToString() ?? "",
+                                role: reader["VAITRO"].ToString()
+                            );
+
+                            employees.Add(emp);
+                        }
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Lỗi khi lấy danh sách nhân viên: " + ex.Message);
+                }
+            }
+
+            return employees;
+        }
+
+    }
 }

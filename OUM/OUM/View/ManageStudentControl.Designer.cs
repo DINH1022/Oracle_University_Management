@@ -39,11 +39,15 @@
             label1 = new Label();
             saveFileDialog1 = new SaveFileDialog();
             bindingSource1 = new BindingSource(components);
+            oracleDAOBindingSource = new BindingSource(components);
+            oracleDAOBindingSource1 = new BindingSource(components);
             panel2.SuspendLayout();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource1).BeginInit();
             SuspendLayout();
             // 
             // panel2
@@ -136,6 +140,14 @@
             label1.TabIndex = 0;
             label1.Text = "Danh Sách Sinh Viên";
             // 
+            // oracleDAOBindingSource
+            // 
+            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
+            // 
+            // oracleDAOBindingSource1
+            // 
+            oracleDAOBindingSource1.DataSource = typeof(Service.DataAccess.OracleDAO);
+            // 
             // ManageStudentControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -150,6 +162,8 @@
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource1).EndInit();
             ResumeLayout(false);
         }
 
@@ -165,5 +179,7 @@
         private SaveFileDialog saveFileDialog1;
         private BindingSource bindingSource1;
         private Button addBtn;
+        private BindingSource oracleDAOBindingSource;
+        private BindingSource oracleDAOBindingSource1;
     }
 }

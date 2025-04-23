@@ -67,7 +67,7 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
 
-                    string query = "SELECT MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO FROM NHANVIEN";
+                    string query = "SELECT MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO FROM NHANVIEN ORDER BY MANLD";
 
                     using (var command = new OracleCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -79,8 +79,8 @@ namespace OUM.Service.DataAccess
                                 name: reader["HOTEN"].ToString(),
                                 gender: reader["PHAI"].ToString(),
                                 dob: reader["NGSINH"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["NGSINH"]),
-                                salary: reader["LUONG"] == DBNull.Value ? 0 : Convert.ToDouble(reader["LUONG"]),
-                                allowance: reader["PHUCAP"] == DBNull.Value ? 0 : Convert.ToDouble(reader["PHUCAP"]),
+                                salary: reader["LUONG"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["LUONG"]),
+                                allowance: reader["PHUCAP"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["PHUCAP"]),
                                 phone: reader["DT"]?.ToString() ?? "",
                                 madv: reader["MADV"]?.ToString() ?? "",
                                 role: reader["VAITRO"].ToString()
@@ -144,6 +144,44 @@ namespace OUM.Service.DataAccess
 
             return students;
         }
+
+        public void InsertEmployee(Employee emp)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    var cmd = connection.CreateCommand();
+                    
+                    cmd.CommandText = @"INSERT INTO NHANVIEN (MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO) 
+                                VALUES (:manld, :name, :gender, :dob, :salary, :allowance, :phone, :madv, :role)";
+                    cmd.Parameters.Add(new OracleParameter("manld", emp.manld));
+                    cmd.Parameters.Add(new OracleParameter("name", emp.name));
+                    cmd.Parameters.Add(new OracleParameter("gender", emp.gender));
+                    cmd.Parameters.Add(new OracleParameter("dob", emp.dob));
+                    cmd.Parameters.Add(new OracleParameter("salary", emp.salary));
+                    cmd.Parameters.Add(new OracleParameter("allowance", emp.allowance));
+                    cmd.Parameters.Add(new OracleParameter("phone", emp.phone));
+                    cmd.Parameters.Add(new OracleParameter("madv", emp.madv));
+                    cmd.Parameters.Add(new OracleParameter("role", emp.role));
+
+                   
+                    cmd.ExecuteNonQuery();
+
+                    connection.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Lỗi khi thêm nhân viên: " + ex.Message);
+                }
+            }
+        }
+
+
+
+
 
     }
 }

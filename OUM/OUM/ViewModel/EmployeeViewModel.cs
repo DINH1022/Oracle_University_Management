@@ -29,5 +29,12 @@ namespace OUM.ViewModel
             Employees = dao.GetListEmployees();
         }
 
+        public void AddEmployee(Employee emp)
+        {
+            OracleDAO dao = new OracleDAO();
+            dao.InsertEmployee(emp); 
+            LoadData();
+        }
+
     }
 }

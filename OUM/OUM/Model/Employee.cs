@@ -12,13 +12,13 @@ namespace OUM.Model
         public string name { get; set; }
         public string gender { get; set; }
         public DateTime dob { get; set; }
-        public double salary {  get; set; }
-        public double allowance { get; set; }
+        public decimal salary {  get; set; }
+        public decimal allowance { get; set; }
         public string phone { get; set; }
         public string madv {  get; set; }
         public string role { get; set; }
 
-        public Employee(string manld, string name, string gender, DateTime dob, double salary, double allowance, string phone, string madv, string role)
+        public Employee(string manld, string name, string gender, DateTime dob, decimal salary, decimal allowance, string phone, string madv, string role)
         {
             this.manld = manld;
             this.name = name;

@@ -26,7 +26,12 @@ namespace OUM.View
         private void addBtn_Click(object sender, EventArgs e)
         {
             AddEmpForm addEmpForm = new AddEmpForm();
-            addEmpForm.ShowDialog();
+            if (addEmpForm.ShowDialog() == DialogResult.OK)
+            {
+                ViewModel.LoadData();
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = ViewModel.Employees;
+            }
         }
 
         private void Data_Load(object sender, EventArgs e)

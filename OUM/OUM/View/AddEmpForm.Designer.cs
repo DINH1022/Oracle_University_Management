@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             CancelBtn = new Button();
-            button1 = new Button();
+            addBtn = new Button();
             panel12 = new Panel();
             resetBtn = new Button();
-            textBox1 = new TextBox();
+            txtMaNLD = new TextBox();
             label3 = new Label();
             panel4 = new Panel();
-            textBox2 = new TextBox();
+            txtHoTen = new TextBox();
             label4 = new Label();
             panel5 = new Panel();
-            comboBox1 = new ComboBox();
+            comboGioiTinh = new ComboBox();
             label5 = new Label();
             panel6 = new Panel();
             label6 = new Label();
-            dateTimePicker1 = new DateTimePicker();
+            dateTimePickerNgaySinh = new DateTimePicker();
             panel7 = new Panel();
-            textBox3 = new TextBox();
+            txtSDT = new TextBox();
             panel1 = new Panel();
             panel2 = new Panel();
             label2 = new Label();
@@ -52,16 +52,16 @@
             panel3 = new Panel();
             panel13 = new Panel();
             panel14 = new Panel();
-            textBox5 = new TextBox();
+            txtPhuCap = new TextBox();
             label11 = new Label();
             panel11 = new Panel();
-            comboBox3 = new ComboBox();
+            comboVaiTro = new ComboBox();
             label10 = new Label();
             panel10 = new Panel();
-            comboBox2 = new ComboBox();
+            comboMaDV = new ComboBox();
             label9 = new Label();
             panel9 = new Panel();
-            textBox4 = new TextBox();
+            txtLuong = new TextBox();
             label8 = new Label();
             panel8 = new Panel();
             label7 = new Label();
@@ -95,24 +95,25 @@
             CancelBtn.UseVisualStyleBackColor = false;
             CancelBtn.Click += Cancel_Click;
             // 
-            // button1
+            // addBtn
             // 
-            button1.BackColor = Color.Gainsboro;
-            button1.Dock = DockStyle.Right;
-            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(828, 0);
-            button1.Margin = new Padding(6);
-            button1.Name = "button1";
-            button1.Size = new Size(116, 59);
-            button1.TabIndex = 6;
-            button1.Text = "Thêm";
-            button1.UseVisualStyleBackColor = false;
+            addBtn.BackColor = Color.Gainsboro;
+            addBtn.Dock = DockStyle.Right;
+            addBtn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addBtn.Location = new Point(828, 0);
+            addBtn.Margin = new Padding(6);
+            addBtn.Name = "addBtn";
+            addBtn.Size = new Size(116, 59);
+            addBtn.TabIndex = 6;
+            addBtn.Text = "Thêm";
+            addBtn.UseVisualStyleBackColor = false;
+            addBtn.Click += addBtn_Click;
             // 
             // panel12
             // 
             panel12.Controls.Add(CancelBtn);
             panel12.Controls.Add(resetBtn);
-            panel12.Controls.Add(button1);
+            panel12.Controls.Add(addBtn);
             panel12.Dock = DockStyle.Bottom;
             panel12.Location = new Point(0, 420);
             panel12.Name = "panel12";
@@ -132,15 +133,15 @@
             resetBtn.Text = "Làm mới";
             resetBtn.UseVisualStyleBackColor = false;
             // 
-            // textBox1
+            // txtMaNLD
             // 
-            textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Location = new Point(76, 0);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(260, 38);
-            textBox1.TabIndex = 1;
+            txtMaNLD.BorderStyle = BorderStyle.FixedSingle;
+            txtMaNLD.Dock = DockStyle.Fill;
+            txtMaNLD.Location = new Point(76, 0);
+            txtMaNLD.Multiline = true;
+            txtMaNLD.Name = "txtMaNLD";
+            txtMaNLD.Size = new Size(260, 38);
+            txtMaNLD.TabIndex = 1;
             // 
             // label3
             // 
@@ -156,22 +157,22 @@
             // 
             // panel4
             // 
-            panel4.Controls.Add(textBox1);
+            panel4.Controls.Add(txtMaNLD);
             panel4.Controls.Add(label3);
             panel4.Location = new Point(19, 32);
             panel4.Name = "panel4";
             panel4.Size = new Size(336, 38);
             panel4.TabIndex = 0;
             // 
-            // textBox2
+            // txtHoTen
             // 
-            textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Dock = DockStyle.Fill;
-            textBox2.Location = new Point(76, 0);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(260, 38);
-            textBox2.TabIndex = 1;
+            txtHoTen.BorderStyle = BorderStyle.FixedSingle;
+            txtHoTen.Dock = DockStyle.Fill;
+            txtHoTen.Location = new Point(76, 0);
+            txtHoTen.Multiline = true;
+            txtHoTen.Name = "txtHoTen";
+            txtHoTen.Size = new Size(260, 38);
+            txtHoTen.TabIndex = 1;
             // 
             // label4
             // 
@@ -187,22 +188,22 @@
             // 
             // panel5
             // 
-            panel5.Controls.Add(textBox2);
+            panel5.Controls.Add(txtHoTen);
             panel5.Controls.Add(label4);
             panel5.Location = new Point(19, 91);
             panel5.Name = "panel5";
             panel5.Size = new Size(336, 38);
             panel5.TabIndex = 2;
             // 
-            // comboBox1
+            // comboGioiTinh
             // 
-            comboBox1.Dock = DockStyle.Fill;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Nam ", "Nữ" });
-            comboBox1.Location = new Point(103, 0);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(127, 28);
-            comboBox1.TabIndex = 1;
+            comboGioiTinh.Dock = DockStyle.Fill;
+            comboGioiTinh.FormattingEnabled = true;
+            comboGioiTinh.Items.AddRange(new object[] { "Nam", "Nữ" });
+            comboGioiTinh.Location = new Point(103, 0);
+            comboGioiTinh.Name = "comboGioiTinh";
+            comboGioiTinh.Size = new Size(127, 28);
+            comboGioiTinh.TabIndex = 1;
             // 
             // label5
             // 
@@ -218,7 +219,7 @@
             // 
             // panel6
             // 
-            panel6.Controls.Add(comboBox1);
+            panel6.Controls.Add(comboGioiTinh);
             panel6.Controls.Add(label5);
             panel6.Location = new Point(389, 91);
             panel6.Name = "panel6";
@@ -237,32 +238,32 @@
             label6.Text = "Ngày Sinh";
             label6.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // dateTimePicker1
+            // dateTimePickerNgaySinh
             // 
-            dateTimePicker1.Dock = DockStyle.Right;
-            dateTimePicker1.Location = new Point(103, 0);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(359, 27);
-            dateTimePicker1.TabIndex = 4;
+            dateTimePickerNgaySinh.Dock = DockStyle.Right;
+            dateTimePickerNgaySinh.Location = new Point(103, 0);
+            dateTimePickerNgaySinh.Name = "dateTimePickerNgaySinh";
+            dateTimePickerNgaySinh.Size = new Size(359, 27);
+            dateTimePickerNgaySinh.TabIndex = 4;
             // 
             // panel7
             // 
             panel7.Controls.Add(label6);
-            panel7.Controls.Add(dateTimePicker1);
+            panel7.Controls.Add(dateTimePickerNgaySinh);
             panel7.Location = new Point(389, 32);
             panel7.Name = "panel7";
             panel7.Size = new Size(462, 28);
             panel7.TabIndex = 4;
             // 
-            // textBox3
+            // txtSDT
             // 
-            textBox3.BorderStyle = BorderStyle.FixedSingle;
-            textBox3.Dock = DockStyle.Fill;
-            textBox3.Location = new Point(76, 0);
-            textBox3.Multiline = true;
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(260, 38);
-            textBox3.TabIndex = 1;
+            txtSDT.BorderStyle = BorderStyle.FixedSingle;
+            txtSDT.Dock = DockStyle.Fill;
+            txtSDT.Location = new Point(76, 0);
+            txtSDT.Multiline = true;
+            txtSDT.Name = "txtSDT";
+            txtSDT.Size = new Size(260, 38);
+            txtSDT.TabIndex = 1;
             // 
             // panel1
             // 
@@ -333,22 +334,22 @@
             // 
             // panel14
             // 
-            panel14.Controls.Add(textBox5);
+            panel14.Controls.Add(txtPhuCap);
             panel14.Controls.Add(label11);
             panel14.Location = new Point(19, 275);
             panel14.Name = "panel14";
             panel14.Size = new Size(336, 38);
             panel14.TabIndex = 6;
             // 
-            // textBox5
+            // txtPhuCap
             // 
-            textBox5.BorderStyle = BorderStyle.FixedSingle;
-            textBox5.Dock = DockStyle.Fill;
-            textBox5.Location = new Point(76, 0);
-            textBox5.Multiline = true;
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(260, 38);
-            textBox5.TabIndex = 1;
+            txtPhuCap.BorderStyle = BorderStyle.FixedSingle;
+            txtPhuCap.Dock = DockStyle.Fill;
+            txtPhuCap.Location = new Point(76, 0);
+            txtPhuCap.Multiline = true;
+            txtPhuCap.Name = "txtPhuCap";
+            txtPhuCap.Size = new Size(260, 38);
+            txtPhuCap.TabIndex = 1;
             // 
             // label11
             // 
@@ -364,22 +365,22 @@
             // 
             // panel11
             // 
-            panel11.Controls.Add(comboBox3);
+            panel11.Controls.Add(comboVaiTro);
             panel11.Controls.Add(label10);
             panel11.Location = new Point(389, 215);
             panel11.Name = "panel11";
             panel11.Size = new Size(230, 28);
             panel11.TabIndex = 5;
             // 
-            // comboBox3
+            // comboVaiTro
             // 
-            comboBox3.Dock = DockStyle.Fill;
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Items.AddRange(new object[] { "NVCB", "GV", "NV PĐT", "..." });
-            comboBox3.Location = new Point(103, 0);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(127, 28);
-            comboBox3.TabIndex = 1;
+            comboVaiTro.Dock = DockStyle.Fill;
+            comboVaiTro.FormattingEnabled = true;
+            comboVaiTro.Items.AddRange(new object[] { "NVCB", "GV", "NV PĐT", "NV PKT", "NV TCHC", "NV CTSV", "TRGDV" });
+            comboVaiTro.Location = new Point(103, 0);
+            comboVaiTro.Name = "comboVaiTro";
+            comboVaiTro.Size = new Size(127, 28);
+            comboVaiTro.TabIndex = 1;
             // 
             // label10
             // 
@@ -395,22 +396,22 @@
             // 
             // panel10
             // 
-            panel10.Controls.Add(comboBox2);
+            panel10.Controls.Add(comboMaDV);
             panel10.Controls.Add(label9);
             panel10.Location = new Point(389, 153);
             panel10.Name = "panel10";
             panel10.Size = new Size(230, 28);
             panel10.TabIndex = 4;
             // 
-            // comboBox2
+            // comboMaDV
             // 
-            comboBox2.Dock = DockStyle.Fill;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Items.AddRange(new object[] { "CNTT", "Toán", "Sinh Học", "Hóa Học" });
-            comboBox2.Location = new Point(103, 0);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(127, 28);
-            comboBox2.TabIndex = 1;
+            comboMaDV.Dock = DockStyle.Fill;
+            comboMaDV.FormattingEnabled = true;
+            comboMaDV.Items.AddRange(new object[] { "CNTT", "TOAN", "VL", "HOA", "SINH", "MT", "DC", "VLKT", "DTVT", "KHLN", "PĐT", "PKT", "TCHC", "CTSV", "KDL" });
+            comboMaDV.Location = new Point(103, 0);
+            comboMaDV.Name = "comboMaDV";
+            comboMaDV.Size = new Size(127, 28);
+            comboMaDV.TabIndex = 1;
             // 
             // label9
             // 
@@ -426,22 +427,22 @@
             // 
             // panel9
             // 
-            panel9.Controls.Add(textBox4);
+            panel9.Controls.Add(txtLuong);
             panel9.Controls.Add(label8);
             panel9.Location = new Point(19, 215);
             panel9.Name = "panel9";
             panel9.Size = new Size(336, 38);
             panel9.TabIndex = 5;
             // 
-            // textBox4
+            // txtLuong
             // 
-            textBox4.BorderStyle = BorderStyle.FixedSingle;
-            textBox4.Dock = DockStyle.Fill;
-            textBox4.Location = new Point(76, 0);
-            textBox4.Multiline = true;
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(260, 38);
-            textBox4.TabIndex = 1;
+            txtLuong.BorderStyle = BorderStyle.FixedSingle;
+            txtLuong.Dock = DockStyle.Fill;
+            txtLuong.Location = new Point(76, 0);
+            txtLuong.Multiline = true;
+            txtLuong.Name = "txtLuong";
+            txtLuong.Size = new Size(260, 38);
+            txtLuong.TabIndex = 1;
             // 
             // label8
             // 
@@ -457,7 +458,7 @@
             // 
             // panel8
             // 
-            panel8.Controls.Add(textBox3);
+            panel8.Controls.Add(txtSDT);
             panel8.Controls.Add(label7);
             panel8.Location = new Point(19, 153);
             panel8.Name = "panel8";
@@ -511,22 +512,22 @@
         #endregion
 
         private Button CancelBtn;
-        private Button button1;
+        private Button addBtn;
         private Panel panel12;
         private Button resetBtn;
-        private TextBox textBox1;
+        private TextBox txtMaNLD;
         private Label label3;
         private Panel panel4;
-        private TextBox textBox2;
+        private TextBox txtHoTen;
         private Label label4;
         private Panel panel5;
-        private ComboBox comboBox1;
+        private ComboBox comboGioiTinh;
         private Label label5;
         private Panel panel6;
         private Label label6;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dateTimePickerNgaySinh;
         private Panel panel7;
-        private TextBox textBox3;
+        private TextBox txtSDT;
         private Panel panel1;
         private Panel panel2;
         private Label label2;
@@ -534,18 +535,18 @@
         private Panel panel3;
         private Panel panel13;
         private Panel panel14;
-        private TextBox textBox5;
+        private TextBox txtPhuCap;
         private Label label11;
         private Panel panel11;
-        private ComboBox comboBox3;
+        private ComboBox comboVaiTro;
         private Label label10;
         private Panel panel9;
-        private TextBox textBox4;
+        private TextBox txtLuong;
         private Label label8;
         private Panel panel8;
         private Label label7;
         private Panel panel10;
-        private ComboBox comboBox2;
+        private ComboBox comboMaDV;
         private Label label9;
     }
 }

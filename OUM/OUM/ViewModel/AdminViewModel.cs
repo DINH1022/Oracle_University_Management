@@ -29,6 +29,8 @@ namespace OUM.ViewModel
                 return false;
             }
         }
-
+        //Viết hàm tạo user ở đây. gọi tới OracleDAO service để truy vấn xuống database.
+        // View(form/page) sẽ gọi hàm được từ ViewModel
+        // Các lớp sẽ được định nghĩa tại Model. ví dụ như lớp student 
     }
 }

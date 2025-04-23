@@ -32,15 +32,26 @@ namespace OUM.Service.DataAccess
         {
             return $"User Id={AdminSession.Username};Password={AdminSession.Password};Data Source=localhost:1521/DKHP;";
         }
-        public void CreateUser(string username,string password, List<string> grants)
+        //Template connect to db
+        public bool CreateUser(string username,string password)
         {
-            try
+            using (var connection = new OracleConnection(GetConnectionString()))
             {
-
-            }
-            catch
-            {
-
+                try
+                {
+                    connection.Open();
+                    string query = $"CREATE USER {username} IDENTIFIED BY {password}";
+                    using(var cmd = new OracleCommand(query, connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+                        return true;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
     }   

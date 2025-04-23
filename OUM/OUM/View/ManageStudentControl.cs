@@ -9,14 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using OUM.ViewModel;
 
 namespace OUM.View
 {
     public partial class ManageStudentControl : UserControl
     {
+        private StudentViewModel ViewModel;
         public ManageStudentControl()
         {
             InitializeComponent();
+            ViewModel = new StudentViewModel();
             this.Load += Data_Load;
         }
 
@@ -28,11 +31,10 @@ namespace OUM.View
 
         private void Data_Load(object sender, EventArgs e)
         {
-            OracleDAO dao = new OracleDAO();
-            List<Student> students = dao.GetListStudents();
-
+            
+            ViewModel.LoadData();
             dataGridView1.AutoGenerateColumns = true;
-            dataGridView1.DataSource = students;
+            dataGridView1.DataSource = ViewModel.Students;
 
             if (dataGridView1.Columns.Count > 0)
             {

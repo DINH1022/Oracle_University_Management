@@ -1,5 +1,6 @@
 ﻿using OUM.Model;
 using OUM.Service.DataAccess;
+using OUM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,9 +15,11 @@ namespace OUM.View
 {
     public partial class ManageEmployeeControl : UserControl
     {
+        private EmployeeViewModel ViewModel;
         public ManageEmployeeControl()
         {
             InitializeComponent();
+            ViewModel = new EmployeeViewModel();
             this.Load += Data_Load;
         }
 
@@ -28,11 +31,9 @@ namespace OUM.View
 
         private void Data_Load(object sender, EventArgs e)
         {
-            OracleDAO dao = new OracleDAO();
-            List<Employee> employees = dao.GetListEmployees();
-
+            ViewModel.LoadData();
             dataGridView1.AutoGenerateColumns = true;
-            dataGridView1.DataSource = employees;
+            dataGridView1.DataSource = ViewModel.Employees;
 
             if (dataGridView1.Columns.Count > 0)
             {

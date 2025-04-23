@@ -41,5 +41,10 @@ namespace OUM.View
             LoginPage loginPage = new LoginPage();
             loginPage.Show();
         }
+
+        private void RevokeBtnNav_click(object sender, EventArgs e)
+        {
+            LoadControl(new RevokeAuthPageControl());
+        }
     }
 }

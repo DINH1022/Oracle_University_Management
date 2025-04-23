@@ -37,6 +37,7 @@
             EmpBtn = new Button();
             StudentBtn = new Button();
             panelMainContent = new Panel();
+            RevokeBtnNav = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -45,6 +46,7 @@
             // 
             panel1.BackColor = Color.LightGoldenrodYellow;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(RevokeBtnNav);
             panel1.Controls.Add(RoleBtn);
             panel1.Controls.Add(flowLayoutPanel1);
             panel1.Controls.Add(panel2);
@@ -132,6 +134,18 @@
             panelMainContent.Size = new Size(951, 853);
             panelMainContent.TabIndex = 1;
             // 
+            // RevokeBtnNav
+            // 
+            RevokeBtnNav.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            RevokeBtnNav.ForeColor = Color.DarkGreen;
+            RevokeBtnNav.Location = new Point(27, 409);
+            RevokeBtnNav.Name = "RevokeBtnNav";
+            RevokeBtnNav.Size = new Size(175, 49);
+            RevokeBtnNav.TabIndex = 4;
+            RevokeBtnNav.Text = "Thu hồi quyền";
+            RevokeBtnNav.UseVisualStyleBackColor = false;
+            RevokeBtnNav.Click += this.RevokeBtnNav_click;
+            // 
             // NavPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -155,5 +169,6 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Button RoleBtn;
         private Panel panelMainContent;
+        private Button RevokeBtnNav;
     }
 }

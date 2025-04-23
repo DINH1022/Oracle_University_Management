@@ -3,10 +3,11 @@ using OUM.ViewModel;
 
 namespace OUM
 {
-    public partial class Form1 : Form
+    public partial class LoginPage : Form
     {
+
         AdminViewModel viewModel;
-        public Form1()
+        public LoginPage()
         {
             InitializeComponent();
             viewModel = new AdminViewModel();
@@ -44,11 +45,12 @@ namespace OUM
 
         private void LoginBtn_MouseClick(object sender, MouseEventArgs e)
         {
-            bool logined =viewModel.AdminLogin();
+            bool logined = viewModel.AdminLogin();
             if (logined)
             {
-                StudentPage form2 = new StudentPage();
-                form2.Show();
+                this.Hide();
+                NavPage navPage = new NavPage();
+                navPage.Show();
             }
             else
             {

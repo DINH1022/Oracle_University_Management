@@ -44,8 +44,8 @@ namespace OUM.View
 
         private void Cancel_Click(object sender, EventArgs e)
         {
-            StudentPage studentPage = new StudentPage();
-            studentPage.Show();
+            this.Close();
+
         }
     }
 }

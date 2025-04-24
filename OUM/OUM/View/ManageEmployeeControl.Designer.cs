@@ -31,23 +31,23 @@
             components = new System.ComponentModel.Container();
             panel2 = new Panel();
             dataGridView1 = new DataGridView();
-            bindingSource1 = new BindingSource(components);
+            oracleDAOBindingSource = new BindingSource(components);
             panel1 = new Panel();
             addBtn = new Button();
             panel4 = new Panel();
-            textBox1 = new TextBox();
-            FindBtn = new Button();
+            searchTextBox = new TextBox();
+            searchButton = new Button();
             panel3 = new Panel();
             label1 = new Label();
+            bindingSource1 = new BindingSource(components);
             saveFileDialog1 = new SaveFileDialog();
-            oracleDAOBindingSource = new BindingSource(components);
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).BeginInit();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             SuspendLayout();
             // 
             // panel2
@@ -75,6 +75,10 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(1006, 267);
             dataGridView1.TabIndex = 2;
+            // 
+            // oracleDAOBindingSource
+            // 
+            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
             // 
             // panel1
             // 
@@ -106,33 +110,34 @@
             // 
             panel4.BackColor = Color.White;
             panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(textBox1);
-            panel4.Controls.Add(FindBtn);
+            panel4.Controls.Add(searchTextBox);
+            panel4.Controls.Add(searchButton);
             panel4.Location = new Point(18, 8);
             panel4.Name = "panel4";
             panel4.Size = new Size(441, 38);
             panel4.TabIndex = 4;
             // 
-            // textBox1
+            // searchTextBox
             // 
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Location = new Point(88, 0);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(351, 36);
-            textBox1.TabIndex = 2;
+            searchTextBox.Dock = DockStyle.Fill;
+            searchTextBox.Location = new Point(88, 0);
+            searchTextBox.Multiline = true;
+            searchTextBox.Name = "searchTextBox";
+            searchTextBox.Size = new Size(351, 36);
+            searchTextBox.TabIndex = 2;
             // 
-            // FindBtn
+            // searchButton
             // 
-            FindBtn.BackColor = Color.PaleGoldenrod;
-            FindBtn.Dock = DockStyle.Left;
-            FindBtn.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            FindBtn.Location = new Point(0, 0);
-            FindBtn.Name = "FindBtn";
-            FindBtn.Size = new Size(88, 36);
-            FindBtn.TabIndex = 0;
-            FindBtn.Text = "Tìm kiếm";
-            FindBtn.UseVisualStyleBackColor = false;
+            searchButton.BackColor = Color.PaleGoldenrod;
+            searchButton.Dock = DockStyle.Left;
+            searchButton.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            searchButton.Location = new Point(0, 0);
+            searchButton.Name = "searchButton";
+            searchButton.Size = new Size(88, 36);
+            searchButton.TabIndex = 0;
+            searchButton.Text = "Tìm kiếm";
+            searchButton.UseVisualStyleBackColor = false;
+            searchButton.Click += searchButton_Click;
             // 
             // panel3
             // 
@@ -155,10 +160,6 @@
             label1.TabIndex = 0;
             label1.Text = "Danh Sách Nhân Viên";
             // 
-            // oracleDAOBindingSource
-            // 
-            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
-            // 
             // ManageEmployeeControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -168,13 +169,13 @@
             Size = new Size(1006, 379);
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).EndInit();
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ResumeLayout(false);
         }
 
@@ -184,8 +185,8 @@
         private Panel panel1;
         private Button addBtn;
         private Panel panel4;
-        private TextBox textBox1;
-        private Button FindBtn;
+        private TextBox searchTextBox;
+        private Button searchButton;
         private Panel panel3;
         private Label label1;
         private SaveFileDialog saveFileDialog1;

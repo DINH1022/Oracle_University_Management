@@ -32,16 +32,12 @@ namespace OUM.View
                 ViewModel.LoadData();
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = ViewModel.Employees;
+                AddDeleteButtonColumn();
+                CustomizeHeaders();
             }
         }
-
-        private void Data_Load(object sender, EventArgs e)
+        private void CustomizeHeaders()
         {
-            ViewModel.LoadData();
-            dataGridView1.AutoGenerateColumns = true;
-            dataGridView1.DataSource = ViewModel.Employees;
-            AddDeleteButtonColumn();
-
             if (dataGridView1.Columns.Count > 0)
             {
                 dataGridView1.Columns["Username"].HeaderText = "Tên tài khoản";
@@ -55,8 +51,16 @@ namespace OUM.View
                 dataGridView1.Columns["phone"].HeaderText = "Điện thoại";
                 dataGridView1.Columns["madv"].HeaderText = "Mã đơn vị";
                 dataGridView1.Columns["role"].HeaderText = "Vai trò";
-                
             }
+        }
+
+        private void Data_Load(object sender, EventArgs e)
+        {
+            ViewModel.LoadData();
+            dataGridView1.AutoGenerateColumns = true;
+            dataGridView1.DataSource = ViewModel.Employees;
+            AddDeleteButtonColumn();
+            CustomizeHeaders();
         }
 
 
@@ -92,7 +96,8 @@ namespace OUM.View
                         ViewModel.DeleteEmployee(emp);
                         dataGridView1.DataSource = null;
                         dataGridView1.DataSource = ViewModel.Employees;
-                        AddDeleteButtonColumn(); 
+                        AddDeleteButtonColumn();
+                        CustomizeHeaders();
                     }
                     catch (Exception ex)
                     {
@@ -102,6 +107,35 @@ namespace OUM.View
             }
         }
 
+        private void FilterData(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                dataGridView1.DataSource = ViewModel.Employees;
+            }
+            else
+            {
+                string lowerKeyword = keyword.ToLower();
+                var filtered = ViewModel.Employees
+                    .Where(emp =>
+                        emp.name.ToLower().Contains(lowerKeyword) ||
+                        emp.manld.ToLower().Contains(lowerKeyword) ||
+                        emp.phone.ToLower().Contains(lowerKeyword) ||
+                        emp.madv.ToLower().Contains(lowerKeyword) ||
+                        emp.role.ToLower().Contains(lowerKeyword)
+                    )
+                    .ToList();
 
+                dataGridView1.DataSource = filtered;
+            }
+
+            AddDeleteButtonColumn();
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            string keyword = searchTextBox.Text;
+            FilterData(keyword);
+        }
     }
 }

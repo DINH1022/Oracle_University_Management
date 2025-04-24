@@ -21,6 +21,7 @@ namespace OUM.View
             InitializeComponent();
             ViewModel = new EmployeeViewModel();
             this.Load += Data_Load;
+            dataGridView1.CellClick += dataGridView1_CellClick;
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -39,9 +40,12 @@ namespace OUM.View
             ViewModel.LoadData();
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = ViewModel.Employees;
+            AddDeleteButtonColumn();
 
             if (dataGridView1.Columns.Count > 0)
             {
+                dataGridView1.Columns["Username"].HeaderText = "Tên tài khoản";
+                dataGridView1.Columns["CreatedTime"].HeaderText = "Ngày tạo";
                 dataGridView1.Columns["manld"].HeaderText = "Mã nld";
                 dataGridView1.Columns["name"].HeaderText = "Họ tên";
                 dataGridView1.Columns["gender"].HeaderText = "Giới tính";
@@ -51,7 +55,53 @@ namespace OUM.View
                 dataGridView1.Columns["phone"].HeaderText = "Điện thoại";
                 dataGridView1.Columns["madv"].HeaderText = "Mã đơn vị";
                 dataGridView1.Columns["role"].HeaderText = "Vai trò";
+                
             }
         }
+
+
+        private void AddDeleteButtonColumn()
+        {
+            if (dataGridView1.Columns.Contains("Delete"))
+                dataGridView1.Columns.Remove("Delete");
+
+            DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn
+            {
+                Name = "Delete",
+                HeaderText = "Xóa",
+                Text = "Xóa",
+                UseColumnTextForButtonValue = true
+            };
+
+            dataGridView1.Columns.Add(deleteButton);
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["Delete"].Index)
+            {
+                var emp = dataGridView1.Rows[e.RowIndex].DataBoundItem as Employee;
+                if (emp == null) return;
+
+                var confirm = MessageBox.Show($"Bạn có chắc muốn xóa nhân viên {emp.name} không?",
+                                              "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm == DialogResult.Yes)
+                {
+                    try
+                    {
+                        ViewModel.DeleteEmployee(emp);
+                        dataGridView1.DataSource = null;
+                        dataGridView1.DataSource = ViewModel.Employees;
+                        AddDeleteButtonColumn(); 
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi xóa:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+
     }
 }

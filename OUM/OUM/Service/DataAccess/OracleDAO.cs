@@ -67,7 +67,22 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
 
-                    string query = "SELECT MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO FROM NHANVIEN ORDER BY MANLD";
+                    string query = @"
+                SELECT 
+                    NV.MANLD,
+                    NV.HOTEN,
+                    NV.PHAI,
+                    NV.NGSINH,
+                    NV.LUONG,
+                    NV.PHUCAP,
+                    NV.DT,
+                    NV.MADV,
+                    NV.VAITRO,
+                    U.USERNAME,
+                    U.CREATED AS THOIGIANTAO
+                FROM NHANVIEN NV
+                LEFT JOIN DBA_USERS U ON NV.MANLD = U.USERNAME
+                ORDER BY NV.MANLD";
 
                     using (var command = new OracleCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -86,6 +101,9 @@ namespace OUM.Service.DataAccess
                                 role: reader["VAITRO"].ToString()
                             );
 
+                            emp.Username = reader["USERNAME"]?.ToString() ?? "";
+                            emp.CreatedTime = reader["THOIGIANTAO"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["THOIGIANTAO"]);
+
                             employees.Add(emp);
                         }
                     }
@@ -100,6 +118,7 @@ namespace OUM.Service.DataAccess
 
             return employees;
         }
+
 
         public List<Student> GetListStudents()
         {
@@ -152,33 +171,91 @@ namespace OUM.Service.DataAccess
                 try
                 {
                     connection.Open();
-                    var cmd = connection.CreateCommand();
-                    
-                    cmd.CommandText = @"INSERT INTO NHANVIEN (MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO) 
-                                VALUES (:manld, :name, :gender, :dob, :salary, :allowance, :phone, :madv, :role)";
-                    cmd.Parameters.Add(new OracleParameter("manld", emp.manld));
-                    cmd.Parameters.Add(new OracleParameter("name", emp.name));
-                    cmd.Parameters.Add(new OracleParameter("gender", emp.gender));
-                    cmd.Parameters.Add(new OracleParameter("dob", emp.dob));
-                    cmd.Parameters.Add(new OracleParameter("salary", emp.salary));
-                    cmd.Parameters.Add(new OracleParameter("allowance", emp.allowance));
-                    cmd.Parameters.Add(new OracleParameter("phone", emp.phone));
-                    cmd.Parameters.Add(new OracleParameter("madv", emp.madv));
-                    cmd.Parameters.Add(new OracleParameter("role", emp.role));
 
-                   
-                    cmd.ExecuteNonQuery();
+                    var checkCmd = connection.CreateCommand();
+                    checkCmd.CommandText = "SELECT COUNT(*) FROM ALL_USERS WHERE USERNAME = :username";
+                    checkCmd.Parameters.Add(new OracleParameter("username", emp.manld.ToUpper()));
+
+                    int userExists = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                    if (userExists == 0)
+                    {
+                        var createUserCmd = connection.CreateCommand();
+                        createUserCmd.CommandText = $@"
+                            BEGIN
+                                EXECUTE IMMEDIATE 'CREATE USER {emp.manld} IDENTIFIED BY PASS123';
+                                EXECUTE IMMEDIATE 'GRANT CONNECT TO {emp.manld}';
+                                
+                            END;";
+                        createUserCmd.ExecuteNonQuery();
+                    }
+
+                    var insertCmd = connection.CreateCommand();
+                    insertCmd.CommandText = @"INSERT INTO NHANVIEN (MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO) 
+                                      VALUES (:manld, :name, :gender, :dob, :salary, :allowance, :phone, :madv, :role)";
+                    insertCmd.Parameters.Add(new OracleParameter("manld", emp.manld));
+                    insertCmd.Parameters.Add(new OracleParameter("name", emp.name));
+                    insertCmd.Parameters.Add(new OracleParameter("gender", emp.gender));
+                    insertCmd.Parameters.Add(new OracleParameter("dob", emp.dob));
+                    insertCmd.Parameters.Add(new OracleParameter("salary", emp.salary));
+                    insertCmd.Parameters.Add(new OracleParameter("allowance", emp.allowance));
+                    insertCmd.Parameters.Add(new OracleParameter("phone", emp.phone));
+                    insertCmd.Parameters.Add(new OracleParameter("madv", emp.madv));
+                    insertCmd.Parameters.Add(new OracleParameter("role", emp.role));
+
+                    insertCmd.ExecuteNonQuery();
 
                     connection.Close();
-
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Lỗi khi thêm nhân viên: " + ex.Message);
+                    MessageBox.Show("Lỗi khi thêm nhân viên hoặc tạo user:\n" + ex.Message);
                 }
             }
         }
 
+        public void DropUser(string username)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var dropCmd = connection.CreateCommand();
+                    dropCmd.CommandText = $"DROP USER {username} CASCADE";
+                    dropCmd.ExecuteNonQuery();
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi drop user:\n" + ex.Message);
+                }
+            }
+        }
+
+        public void DeleteEmployee(Employee emp)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var Cmd = connection.CreateCommand();
+                    Cmd.CommandText = "DELETE FROM NHANVIEN WHERE MANLD = :manld";
+                    Cmd.Parameters.Add(new OracleParameter("manld", emp.manld.ToUpper()));
+                    Cmd.ExecuteNonQuery();
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi xóa nhân viên:\n" + ex.Message);
+                }
+            }
+        }
 
 
 

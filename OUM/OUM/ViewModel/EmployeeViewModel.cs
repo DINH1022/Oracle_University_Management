@@ -36,5 +36,13 @@ namespace OUM.ViewModel
             LoadData();
         }
 
+        public void DeleteEmployee(Employee emp)
+        {
+            OracleDAO dao = new OracleDAO();
+            dao.DropUser(emp.Username);
+            dao.DeleteEmployee(emp);
+            LoadData();
+        }
+
     }
 }

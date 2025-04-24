@@ -8,6 +8,8 @@ namespace OUM.Model
 {
     public class Employee
     {
+        public string Username { get; set; }
+        public DateTime CreatedTime { get; set; }
         public string manld {  get; set; }
         public string name { get; set; }
         public string gender { get; set; }
@@ -17,6 +19,7 @@ namespace OUM.Model
         public string phone { get; set; }
         public string madv {  get; set; }
         public string role { get; set; }
+        
 
         public Employee(string manld, string name, string gender, DateTime dob, decimal salary, decimal allowance, string phone, string madv, string role)
         {

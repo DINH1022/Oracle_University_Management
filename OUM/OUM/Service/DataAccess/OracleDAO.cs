@@ -214,6 +214,54 @@ namespace OUM.Service.DataAccess
             }
         }
 
+        public void UpdateEmployee(Employee emp)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var updateCmd = connection.CreateCommand();
+                    updateCmd.CommandText = @"
+                        UPDATE NHANVIEN 
+                        SET HOTEN = :name, 
+                            PHAI = :gender, 
+                            NGSINH = :dob, 
+                            LUONG = :salary, 
+                            PHUCAP = :allowance, 
+                            DT = :phone, 
+                            MADV = :madv, 
+                            VAITRO = :role
+                        WHERE MANLD = :manld";
+
+                    updateCmd.Parameters.Add(new OracleParameter("name", emp.name));
+                    updateCmd.Parameters.Add(new OracleParameter("gender", emp.gender));
+                    updateCmd.Parameters.Add(new OracleParameter("dob", emp.dob));
+                    updateCmd.Parameters.Add(new OracleParameter("salary", emp.salary));
+                    updateCmd.Parameters.Add(new OracleParameter("allowance", emp.allowance));
+                    updateCmd.Parameters.Add(new OracleParameter("phone", emp.phone));
+                    updateCmd.Parameters.Add(new OracleParameter("madv", emp.madv));
+                    updateCmd.Parameters.Add(new OracleParameter("role", emp.role));
+                    updateCmd.Parameters.Add(new OracleParameter("manld", emp.manld)); 
+
+                    int rows = updateCmd.ExecuteNonQuery();
+
+                    if (rows == 0)
+                    {
+                        MessageBox.Show("Không tìm thấy nhân viên để cập nhật.");
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi cập nhật nhân viên:\n" + ex.Message);
+                }
+            }
+        }
+
+
         public void DropUser(string username)
         {
             using (var connection = new OracleConnection(GetConnectionString()))

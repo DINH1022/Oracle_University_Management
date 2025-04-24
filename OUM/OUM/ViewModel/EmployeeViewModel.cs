@@ -36,6 +36,13 @@ namespace OUM.ViewModel
             LoadData();
         }
 
+        public void UpdateEmployee(Employee emp)
+        {
+            OracleDAO dao = new OracleDAO();
+            dao.UpdateEmployee(emp);
+            LoadData();
+        }
+
         public void DeleteEmployee(Employee emp)
         {
             OracleDAO dao = new OracleDAO();

@@ -32,7 +32,7 @@ namespace OUM.View
                 ViewModel.LoadData();
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = ViewModel.Employees;
-                AddDeleteButtonColumn();
+                AddButtonColumn();
                 CustomizeHeaders();
             }
         }
@@ -59,15 +59,17 @@ namespace OUM.View
             ViewModel.LoadData();
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = ViewModel.Employees;
-            AddDeleteButtonColumn();
+            AddButtonColumn();
             CustomizeHeaders();
         }
 
 
-        private void AddDeleteButtonColumn()
+        private void AddButtonColumn()
         {
             if (dataGridView1.Columns.Contains("Delete"))
                 dataGridView1.Columns.Remove("Delete");
+            if (dataGridView1.Columns.Contains("Update"))
+                dataGridView1.Columns.Remove("Update");
 
             DataGridViewButtonColumn deleteButton = new DataGridViewButtonColumn
             {
@@ -77,35 +79,59 @@ namespace OUM.View
                 UseColumnTextForButtonValue = true
             };
 
+            DataGridViewButtonColumn updateButton = new DataGridViewButtonColumn
+            {
+                Name = "Update",
+                HeaderText = "Chỉnh sửa",
+                Text = "Chỉnh sửa",
+                UseColumnTextForButtonValue = true
+            };
+
+            dataGridView1.Columns.Add(updateButton);
             dataGridView1.Columns.Add(deleteButton);
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["Delete"].Index)
+            if (e.RowIndex >= 0)
             {
                 var emp = dataGridView1.Rows[e.RowIndex].DataBoundItem as Employee;
                 if (emp == null) return;
 
-                var confirm = MessageBox.Show($"Bạn có chắc muốn xóa nhân viên {emp.name} không?",
-                                              "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (confirm == DialogResult.Yes)
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "Delete")
                 {
-                    try
+                    var confirm = MessageBox.Show($"Bạn có chắc muốn xóa nhân viên {emp.name} không?",
+                                                  "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Yes)
                     {
-                        ViewModel.DeleteEmployee(emp);
+                        try
+                        {
+                            ViewModel.DeleteEmployee(emp);
+                            ViewModel.LoadData();
+                            dataGridView1.DataSource = null;
+                            dataGridView1.DataSource = ViewModel.Employees;
+                            AddButtonColumn();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Lỗi khi xóa:\n" + ex.Message);
+                        }
+                    }
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "Update")
+                {
+                    var editForm = new UpdateEmpForm(emp);
+                    if (editForm.ShowDialog() == DialogResult.OK)
+                    {
+                        ViewModel.LoadData();
                         dataGridView1.DataSource = null;
                         dataGridView1.DataSource = ViewModel.Employees;
-                        AddDeleteButtonColumn();
-                        CustomizeHeaders();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Lỗi khi xóa:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        AddButtonColumn();
                     }
                 }
             }
         }
+
 
         private void FilterData(string keyword)
         {
@@ -129,7 +155,7 @@ namespace OUM.View
                 dataGridView1.DataSource = filtered;
             }
 
-            AddDeleteButtonColumn();
+            AddButtonColumn();
         }
 
         private void searchButton_Click(object sender, EventArgs e)

@@ -39,7 +39,7 @@ namespace OUM.View
         private const string HEADERTEXT_USER_ROLE_ROLE = "Vai trò";
         private const string HEADERTEXT_USER_ROLE_GRANTOPT = "WITH GRANT OPTION";
 
-        private  Dictionary<String, String> HEADER_TEXT_TO_NAME_USER_PRIVS = new Dictionary<String, String>()
+        private Dictionary<String, String> HEADER_TEXT_TO_NAME_USER_PRIVS = new Dictionary<String, String>()
         {
             {HEADERTEXT_USER_PRIVS_NAME,"name"},
             {HEADERTEXT_USER_PRIVS_OBJECT,"object_name"},
@@ -211,31 +211,6 @@ namespace OUM.View
             configUICells();
         }
 
-        //private List<GrantInformation> mockListGrant()
-        //{
-        //    List<GrantInformation> grantInformation = new List<GrantInformation>();
-        //    GrantInformation a1 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-        //    GrantInformation a2 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT, UPDATE", "MANV,HOTEN,PHAI", "Không");
-        //    GrantInformation a3 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-        //    GrantInformation a4 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-        //    GrantInformation a5 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-        //    GrantInformation a6 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT, DELETE", "MANV,HOTEN,PHAI", "Không");
-        //    GrantInformation a7 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-        //    grantInformation.Add(a1);
-        //    grantInformation.Add(a2);
-        //    grantInformation.Add(a3);
-        //    grantInformation.Add(a4);
-        //    grantInformation.Add(a5);
-        //    grantInformation.Add(a6);
-        //    grantInformation.Add(a7);
-        //    return grantInformation;
-        //}
-
-        //private void initData()
-        //{
-        //    grantInformations = mockListGrant();
-        //}
-
         private void configUIHeaders()
         {
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -300,13 +275,21 @@ namespace OUM.View
                 );
                 if (result == DialogResult.Yes)
                 {
-                    dataGridView1.Rows.RemoveAt(e.RowIndex);
                     if (isRevokingRoleFromUser()) {
                         string nameOfCol_username = HEADER_TEXT_TO_NAME_USER_ROLE[HEADERTEXT_USER_ROLE_NAME];
                         string nameOfCol_role = HEADER_TEXT_TO_NAME_USER_ROLE[HEADERTEXT_USER_ROLE_ROLE];
 
                         string username = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_username].Value.ToString();
                         string role = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_role].Value.ToString();
+                        var objectToRemove = userRoleInformations
+                            .FirstOrDefault(obj => obj.Name.ToUpper() == username
+                                                && obj.Role.ToUpper() == role);
+                        dataGridView1.DataSource = null;
+                        if (objectToRemove != null)
+                        {
+                            userRoleInformations.Remove(objectToRemove);
+                        }
+                        dataGridView1.DataSource= userRoleInformations;
                         revokeDAO.revokeRoleFromUser(username, role);
                         return;
                     }
@@ -319,6 +302,15 @@ namespace OUM.View
                         string username = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_username].Value.ToString();
                         string object_name = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_objectName].Value.ToString();
                         string query_type = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_queryType].Value.ToString();
+                        GrantInformation objectToRemove = grantInformations
+                            .FirstOrDefault(obj => obj.Name.ToUpper() == username.ToUpper()
+                                             && obj.ObjectName.ToUpper() == object_name.ToUpper()
+                                             && obj.Authority.ToUpper() == query_type.ToUpper());
+                        dataGridView1.DataSource = null;
+                        if (objectToRemove != null) {
+                            grantInformations.Remove(objectToRemove);    
+                        }
+                        dataGridView1.DataSource = userRoleInformations;
                         revokeDAO.revokeAllColumnsPriv(username, object_name, query_type);
                         return;
                     }
@@ -331,6 +323,17 @@ namespace OUM.View
                     string objectName = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_objectname].Value.ToString();
                     string queryType = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_querytype].Value.ToString();
                     string col = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_col].Value.ToString();
+                    GrantInformation objectToRemove1 = grantInformations
+                        .FirstOrDefault(obj => obj.Name.ToUpper() == name &&
+                                   obj.ObjectName.ToUpper() == objectName &&
+                                   obj.Authority.ToUpper() == queryType &&
+                                   obj.Columns.ToUpper() == col);
+                    dataGridView1.DataSource = null;
+                    if (objectToRemove1 != null)
+                    {
+                        grantInformations.Remove(objectToRemove1);
+                    }
+                    dataGridView1.DataSource = userRoleInformations;
                     revokeDAO.revokeGivenColumnPriv(name, objectName, queryType, col);
                 }
             }

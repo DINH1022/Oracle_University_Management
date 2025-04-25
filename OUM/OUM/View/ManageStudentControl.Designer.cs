@@ -31,24 +31,24 @@
             components = new System.ComponentModel.Container();
             panel2 = new Panel();
             dataGridView1 = new DataGridView();
+            oracleDAOBindingSource = new BindingSource(components);
             panel1 = new Panel();
             addBtn = new Button();
             panel4 = new Panel();
-            textBox1 = new TextBox();
+            searchTextBox = new TextBox();
             FindBtn = new Button();
             panel3 = new Panel();
             label1 = new Label();
             saveFileDialog1 = new SaveFileDialog();
             bindingSource1 = new BindingSource(components);
-            oracleDAOBindingSource = new BindingSource(components);
             oracleDAOBindingSource1 = new BindingSource(components);
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).BeginInit();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource1).BeginInit();
             SuspendLayout();
             // 
@@ -77,6 +77,10 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(1076, 400);
             dataGridView1.TabIndex = 2;
+            // 
+            // oracleDAOBindingSource
+            // 
+            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
             // 
             // panel1
             // 
@@ -108,21 +112,22 @@
             // 
             panel4.BackColor = Color.White;
             panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(textBox1);
+            panel4.Controls.Add(searchTextBox);
             panel4.Controls.Add(FindBtn);
             panel4.Location = new Point(18, 8);
             panel4.Name = "panel4";
             panel4.Size = new Size(441, 38);
             panel4.TabIndex = 4;
             // 
-            // textBox1
+            // searchTextBox
             // 
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Location = new Point(88, 0);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(351, 36);
-            textBox1.TabIndex = 2;
+            searchTextBox.Dock = DockStyle.Fill;
+            searchTextBox.Location = new Point(88, 0);
+            searchTextBox.Multiline = true;
+            searchTextBox.Name = "searchTextBox";
+            searchTextBox.Size = new Size(351, 36);
+            searchTextBox.TabIndex = 2;
+            searchTextBox.TextChanged += searchTextBox_TextChanged;
             // 
             // FindBtn
             // 
@@ -135,6 +140,7 @@
             FindBtn.TabIndex = 0;
             FindBtn.Text = "Tìm kiếm";
             FindBtn.UseVisualStyleBackColor = false;
+            FindBtn.Click += findBtn_Click;
             // 
             // panel3
             // 
@@ -157,10 +163,6 @@
             label1.TabIndex = 0;
             label1.Text = "Danh Sách Sinh Viên";
             // 
-            // oracleDAOBindingSource
-            // 
-            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
-            // 
             // oracleDAOBindingSource1
             // 
             oracleDAOBindingSource1.DataSource = typeof(Service.DataAccess.OracleDAO);
@@ -174,13 +176,13 @@
             Size = new Size(1076, 512);
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).EndInit();
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource1).EndInit();
             ResumeLayout(false);
         }
@@ -190,7 +192,7 @@
         private Panel panel2;
         private Panel panel1;
         private Panel panel4;
-        private TextBox textBox1;
+        private TextBox searchTextBox;
         private Button FindBtn;
         private Panel panel3;
         private Label label1;

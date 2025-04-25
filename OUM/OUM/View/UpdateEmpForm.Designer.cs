@@ -1,6 +1,6 @@
 ﻿namespace OUM.View
 {
-    partial class AddEmpForm
+    partial class UpdateEmpForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,23 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            CancelBtn = new Button();
-            addBtn = new Button();
-            panel12 = new Panel();
-            txtMaNLD = new TextBox();
-            label3 = new Label();
-            panel4 = new Panel();
-            txtHoTen = new TextBox();
-            label4 = new Label();
-            panel5 = new Panel();
-            comboGioiTinh = new ComboBox();
-            label5 = new Label();
-            panel6 = new Panel();
-            label6 = new Label();
-            dateTimePickerNgaySinh = new DateTimePicker();
-            panel7 = new Panel();
-            txtSDT = new TextBox();
-            panel1 = new Panel();
             panel2 = new Panel();
             label2 = new Label();
             label1 = new Label();
@@ -63,13 +46,24 @@
             txtLuong = new TextBox();
             label8 = new Label();
             panel8 = new Panel();
+            txtSDT = new TextBox();
             label7 = new Label();
-            panel12.SuspendLayout();
-            panel4.SuspendLayout();
-            panel5.SuspendLayout();
-            panel6.SuspendLayout();
-            panel7.SuspendLayout();
-            panel1.SuspendLayout();
+            panel7 = new Panel();
+            label6 = new Label();
+            dateTimePickerNgaySinh = new DateTimePicker();
+            panel6 = new Panel();
+            comboGioiTinh = new ComboBox();
+            label5 = new Label();
+            panel5 = new Panel();
+            txtHoTen = new TextBox();
+            label4 = new Label();
+            panel4 = new Panel();
+            txtMaNLD = new TextBox();
+            label3 = new Label();
+            panel12 = new Panel();
+            CancelBtn = new Button();
+            UpdateBtn = new Button();
+            panel1 = new Panel();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel13.SuspendLayout();
@@ -78,187 +72,13 @@
             panel10.SuspendLayout();
             panel9.SuspendLayout();
             panel8.SuspendLayout();
+            panel7.SuspendLayout();
+            panel6.SuspendLayout();
+            panel5.SuspendLayout();
+            panel4.SuspendLayout();
+            panel12.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // CancelBtn
-            // 
-            CancelBtn.BackColor = Color.Gainsboro;
-            CancelBtn.Dock = DockStyle.Right;
-            CancelBtn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CancelBtn.Location = new Point(712, 0);
-            CancelBtn.Margin = new Padding(6);
-            CancelBtn.Name = "CancelBtn";
-            CancelBtn.Size = new Size(116, 59);
-            CancelBtn.TabIndex = 8;
-            CancelBtn.Text = "Quay lại";
-            CancelBtn.UseVisualStyleBackColor = false;
-            CancelBtn.Click += Cancel_Click;
-            // 
-            // addBtn
-            // 
-            addBtn.BackColor = Color.Gainsboro;
-            addBtn.Dock = DockStyle.Right;
-            addBtn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            addBtn.Location = new Point(828, 0);
-            addBtn.Margin = new Padding(6);
-            addBtn.Name = "addBtn";
-            addBtn.Size = new Size(116, 59);
-            addBtn.TabIndex = 6;
-            addBtn.Text = "Thêm";
-            addBtn.UseVisualStyleBackColor = false;
-            addBtn.Click += addBtn_Click;
-            // 
-            // panel12
-            // 
-            panel12.Controls.Add(CancelBtn);
-            panel12.Controls.Add(addBtn);
-            panel12.Dock = DockStyle.Bottom;
-            panel12.Location = new Point(0, 420);
-            panel12.Name = "panel12";
-            panel12.Size = new Size(944, 59);
-            panel12.TabIndex = 9;
-            // 
-            // txtMaNLD
-            // 
-            txtMaNLD.BorderStyle = BorderStyle.FixedSingle;
-            txtMaNLD.Dock = DockStyle.Fill;
-            txtMaNLD.Location = new Point(76, 0);
-            txtMaNLD.Multiline = true;
-            txtMaNLD.Name = "txtMaNLD";
-            txtMaNLD.Size = new Size(260, 38);
-            txtMaNLD.TabIndex = 1;
-            // 
-            // label3
-            // 
-            label3.BorderStyle = BorderStyle.FixedSingle;
-            label3.Dock = DockStyle.Left;
-            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(0, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(76, 38);
-            label3.TabIndex = 0;
-            label3.Text = "Mã NLD";
-            label3.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // panel4
-            // 
-            panel4.Controls.Add(txtMaNLD);
-            panel4.Controls.Add(label3);
-            panel4.Location = new Point(19, 32);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(336, 38);
-            panel4.TabIndex = 0;
-            // 
-            // txtHoTen
-            // 
-            txtHoTen.BorderStyle = BorderStyle.FixedSingle;
-            txtHoTen.Dock = DockStyle.Fill;
-            txtHoTen.Location = new Point(76, 0);
-            txtHoTen.Multiline = true;
-            txtHoTen.Name = "txtHoTen";
-            txtHoTen.Size = new Size(260, 38);
-            txtHoTen.TabIndex = 1;
-            // 
-            // label4
-            // 
-            label4.BorderStyle = BorderStyle.FixedSingle;
-            label4.Dock = DockStyle.Left;
-            label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(0, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(76, 38);
-            label4.TabIndex = 0;
-            label4.Text = "Họ Tên";
-            label4.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // panel5
-            // 
-            panel5.Controls.Add(txtHoTen);
-            panel5.Controls.Add(label4);
-            panel5.Location = new Point(19, 91);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(336, 38);
-            panel5.TabIndex = 2;
-            // 
-            // comboGioiTinh
-            // 
-            comboGioiTinh.Dock = DockStyle.Fill;
-            comboGioiTinh.FormattingEnabled = true;
-            comboGioiTinh.Items.AddRange(new object[] { "Nam", "Nữ" });
-            comboGioiTinh.Location = new Point(103, 0);
-            comboGioiTinh.Name = "comboGioiTinh";
-            comboGioiTinh.Size = new Size(127, 28);
-            comboGioiTinh.TabIndex = 1;
-            // 
-            // label5
-            // 
-            label5.BorderStyle = BorderStyle.FixedSingle;
-            label5.Dock = DockStyle.Left;
-            label5.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(0, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(103, 28);
-            label5.TabIndex = 0;
-            label5.Text = "Giới Tính";
-            label5.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // panel6
-            // 
-            panel6.Controls.Add(comboGioiTinh);
-            panel6.Controls.Add(label5);
-            panel6.Location = new Point(389, 91);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(230, 28);
-            panel6.TabIndex = 3;
-            // 
-            // label6
-            // 
-            label6.BorderStyle = BorderStyle.FixedSingle;
-            label6.Dock = DockStyle.Left;
-            label6.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(0, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(103, 28);
-            label6.TabIndex = 0;
-            label6.Text = "Ngày Sinh";
-            label6.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // dateTimePickerNgaySinh
-            // 
-            dateTimePickerNgaySinh.Dock = DockStyle.Right;
-            dateTimePickerNgaySinh.Location = new Point(103, 0);
-            dateTimePickerNgaySinh.Name = "dateTimePickerNgaySinh";
-            dateTimePickerNgaySinh.Size = new Size(359, 27);
-            dateTimePickerNgaySinh.TabIndex = 4;
-            // 
-            // panel7
-            // 
-            panel7.Controls.Add(label6);
-            panel7.Controls.Add(dateTimePickerNgaySinh);
-            panel7.Location = new Point(389, 32);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(462, 28);
-            panel7.TabIndex = 4;
-            // 
-            // txtSDT
-            // 
-            txtSDT.BorderStyle = BorderStyle.FixedSingle;
-            txtSDT.Dock = DockStyle.Fill;
-            txtSDT.Location = new Point(76, 0);
-            txtSDT.Multiline = true;
-            txtSDT.Name = "txtSDT";
-            txtSDT.Size = new Size(260, 38);
-            txtSDT.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(panel2);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(944, 109);
-            panel1.TabIndex = 2;
             // 
             // panel2
             // 
@@ -277,7 +97,7 @@
             label2.Name = "label2";
             label2.Size = new Size(602, 20);
             label2.TabIndex = 1;
-            label2.Text = "Nhập thông tin để tạo người dùng mới trong hệ thống";
+            label2.Text = "Chỉnh sửa thông tin người dùng trong hệ thống";
             // 
             // label1
             // 
@@ -285,9 +105,9 @@
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(19, 31);
             label1.Name = "label1";
-            label1.Size = new Size(170, 28);
+            label1.Size = new Size(212, 28);
             label1.TabIndex = 1;
-            label1.Text = "Thêm Nhân Viên";
+            label1.Text = "Chỉnh Sửa Nhân Viên";
             // 
             // panel3
             // 
@@ -298,7 +118,7 @@
             panel3.Location = new Point(0, 109);
             panel3.Name = "panel3";
             panel3.Size = new Size(944, 479);
-            panel3.TabIndex = 3;
+            panel3.TabIndex = 5;
             // 
             // panel13
             // 
@@ -450,6 +270,16 @@
             panel8.Size = new Size(336, 38);
             panel8.TabIndex = 2;
             // 
+            // txtSDT
+            // 
+            txtSDT.BorderStyle = BorderStyle.FixedSingle;
+            txtSDT.Dock = DockStyle.Fill;
+            txtSDT.Location = new Point(76, 0);
+            txtSDT.Multiline = true;
+            txtSDT.Name = "txtSDT";
+            txtSDT.Size = new Size(260, 38);
+            txtSDT.TabIndex = 1;
+            // 
             // label7
             // 
             label7.BorderStyle = BorderStyle.FixedSingle;
@@ -462,24 +292,185 @@
             label7.Text = "SĐT";
             label7.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // AddEmpForm
+            // panel7
+            // 
+            panel7.Controls.Add(label6);
+            panel7.Controls.Add(dateTimePickerNgaySinh);
+            panel7.Location = new Point(389, 32);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(462, 28);
+            panel7.TabIndex = 4;
+            // 
+            // label6
+            // 
+            label6.BorderStyle = BorderStyle.FixedSingle;
+            label6.Dock = DockStyle.Left;
+            label6.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(0, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(103, 28);
+            label6.TabIndex = 0;
+            label6.Text = "Ngày Sinh";
+            label6.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // dateTimePickerNgaySinh
+            // 
+            dateTimePickerNgaySinh.Dock = DockStyle.Right;
+            dateTimePickerNgaySinh.Location = new Point(103, 0);
+            dateTimePickerNgaySinh.Name = "dateTimePickerNgaySinh";
+            dateTimePickerNgaySinh.Size = new Size(359, 27);
+            dateTimePickerNgaySinh.TabIndex = 4;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(comboGioiTinh);
+            panel6.Controls.Add(label5);
+            panel6.Location = new Point(389, 91);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(230, 28);
+            panel6.TabIndex = 3;
+            // 
+            // comboGioiTinh
+            // 
+            comboGioiTinh.Dock = DockStyle.Fill;
+            comboGioiTinh.FormattingEnabled = true;
+            comboGioiTinh.Items.AddRange(new object[] { "Nam", "Nữ" });
+            comboGioiTinh.Location = new Point(103, 0);
+            comboGioiTinh.Name = "comboGioiTinh";
+            comboGioiTinh.Size = new Size(127, 28);
+            comboGioiTinh.TabIndex = 1;
+            // 
+            // label5
+            // 
+            label5.BorderStyle = BorderStyle.FixedSingle;
+            label5.Dock = DockStyle.Left;
+            label5.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(0, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(103, 28);
+            label5.TabIndex = 0;
+            label5.Text = "Giới Tính";
+            label5.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panel5
+            // 
+            panel5.Controls.Add(txtHoTen);
+            panel5.Controls.Add(label4);
+            panel5.Location = new Point(19, 91);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(336, 38);
+            panel5.TabIndex = 2;
+            // 
+            // txtHoTen
+            // 
+            txtHoTen.BorderStyle = BorderStyle.FixedSingle;
+            txtHoTen.Dock = DockStyle.Fill;
+            txtHoTen.Location = new Point(76, 0);
+            txtHoTen.Multiline = true;
+            txtHoTen.Name = "txtHoTen";
+            txtHoTen.Size = new Size(260, 38);
+            txtHoTen.TabIndex = 1;
+            // 
+            // label4
+            // 
+            label4.BorderStyle = BorderStyle.FixedSingle;
+            label4.Dock = DockStyle.Left;
+            label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(0, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(76, 38);
+            label4.TabIndex = 0;
+            label4.Text = "Họ Tên";
+            label4.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panel4
+            // 
+            panel4.Controls.Add(txtMaNLD);
+            panel4.Controls.Add(label3);
+            panel4.Location = new Point(19, 32);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(336, 38);
+            panel4.TabIndex = 0;
+            // 
+            // txtMaNLD
+            // 
+            txtMaNLD.BorderStyle = BorderStyle.FixedSingle;
+            txtMaNLD.Dock = DockStyle.Fill;
+            txtMaNLD.Location = new Point(76, 0);
+            txtMaNLD.Multiline = true;
+            txtMaNLD.Name = "txtMaNLD";
+            txtMaNLD.Size = new Size(260, 38);
+            txtMaNLD.TabIndex = 1;
+            // 
+            // label3
+            // 
+            label3.BorderStyle = BorderStyle.FixedSingle;
+            label3.Dock = DockStyle.Left;
+            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(0, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(76, 38);
+            label3.TabIndex = 0;
+            label3.Text = "Mã NLD";
+            label3.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // panel12
+            // 
+            panel12.Controls.Add(CancelBtn);
+            panel12.Controls.Add(UpdateBtn);
+            panel12.Dock = DockStyle.Bottom;
+            panel12.Location = new Point(0, 420);
+            panel12.Name = "panel12";
+            panel12.Size = new Size(944, 59);
+            panel12.TabIndex = 9;
+            // 
+            // CancelBtn
+            // 
+            CancelBtn.BackColor = Color.Gainsboro;
+            CancelBtn.Dock = DockStyle.Right;
+            CancelBtn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            CancelBtn.Location = new Point(712, 0);
+            CancelBtn.Margin = new Padding(6);
+            CancelBtn.Name = "CancelBtn";
+            CancelBtn.Size = new Size(116, 59);
+            CancelBtn.TabIndex = 8;
+            CancelBtn.Text = "Quay lại";
+            CancelBtn.UseVisualStyleBackColor = false;
+            CancelBtn.Click += cancelBtn_Click;
+            // 
+            // UpdateBtn
+            // 
+            UpdateBtn.BackColor = Color.Gainsboro;
+            UpdateBtn.Dock = DockStyle.Right;
+            UpdateBtn.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            UpdateBtn.Location = new Point(828, 0);
+            UpdateBtn.Margin = new Padding(6);
+            UpdateBtn.Name = "UpdateBtn";
+            UpdateBtn.Size = new Size(116, 59);
+            UpdateBtn.TabIndex = 6;
+            UpdateBtn.Text = "Cập nhật";
+            UpdateBtn.UseVisualStyleBackColor = false;
+            UpdateBtn.Click += updateBtn_Click;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.White;
+            panel1.Controls.Add(panel2);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(944, 109);
+            panel1.TabIndex = 4;
+            // 
+            // UpdateEmpForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(944, 588);
             Controls.Add(panel3);
             Controls.Add(panel1);
-            Name = "AddEmpForm";
-            Text = "AddEmpForm";
-            Load += AddEmpForm_Load;
-            panel12.ResumeLayout(false);
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
-            panel6.ResumeLayout(false);
-            panel7.ResumeLayout(false);
-            panel1.ResumeLayout(false);
+            Name = "UpdateEmpForm";
+            Text = "UpdateEmpForm";
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
@@ -492,28 +483,19 @@
             panel9.PerformLayout();
             panel8.ResumeLayout(false);
             panel8.PerformLayout();
+            panel7.ResumeLayout(false);
+            panel6.ResumeLayout(false);
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            panel12.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button CancelBtn;
-        private Button addBtn;
-        private Panel panel12;
-        private TextBox txtMaNLD;
-        private Label label3;
-        private Panel panel4;
-        private TextBox txtHoTen;
-        private Label label4;
-        private Panel panel5;
-        private ComboBox comboGioiTinh;
-        private Label label5;
-        private Panel panel6;
-        private Label label6;
-        private DateTimePicker dateTimePickerNgaySinh;
-        private Panel panel7;
-        private TextBox txtSDT;
-        private Panel panel1;
         private Panel panel2;
         private Label label2;
         private Label label1;
@@ -525,13 +507,30 @@
         private Panel panel11;
         private ComboBox comboVaiTro;
         private Label label10;
+        private Panel panel10;
+        private ComboBox comboMaDV;
+        private Label label9;
         private Panel panel9;
         private TextBox txtLuong;
         private Label label8;
         private Panel panel8;
+        private TextBox txtSDT;
         private Label label7;
-        private Panel panel10;
-        private ComboBox comboMaDV;
-        private Label label9;
+        private Panel panel7;
+        private Label label6;
+        private DateTimePicker dateTimePickerNgaySinh;
+        private Panel panel6;
+        private ComboBox comboGioiTinh;
+        private Label label5;
+        private Panel panel5;
+        private TextBox txtHoTen;
+        private Label label4;
+        private Panel panel4;
+        private TextBox txtMaNLD;
+        private Label label3;
+        private Panel panel12;
+        private Button CancelBtn;
+        private Button UpdateBtn;
+        private Panel panel1;
     }
 }

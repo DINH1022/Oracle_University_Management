@@ -43,7 +43,6 @@
             panelGrant.Name = "panelGrant";
             panelGrant.Size = new Size(1073, 588);
             panelGrant.TabIndex = 0;
-            panelGrant.Paint += panel1_Paint;
             // 
             // tableLayoutPanel1
             // 
@@ -72,6 +71,7 @@
             userRoleBtn.TabIndex = 2;
             userRoleBtn.Text = "Vai trò người dùng";
             userRoleBtn.UseVisualStyleBackColor = true;
+            userRoleBtn.Click += GrantRoleToUser_Click;
             // 
             // privilegeRoleBtn
             // 
@@ -105,7 +105,6 @@
             Controls.Add(panelGrant);
             Name = "GrantPageControl";
             Size = new Size(1073, 588);
-            Load += GrantPageControl_Load;
             tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }

@@ -32,7 +32,7 @@
             label1 = new Label();
             panel1 = new Panel();
             panel4 = new Panel();
-            textBox1 = new TextBox();
+            searchInput = new TextBox();
             FindBtn = new Button();
             listUserDataGridView = new DataGridView();
             panel2 = new Panel();
@@ -98,21 +98,21 @@
             // 
             panel4.BackColor = Color.White;
             panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(textBox1);
+            panel4.Controls.Add(searchInput);
             panel4.Controls.Add(FindBtn);
             panel4.Location = new Point(18, 8);
             panel4.Name = "panel4";
             panel4.Size = new Size(441, 38);
             panel4.TabIndex = 4;
             // 
-            // textBox1
+            // searchInput
             // 
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Location = new Point(88, 0);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(351, 36);
-            textBox1.TabIndex = 2;
+            searchInput.Dock = DockStyle.Fill;
+            searchInput.Location = new Point(88, 0);
+            searchInput.Multiline = true;
+            searchInput.Name = "searchInput";
+            searchInput.Size = new Size(351, 36);
+            searchInput.TabIndex = 2;
             // 
             // FindBtn
             // 
@@ -125,6 +125,7 @@
             FindBtn.TabIndex = 0;
             FindBtn.Text = "Tìm kiếm";
             FindBtn.UseVisualStyleBackColor = false;
+            FindBtn.Click += searchBtn;
             // 
             // listUserDataGridView
             // 
@@ -348,7 +349,7 @@
         private Label label1;
         private Panel panel1;
         private Panel panel4;
-        private TextBox textBox1;
+        private TextBox searchInput;
         private Button FindBtn;
         private DataGridView listUserDataGridView;
         private Panel panel2;

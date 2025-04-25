@@ -43,7 +43,7 @@
             label2 = new Label();
             objectsCombox = new ComboBox();
             listRoleDataGridView = new DataGridView();
-            textBox1 = new TextBox();
+            searchInput = new TextBox();
             FindBtn = new Button();
             panel4 = new Panel();
             panel1 = new Panel();
@@ -231,14 +231,14 @@
             listRoleDataGridView.Size = new Size(1058, 174);
             listRoleDataGridView.TabIndex = 12;
             // 
-            // textBox1
+            // searchInput
             // 
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Location = new Point(88, 0);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(351, 36);
-            textBox1.TabIndex = 2;
+            searchInput.Dock = DockStyle.Fill;
+            searchInput.Location = new Point(88, 0);
+            searchInput.Multiline = true;
+            searchInput.Name = "searchInput";
+            searchInput.Size = new Size(351, 36);
+            searchInput.TabIndex = 2;
             // 
             // FindBtn
             // 
@@ -251,12 +251,13 @@
             FindBtn.TabIndex = 0;
             FindBtn.Text = "Tìm kiếm";
             FindBtn.UseVisualStyleBackColor = false;
+            FindBtn.Click += searchBtn;
             // 
             // panel4
             // 
             panel4.BackColor = Color.White;
             panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(textBox1);
+            panel4.Controls.Add(searchInput);
             panel4.Controls.Add(FindBtn);
             panel4.Location = new Point(18, 8);
             panel4.Name = "panel4";
@@ -342,7 +343,7 @@
         private Label label2;
         private ComboBox objectsCombox;
         private DataGridView listRoleDataGridView;
-        private TextBox textBox1;
+        private TextBox searchInput;
         private Button FindBtn;
         private Panel panel4;
         private Panel panel1;

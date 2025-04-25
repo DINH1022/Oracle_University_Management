@@ -25,7 +25,7 @@ namespace OUM.ViewModel
         public RoleSystemInformation SelectedRole { get; set; } = null;
         public DatabaseObject SelectedObject { get; set; } = null;
 
-
+        public string searchKeyword { get; set; }
         public GrantRoleViewModel()
         {
             dao = new OracleDAO();
@@ -36,7 +36,7 @@ namespace OUM.ViewModel
         }
         public void LoadRoles()
         {
-            var roleList = dao.GetSystemRoles("");
+            var roleList = dao.GetSystemRoles(searchKeyword);
             Roles.Clear();
             foreach (var role in roleList)
             {

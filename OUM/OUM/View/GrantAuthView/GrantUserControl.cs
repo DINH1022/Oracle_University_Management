@@ -21,6 +21,8 @@ namespace OUM.View.GrantAuthView
             viewModel = new GrantUserViewModel();
             setUpListUserDataGridView();
             setUpComboxandDataGridViewDBObect();
+            searchInput.DataBindings.Add("Text", viewModel, "searchKeyword", false, DataSourceUpdateMode.OnPropertyChanged);
+
 
         }
         private void GrantUserControl_Load(object sender, EventArgs e)
@@ -203,6 +205,11 @@ namespace OUM.View.GrantAuthView
             return columns;
         }
 
-      
+        private void searchBtn(object sender, EventArgs e)
+        {
+            viewModel.LoadUsers();
+            listUserDataGridView.DataSource = null;
+            listUserDataGridView.DataSource = viewModel.Users;
+        }
     }
 }

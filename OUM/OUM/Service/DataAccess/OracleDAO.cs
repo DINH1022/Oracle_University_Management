@@ -5,6 +5,7 @@ using OUM.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
@@ -157,8 +158,12 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
                     string query = @"SELECT username, account_status,created FROM dba_users
-                                    WHERE oracle_maintained ='N'";
+                                    WHERE oracle_maintained ='N'" + (!string.IsNullOrEmpty(keyword) ? " AND UPPER(username) LIKE UPPER(:keyword)" : ""); ;
                     var command = new OracleCommand(query, connection);
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        command.Parameters.Add(new OracleParameter("keyword", "%" + keyword + "%"));
+                    }
                     var reader =command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -188,8 +193,13 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
                     string query = @"SELECT ROLE, COMMON,INHERITED, AUTHENTICATION_TYPE FROM dba_roles
-                                    WHERE oracle_maintained ='N'";
+                                    WHERE oracle_maintained ='N'" + (!string.IsNullOrEmpty(keyword)? " AND UPPER(ROLE) LIKE UPPER(:keyword)" : "");
+                   
                     var command = new OracleCommand(query, connection);
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        command.Parameters.Add(new OracleParameter("keyword", "%" + keyword + "%"));
+                    }
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
@@ -289,7 +299,7 @@ namespace OUM.Service.DataAccess
             }
             return columns;
         }
-        public bool GrantPrivilege(string username, string objectName, string privilege, List<string> columns =null, bool withGrantOptin = false)
+        public bool GrantPrivilege(string username, string objectName, string privilege, List<string> columns =null, bool withGrantOption = false)
         {
             try
             {
@@ -297,7 +307,7 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
                     string sql;
-                    string grantOptionClause = withGrantOptin ? "WITH GRANT OPTION" : "";
+                    string grantOptionClause = withGrantOption ? "WITH GRANT OPTION" : "";
                     if ( privilege=="UPDATE" && columns!=null && columns.Count > 0)
                     {
                         if (columns.Contains("ALL"))
@@ -323,6 +333,29 @@ namespace OUM.Service.DataAccess
             catch (Exception ex)
             {
                 Console.WriteLine("Error when grant privilege: " + ex.Message);
+                return false;
+            }
+        }
+        public bool GrantRoleToUser(string role, string username, bool withAdminOption = false)
+        {
+            try
+            {
+                using (var connection = new OracleConnection(GetConnectionString()))
+                {
+                    connection.Open();
+                    string sql;
+                    string grantOptionClause = withAdminOption ? "WITH ADMIN OPTION" : "";
+                    sql = $"GRANT {role} TO {username} {grantOptionClause}";
+                    using (var command = new OracleCommand(sql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error when grant role: " + ex.Message);
                 return false;
             }
         }

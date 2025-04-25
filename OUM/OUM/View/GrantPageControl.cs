@@ -23,27 +23,6 @@ namespace OUM.View
             control.Dock = DockStyle.Fill;
             panelGrant.Controls.Add(control);
         }
-
-        private void GrantPageControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void privilegeUserBtn_Click(object sender, EventArgs e)
         {
             LoadControl(new GrantUserControl());
@@ -52,6 +31,12 @@ namespace OUM.View
         private void GrantRoleControl_Click(object sender, EventArgs e)
         {
             LoadControl(new GrantRoleControl());
+
+        }
+
+        private void GrantRoleToUser_Click(object sender, EventArgs e)
+        {
+            LoadControl(new GrantRoleToUserControl());
         }
     }
 }

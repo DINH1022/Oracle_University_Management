@@ -25,6 +25,7 @@ namespace OUM.ViewModel
         public UserSystemInformation SelectedUser { get; set; } = null;
         public DatabaseObject SelectedObject { get; set; } = null;
 
+        public string searchKeyWord { get; set; }
         public GrantUserViewModel()
         {
             dao = new OracleDAO();
@@ -35,7 +36,7 @@ namespace OUM.ViewModel
         }
         public void LoadUsers()
         {
-            var userList = dao.GetSystemUsers("");
+            var userList = dao.GetSystemUsers(searchKeyWord);
             Users.Clear();
             foreach (var user in userList)
             {

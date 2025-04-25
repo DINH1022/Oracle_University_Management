@@ -21,6 +21,7 @@ namespace OUM.View.GrantAuthView
             viewModel = new GrantRoleViewModel();
             setUpListRoleDataGridView();
             setUpComboxandDataGridViewDBObect();
+            searchInput.DataBindings.Add("Text", viewModel, "searchKeyword", false, DataSourceUpdateMode.OnPropertyChanged);
         }
         private void setUpListRoleDataGridView()
         {
@@ -195,6 +196,13 @@ namespace OUM.View.GrantAuthView
                 }
             }
             return columns;
+        }
+
+        private void searchBtn(object sender, EventArgs e)
+        {
+            viewModel.LoadRoles();
+            listRoleDataGridView.DataSource = null;
+            listRoleDataGridView.DataSource = viewModel.Roles;
         }
     }
 }

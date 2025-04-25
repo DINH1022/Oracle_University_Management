@@ -13,8 +13,6 @@ namespace OUM
             viewModel = new AdminViewModel();
             userNameTextBox.DataBindings.Add("Text", viewModel, "username", false, DataSourceUpdateMode.OnPropertyChanged);
             passWordTextBox.DataBindings.Add("Text", viewModel, "password", false, DataSourceUpdateMode.OnPropertyChanged);
-
-
         }
 
         private void label1_Click(object sender, EventArgs e)

@@ -244,5 +244,10 @@ namespace OUM.View
                 dataGridView1.DataSource = newDisplayingUserRoleInfors;
             }
         }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

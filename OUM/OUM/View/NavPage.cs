@@ -46,5 +46,15 @@ namespace OUM.View
         {
             LoadControl(new RevokeAuthPageControl());
         }
+
+        private void GrantBtnNav_click(object sender, EventArgs e)
+        {
+            LoadControl(new GrantPageControl());
+        }
+
+        private void panelMainContent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

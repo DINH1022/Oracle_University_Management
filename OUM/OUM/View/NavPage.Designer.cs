@@ -30,14 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NavPage));
             panel1 = new Panel();
-            RoleBtn = new Button();
+            RevokeBtnNav = new Button();
+            PerViewBtn = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel2 = new Panel();
             LogoutBtn = new Button();
             EmpBtn = new Button();
             StudentBtn = new Button();
             panelMainContent = new Panel();
-            RevokeBtnNav = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -47,7 +47,7 @@
             panel1.BackColor = Color.LightGoldenrodYellow;
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(RevokeBtnNav);
-            panel1.Controls.Add(RoleBtn);
+            panel1.Controls.Add(PerViewBtn);
             panel1.Controls.Add(flowLayoutPanel1);
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(EmpBtn);
@@ -58,16 +58,29 @@
             panel1.Size = new Size(231, 853);
             panel1.TabIndex = 0;
             // 
-            // RoleBtn
+            // RevokeBtnNav
             // 
-            RoleBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            RoleBtn.ForeColor = Color.DarkGreen;
-            RoleBtn.Location = new Point(27, 341);
-            RoleBtn.Name = "RoleBtn";
-            RoleBtn.Size = new Size(175, 49);
-            RoleBtn.TabIndex = 3;
-            RoleBtn.Text = "Quản Lý Vai Trò";
-            RoleBtn.UseVisualStyleBackColor = false;
+            RevokeBtnNav.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            RevokeBtnNav.ForeColor = Color.DarkGreen;
+            RevokeBtnNav.Location = new Point(27, 425);
+            RevokeBtnNav.Name = "RevokeBtnNav";
+            RevokeBtnNav.Size = new Size(175, 49);
+            RevokeBtnNav.TabIndex = 4;
+            RevokeBtnNav.Text = "Thu hồi quyền";
+            RevokeBtnNav.UseVisualStyleBackColor = false;
+            RevokeBtnNav.Click += RevokeBtnNav_click;
+            // 
+            // PerViewBtn
+            // 
+            PerViewBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            PerViewBtn.ForeColor = Color.DarkGreen;
+            PerViewBtn.Location = new Point(27, 341);
+            PerViewBtn.Name = "PerViewBtn";
+            PerViewBtn.Size = new Size(175, 62);
+            PerViewBtn.TabIndex = 3;
+            PerViewBtn.Text = "Xem thông tin quyền";
+            PerViewBtn.UseVisualStyleBackColor = false;
+            PerViewBtn.Click += PerViewBtn_Click;
             // 
             // flowLayoutPanel1
             // 
@@ -134,18 +147,6 @@
             panelMainContent.Size = new Size(951, 853);
             panelMainContent.TabIndex = 1;
             // 
-            // RevokeBtnNav
-            // 
-            RevokeBtnNav.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            RevokeBtnNav.ForeColor = Color.DarkGreen;
-            RevokeBtnNav.Location = new Point(27, 409);
-            RevokeBtnNav.Name = "RevokeBtnNav";
-            RevokeBtnNav.Size = new Size(175, 49);
-            RevokeBtnNav.TabIndex = 4;
-            RevokeBtnNav.Text = "Thu hồi quyền";
-            RevokeBtnNav.UseVisualStyleBackColor = false;
-            RevokeBtnNav.Click += this.RevokeBtnNav_click;
-            // 
             // NavPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -167,7 +168,7 @@
         private Button LogoutBtn;
         private Button StudentBtn;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button RoleBtn;
+        private Button PerViewBtn;
         private Panel panelMainContent;
         private Button RevokeBtnNav;
     }

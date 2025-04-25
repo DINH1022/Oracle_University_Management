@@ -21,5 +21,10 @@ namespace OUM.View
         {
             this.Close();
         }
+
+        private void AddEmpForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

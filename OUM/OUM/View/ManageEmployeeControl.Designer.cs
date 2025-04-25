@@ -31,7 +31,7 @@
             components = new System.ComponentModel.Container();
             panel2 = new Panel();
             dataGridView1 = new DataGridView();
-            bindingSource1 = new BindingSource(components);
+            oracleDAOBindingSource = new BindingSource(components);
             panel1 = new Panel();
             addBtn = new Button();
             panel4 = new Panel();
@@ -39,15 +39,15 @@
             FindBtn = new Button();
             panel3 = new Panel();
             label1 = new Label();
+            bindingSource1 = new BindingSource(components);
             saveFileDialog1 = new SaveFileDialog();
-            oracleDAOBindingSource = new BindingSource(components);
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).BeginInit();
             panel1.SuspendLayout();
             panel4.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             SuspendLayout();
             // 
             // panel2
@@ -75,6 +75,10 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(1006, 267);
             dataGridView1.TabIndex = 2;
+            // 
+            // oracleDAOBindingSource
+            // 
+            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
             // 
             // panel1
             // 
@@ -144,7 +148,6 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1006, 56);
             panel3.TabIndex = 0;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -155,10 +158,6 @@
             label1.TabIndex = 0;
             label1.Text = "Danh Sách Nhân Viên";
             // 
-            // oracleDAOBindingSource
-            // 
-            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
-            // 
             // ManageEmployeeControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -168,13 +167,13 @@
             Size = new Size(1006, 379);
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).EndInit();
             panel1.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ResumeLayout(false);
         }
 

@@ -485,6 +485,7 @@
             Controls.Add(panel1);
             Name = "AddEmpForm";
             Text = "AddEmpForm";
+            Load += AddEmpForm_Load;
             panel12.ResumeLayout(false);
             panel4.ResumeLayout(false);
             panel4.PerformLayout();

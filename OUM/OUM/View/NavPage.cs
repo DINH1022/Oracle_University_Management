@@ -46,5 +46,10 @@ namespace OUM.View
         {
             LoadControl(new RevokeAuthPageControl());
         }
+
+        private void PerViewBtn_Click(object sender, EventArgs e)
+        {
+            LoadControl(new PermissionInfo());
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using OUM.Service.DataAccess;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using OUM.Model;
+using OUM.Service.DataAccess;
 using OUM.Session;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,10 @@ namespace OUM.ViewModel
         public event PropertyChangedEventHandler? PropertyChanged;
         public string username { get; set; } = "";
         public string password { get; set; } = "";
+
+        public List<UserInfo> Users { get; set; } = new List<UserInfo>();
+        public List<string> Roles { get; set; }
+
         public bool AdminLogin()
         {
             bool success = dao.AuthenticateAdmin(username, password);
@@ -32,5 +38,15 @@ namespace OUM.ViewModel
         //Viết hàm tạo user ở đây. gọi tới OracleDAO service để truy vấn xuống database.
         // View(form/page) sẽ gọi hàm được từ ViewModel
         // Các lớp sẽ được định nghĩa tại Model. ví dụ như lớp student 
+        public bool CreateUser()
+        {
+            bool created = dao.CreateUser(username, password);
+            return created;
+        }
+
+
+
+
+
     }
 }

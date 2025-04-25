@@ -99,6 +99,12 @@ namespace OUM.View
                     return;
                 }
 
+                if (!maNLD.StartsWith("NV"))
+                {
+                    MessageBox.Show("Mã NLD phải bắt đầu bằng 'NV'.");
+                    return;
+                }
+
                 Employee emp = new Employee(maNLD, hoTen, gioiTinh, ngaySinh, luong, phuCap, sdt, maDV, vaiTro);
 
                 EmployeeViewModel vm = new EmployeeViewModel();

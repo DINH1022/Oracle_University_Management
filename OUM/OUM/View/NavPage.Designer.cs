@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NavPage));
             panel1 = new Panel();
+            RevokeBtnNav = new Button();
             RoleBtn = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel2 = new Panel();
@@ -37,7 +38,6 @@
             EmpBtn = new Button();
             StudentBtn = new Button();
             panelMainContent = new Panel();
-            RevokeBtnNav = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -58,6 +58,18 @@
             panel1.Size = new Size(231, 853);
             panel1.TabIndex = 0;
             // 
+            // RevokeBtnNav
+            // 
+            RevokeBtnNav.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            RevokeBtnNav.ForeColor = Color.DarkGreen;
+            RevokeBtnNav.Location = new Point(27, 409);
+            RevokeBtnNav.Name = "RevokeBtnNav";
+            RevokeBtnNav.Size = new Size(175, 49);
+            RevokeBtnNav.TabIndex = 4;
+            RevokeBtnNav.Text = "Thu hồi quyền";
+            RevokeBtnNav.UseVisualStyleBackColor = false;
+            RevokeBtnNav.Click += RevokeBtnNav_click;
+            // 
             // RoleBtn
             // 
             RoleBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -68,6 +80,7 @@
             RoleBtn.TabIndex = 3;
             RoleBtn.Text = "Quản Lý Vai Trò";
             RoleBtn.UseVisualStyleBackColor = false;
+            RoleBtn.Click += manageRole_Click;
             // 
             // flowLayoutPanel1
             // 
@@ -133,18 +146,6 @@
             panelMainContent.Name = "panelMainContent";
             panelMainContent.Size = new Size(951, 853);
             panelMainContent.TabIndex = 1;
-            // 
-            // RevokeBtnNav
-            // 
-            RevokeBtnNav.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            RevokeBtnNav.ForeColor = Color.DarkGreen;
-            RevokeBtnNav.Location = new Point(27, 409);
-            RevokeBtnNav.Name = "RevokeBtnNav";
-            RevokeBtnNav.Size = new Size(175, 49);
-            RevokeBtnNav.TabIndex = 4;
-            RevokeBtnNav.Text = "Thu hồi quyền";
-            RevokeBtnNav.UseVisualStyleBackColor = false;
-            RevokeBtnNav.Click += this.RevokeBtnNav_click;
             // 
             // NavPage
             // 

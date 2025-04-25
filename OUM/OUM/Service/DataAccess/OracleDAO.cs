@@ -441,8 +441,84 @@ namespace OUM.Service.DataAccess
             }
         }
 
+        public List<UserPerRole> GetListRole()
+        {
+            List<UserPerRole> uprs = new List<UserPerRole>();
 
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
 
+                    string query = @"
+                        SELECT granted_role as ROLENAME,count(*) as USERCOUNT FROM DBA_ROLE_PRIVS WHERE GRANTED_ROLE LIKE 'ROLE_%' group by granted_role";
+
+                    using (var command = new OracleCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            UserPerRole upr = new UserPerRole(
+                                roleName: reader["ROLENAME"].ToString(),
+                                userCount: reader["USERCOUNT"] == DBNull.Value ? 0 : Convert.ToInt32(reader["USERCOUNT"]) - 1   // -1 của pdb_admin
+                            );
+                            uprs.Add(upr);
+                        }
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Lỗi khi lấy danh sách role: " + ex.Message);
+                }
+            }
+
+            return uprs;
+        }
+
+        public void DropRole(string roleName)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var dropCmd = connection.CreateCommand();
+                    dropCmd.CommandText = $"DROP ROLE {roleName}";  //xóa role tự động thu hồi role phía user, không cần thu hồi thủ công
+                    dropCmd.ExecuteNonQuery();
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi drop role:\n" + ex.Message);
+                }
+            }
+        }
+
+        public void AddRole(string roleName)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var dropCmd = connection.CreateCommand();
+                    dropCmd.CommandText = $"CREATE ROLE ROLE_{roleName}";  
+                    dropCmd.ExecuteNonQuery();
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi thêm role:\n" + ex.Message);
+                }
+            }
+        }
 
     }
 }

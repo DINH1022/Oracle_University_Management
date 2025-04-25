@@ -34,9 +34,6 @@
             oracleDAOBindingSource = new BindingSource(components);
             panel1 = new Panel();
             addBtn = new Button();
-            panel4 = new Panel();
-            textBox1 = new TextBox();
-            FindBtn = new Button();
             panel3 = new Panel();
             label1 = new Label();
             bindingSource1 = new BindingSource(components);
@@ -45,7 +42,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).BeginInit();
             panel1.SuspendLayout();
-            panel4.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             SuspendLayout();
@@ -85,7 +81,6 @@
             panel1.BackColor = Color.WhiteSmoke;
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(addBtn);
-            panel1.Controls.Add(panel4);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 56);
             panel1.Name = "panel1";
@@ -104,38 +99,7 @@
             addBtn.TabIndex = 5;
             addBtn.Text = "Thêm";
             addBtn.UseVisualStyleBackColor = false;
-            // 
-            // panel4
-            // 
-            panel4.BackColor = Color.White;
-            panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(textBox1);
-            panel4.Controls.Add(FindBtn);
-            panel4.Location = new Point(18, 8);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(441, 38);
-            panel4.TabIndex = 4;
-            // 
-            // textBox1
-            // 
-            textBox1.Dock = DockStyle.Fill;
-            textBox1.Location = new Point(88, 0);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(351, 36);
-            textBox1.TabIndex = 2;
-            // 
-            // FindBtn
-            // 
-            FindBtn.BackColor = Color.PaleGoldenrod;
-            FindBtn.Dock = DockStyle.Left;
-            FindBtn.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            FindBtn.Location = new Point(0, 0);
-            FindBtn.Name = "FindBtn";
-            FindBtn.Size = new Size(88, 36);
-            FindBtn.TabIndex = 0;
-            FindBtn.Text = "Tìm kiếm";
-            FindBtn.UseVisualStyleBackColor = false;
+            addBtn.Click += addBtn_Click;
             // 
             // panel3
             // 
@@ -169,8 +133,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)oracleDAOBindingSource).EndInit();
             panel1.ResumeLayout(false);
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
@@ -184,9 +146,6 @@
         private BindingSource oracleDAOBindingSource;
         private Panel panel1;
         private Button addBtn;
-        private Panel panel4;
-        private TextBox textBox1;
-        private Button FindBtn;
         private Panel panel3;
         private Label label1;
         private BindingSource bindingSource1;

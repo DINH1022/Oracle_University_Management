@@ -28,6 +28,8 @@ namespace OUM.View
         {
             if (dataGridView1.Columns.Count > 0)
             {
+                dataGridView1.Columns["Username"].HeaderText = "Tên Tài Khoản";
+                dataGridView1.Columns["CreatedTime"].HeaderText = "Ngày Tạo";
                 dataGridView1.Columns["id"].HeaderText = "Mã SV";
                 dataGridView1.Columns["name"].HeaderText = "Họ tên";
                 dataGridView1.Columns["gender"].HeaderText = "Giới tính";
@@ -111,6 +113,7 @@ namespace OUM.View
                             dataGridView1.DataSource = null;
                             dataGridView1.DataSource = ViewModel.Students;
                             AddButtonColumn();
+                            CustomizeHeaders();
                         }
                         catch (Exception ex)
                         {
@@ -127,6 +130,7 @@ namespace OUM.View
                         dataGridView1.DataSource = null;
                         dataGridView1.DataSource = ViewModel.Students;
                         AddButtonColumn();
+                        CustomizeHeaders();
                     }
                 }
             }

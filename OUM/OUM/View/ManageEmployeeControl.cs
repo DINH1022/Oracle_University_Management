@@ -111,6 +111,7 @@ namespace OUM.View
                             dataGridView1.DataSource = null;
                             dataGridView1.DataSource = ViewModel.Employees;
                             AddButtonColumn();
+                            CustomizeHeaders();
                         }
                         catch (Exception ex)
                         {
@@ -127,6 +128,7 @@ namespace OUM.View
                         dataGridView1.DataSource = null;
                         dataGridView1.DataSource = ViewModel.Employees;
                         AddButtonColumn();
+                        CustomizeHeaders();
                     }
                 }
             }

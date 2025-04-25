@@ -9,47 +9,40 @@ using System.Threading.Tasks;
 
 namespace OUM.ViewModel
 {
-    public class EmployeeViewModel: INotifyPropertyChanged
+    public class RoleViewModel : INotifyPropertyChanged
     {
-        private List<Employee> _employees;
+        private List<UserPerRole> _userPerRoles;
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        public List<Employee> Employees
+        public List<UserPerRole> UserPerRoles
         {
-            get => _employees;
+            get => _userPerRoles;
             set
             {
-                _employees = value;
+                _userPerRoles = value;
             }
         }
 
         public void LoadData()
         {
             OracleDAO dao = new OracleDAO();
-            Employees = dao.GetListEmployees();
+            UserPerRoles = dao.GetListRole();
         }
 
-        public void AddEmployee(Employee emp)
+        public void DeleteRole(UserPerRole upr)
         {
             OracleDAO dao = new OracleDAO();
-            dao.InsertEmployee(emp); 
+            dao.DropRole(upr.roleName);
+            LoadData();
+        }
+        
+        public void AddRole(UserPerRole r)
+        {
+            OracleDAO dao = new OracleDAO();
+            dao.AddRole(r.roleName);
             LoadData();
         }
 
-        public void UpdateEmployee(Employee emp)
-        {
-            OracleDAO dao = new OracleDAO();
-            dao.UpdateEmployee(emp);
-            LoadData();
-        }
-
-        public void DeleteEmployee(Employee emp)
-        {
-            OracleDAO dao = new OracleDAO();
-            dao.DropUser(emp.Username);
-            dao.DeleteEmployee(emp);
-            LoadData();
-        }
-
+        
     }
 }

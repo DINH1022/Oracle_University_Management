@@ -50,6 +50,7 @@
             label1 = new Label();
             panel3 = new Panel();
             panel13 = new Panel();
+            label12 = new Label();
             panel14 = new Panel();
             txtPhuCap = new TextBox();
             label11 = new Label();
@@ -144,7 +145,7 @@
             // 
             panel4.Controls.Add(txtMaNLD);
             panel4.Controls.Add(label3);
-            panel4.Location = new Point(19, 32);
+            panel4.Location = new Point(19, 50);
             panel4.Name = "panel4";
             panel4.Size = new Size(336, 38);
             panel4.TabIndex = 0;
@@ -175,7 +176,7 @@
             // 
             panel5.Controls.Add(txtHoTen);
             panel5.Controls.Add(label4);
-            panel5.Location = new Point(19, 91);
+            panel5.Location = new Point(19, 109);
             panel5.Name = "panel5";
             panel5.Size = new Size(336, 38);
             panel5.TabIndex = 2;
@@ -206,7 +207,7 @@
             // 
             panel6.Controls.Add(comboGioiTinh);
             panel6.Controls.Add(label5);
-            panel6.Location = new Point(389, 91);
+            panel6.Location = new Point(389, 109);
             panel6.Name = "panel6";
             panel6.Size = new Size(230, 28);
             panel6.TabIndex = 3;
@@ -235,7 +236,7 @@
             // 
             panel7.Controls.Add(label6);
             panel7.Controls.Add(dateTimePickerNgaySinh);
-            panel7.Location = new Point(389, 32);
+            panel7.Location = new Point(389, 50);
             panel7.Name = "panel7";
             panel7.Size = new Size(462, 28);
             panel7.TabIndex = 4;
@@ -302,6 +303,7 @@
             // 
             // panel13
             // 
+            panel13.Controls.Add(label12);
             panel13.Controls.Add(panel14);
             panel13.Controls.Add(panel11);
             panel13.Controls.Add(panel10);
@@ -317,11 +319,21 @@
             panel13.Size = new Size(944, 420);
             panel13.TabIndex = 10;
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label12.Location = new Point(22, 26);
+            label12.Name = "label12";
+            label12.Size = new Size(251, 20);
+            label12.TabIndex = 7;
+            label12.Text = "Lưu ý : mã nld phải bắt đầu bằng 'NV'";
+            // 
             // panel14
             // 
             panel14.Controls.Add(txtPhuCap);
             panel14.Controls.Add(label11);
-            panel14.Location = new Point(19, 275);
+            panel14.Location = new Point(19, 293);
             panel14.Name = "panel14";
             panel14.Size = new Size(336, 38);
             panel14.TabIndex = 6;
@@ -352,7 +364,7 @@
             // 
             panel11.Controls.Add(comboVaiTro);
             panel11.Controls.Add(label10);
-            panel11.Location = new Point(389, 215);
+            panel11.Location = new Point(389, 233);
             panel11.Name = "panel11";
             panel11.Size = new Size(230, 28);
             panel11.TabIndex = 5;
@@ -383,7 +395,7 @@
             // 
             panel10.Controls.Add(comboMaDV);
             panel10.Controls.Add(label9);
-            panel10.Location = new Point(389, 153);
+            panel10.Location = new Point(389, 171);
             panel10.Name = "panel10";
             panel10.Size = new Size(230, 28);
             panel10.TabIndex = 4;
@@ -414,7 +426,7 @@
             // 
             panel9.Controls.Add(txtLuong);
             panel9.Controls.Add(label8);
-            panel9.Location = new Point(19, 215);
+            panel9.Location = new Point(19, 233);
             panel9.Name = "panel9";
             panel9.Size = new Size(336, 38);
             panel9.TabIndex = 5;
@@ -445,7 +457,7 @@
             // 
             panel8.Controls.Add(txtSDT);
             panel8.Controls.Add(label7);
-            panel8.Location = new Point(19, 153);
+            panel8.Location = new Point(19, 171);
             panel8.Name = "panel8";
             panel8.Size = new Size(336, 38);
             panel8.TabIndex = 2;
@@ -483,6 +495,7 @@
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel13.ResumeLayout(false);
+            panel13.PerformLayout();
             panel14.ResumeLayout(false);
             panel14.PerformLayout();
             panel11.ResumeLayout(false);
@@ -532,5 +545,6 @@
         private Panel panel10;
         private ComboBox comboMaDV;
         private Label label9;
+        private Label label12;
     }
 }

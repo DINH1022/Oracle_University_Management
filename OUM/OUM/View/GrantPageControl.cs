@@ -48,5 +48,10 @@ namespace OUM.View
         {
             LoadControl(new GrantUserControl());
         }
+
+        private void GrantRoleControl_Click(object sender, EventArgs e)
+        {
+            LoadControl(new GrantRoleControl());
+        }
     }
 }

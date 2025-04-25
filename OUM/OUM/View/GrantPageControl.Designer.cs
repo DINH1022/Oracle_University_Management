@@ -83,6 +83,7 @@
             privilegeRoleBtn.TabIndex = 1;
             privilegeRoleBtn.Text = "Quyền vai trò";
             privilegeRoleBtn.UseVisualStyleBackColor = true;
+            privilegeRoleBtn.Click += GrantRoleControl_Click;
             // 
             // privilegeUserBtn
             // 

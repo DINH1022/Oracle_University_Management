@@ -179,7 +179,38 @@ namespace OUM.Service.DataAccess
             }
             return users;
         }
+        public List<RoleSystemInformation> GetSystemRoles(string keyword)
+        {
+            List<RoleSystemInformation> roles = new List<RoleSystemInformation>();
+            try
+            {
+                using (var connection = new OracleConnection(GetConnectionString()))
+                {
+                    connection.Open();
+                    string query = @"SELECT ROLE, COMMON,INHERITED, AUTHENTICATION_TYPE FROM dba_roles
+                                    WHERE oracle_maintained ='N'";
+                    var command = new OracleCommand(query, connection);
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        RoleSystemInformation role = new RoleSystemInformation
+                        (
+                            RoleName: reader["ROLE"].ToString(),
+                            Common: reader["COMMON"].ToString(),
+                            Inherited: reader["INHERITED"].ToString(),
+                            AuthenticationType: reader["AUTHENTICATION_TYPE"].ToString()
+                        );
+                        roles.Add(role);
+                    }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error when get system role: " + ex.Message);
+            }
+            return roles;
+        }
         public List<DatabaseObject> GetDatabaseObject(string objectType)
         {
             List<DatabaseObject> DBobjects = new List<DatabaseObject>();

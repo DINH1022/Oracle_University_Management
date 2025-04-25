@@ -12,32 +12,28 @@ using System.Windows.Forms;
 
 namespace OUM.View.GrantAuthView
 {
-    public partial class GrantUserControl : UserControl
+    public partial class GrantRoleControl : UserControl
     {
-        private GrantUserViewModel viewModel;
-        public GrantUserControl()
+        private GrantRoleViewModel viewModel;
+        public GrantRoleControl()
         {
             InitializeComponent();
-            viewModel = new GrantUserViewModel();
-            setUpListUserDataGridView();
+            viewModel = new GrantRoleViewModel();
+            setUpListRoleDataGridView();
             setUpComboxandDataGridViewDBObect();
-
         }
-        private void GrantUserControl_Load(object sender, EventArgs e)
+        private void setUpListRoleDataGridView()
         {
-            viewModel.LoadUsers();
-            viewModel.LoadDatabaseObject();
-        }
-        private void setUpListUserDataGridView()
-        {
-            listUserDataGridView.AutoGenerateColumns = true;
-            listUserDataGridView.DataSource = viewModel.Users;
-            if (listUserDataGridView.Columns.Count > 0)
+            listRoleDataGridView.AutoGenerateColumns = true;
+            listRoleDataGridView.DataSource = viewModel.Roles;
+            if (listRoleDataGridView.Columns.Count > 0)
             {
-                listUserDataGridView.Columns["Username"].HeaderText = "Username";
-                listUserDataGridView.Columns["AccountStatus"].HeaderText = "Trạng thái";
-                listUserDataGridView.Columns["Created"].HeaderText = "Ngày tạo";
-                listUserDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                listRoleDataGridView.Columns["RoleName"].HeaderText = "Tên Role";
+                listRoleDataGridView.Columns["Common"].HeaderText = "Chung";
+                listRoleDataGridView.Columns["Inherited"].HeaderText = "Kế thừa";
+                listRoleDataGridView.Columns["AuthenticationType"].HeaderText = "Loại xác thực";
+
+                listRoleDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             }
         }
@@ -69,7 +65,6 @@ namespace OUM.View.GrantAuthView
             listObjectDGV.DataSource = viewModel.DatabaseObjects;
             listObjectDGV.SelectionChanged += ListObjectDGV_SelectionChanged;
         }
-
         private void ListObjectDGV_SelectionChanged(object sender, EventArgs e)
         {
             if (listObjectDGV.SelectedRows.Count > 0)
@@ -149,7 +144,7 @@ namespace OUM.View.GrantAuthView
 
         private void grantPrivilegeBtn_Click(object sender, EventArgs e)
         {
-            if (listUserDataGridView.SelectedRows.Count == 0)
+            if (listRoleDataGridView.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Vui lòng chọn người dùng cần cấp quyền", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -159,7 +154,7 @@ namespace OUM.View.GrantAuthView
                 MessageBox.Show("Vui lòng chọn đối tượng cần cấp quyền", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            viewModel.SelectedUser = (listUserDataGridView.SelectedRows[0].DataBoundItem as UserSystemInformation)!;
+            viewModel.SelectedRole = (listRoleDataGridView.SelectedRows[0].DataBoundItem as RoleSystemInformation)!;
             viewModel.SelectedObject = (listObjectDGV.SelectedRows[0].DataBoundItem as DatabaseObject)!;
             List<string> selectedcolumns = null;
             if ((viewModel.SelectedObject.ObjectType == "TABLE" || viewModel.SelectedObject.ObjectType == "VIEW") &&
@@ -172,8 +167,7 @@ namespace OUM.View.GrantAuthView
                     return;
                 }
             }
-            bool withGrantOption = withGrantOptionCB.Checked;
-            bool succes = viewModel.GrantPrivilegeToUser(selectedcolumns, withGrantOption);
+            bool succes = viewModel.GrantPrivilegeToRole(selectedcolumns);
             if (succes)
             {
                 MessageBox.Show("Cấp quyền thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -202,7 +196,5 @@ namespace OUM.View.GrantAuthView
             }
             return columns;
         }
-
-      
     }
 }

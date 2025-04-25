@@ -70,7 +70,7 @@
             panel3.Dock = DockStyle.Top;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1057, 56);
+            panel3.Size = new Size(1058, 56);
             panel3.TabIndex = 1;
             // 
             // label1
@@ -91,7 +91,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 56);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1057, 56);
+            panel1.Size = new Size(1058, 56);
             panel1.TabIndex = 2;
             // 
             // panel4
@@ -135,7 +135,7 @@
             listUserDataGridView.Location = new Point(0, 112);
             listUserDataGridView.Name = "listUserDataGridView";
             listUserDataGridView.RowHeadersWidth = 51;
-            listUserDataGridView.Size = new Size(1057, 174);
+            listUserDataGridView.Size = new Size(1058, 174);
             listUserDataGridView.TabIndex = 3;
             // 
             // panel2
@@ -180,14 +180,14 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1057, 90);
+            tableLayoutPanel1.Size = new Size(1058, 90);
             tableLayoutPanel1.TabIndex = 7;
             // 
             // panel5
             // 
             panel5.Controls.Add(label3);
             panel5.Controls.Add(privilegeCombox);
-            panel5.Location = new Point(531, 3);
+            panel5.Location = new Point(532, 3);
             panel5.Name = "panel5";
             panel5.Size = new Size(523, 84);
             panel5.TabIndex = 4;
@@ -225,7 +225,7 @@
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(1057, 266);
+            tableLayoutPanel2.Size = new Size(1058, 266);
             tableLayoutPanel2.TabIndex = 8;
             // 
             // listObjectDGV
@@ -236,7 +236,7 @@
             listObjectDGV.Location = new Point(3, 3);
             listObjectDGV.Name = "listObjectDGV";
             listObjectDGV.RowHeadersWidth = 51;
-            listObjectDGV.Size = new Size(522, 260);
+            listObjectDGV.Size = new Size(523, 260);
             listObjectDGV.TabIndex = 1;
             listObjectDGV.SelectionChanged += ListObjectDGV_SelectionChanged;
             // 
@@ -249,7 +249,7 @@
             tableLayoutPanel3.Controls.Add(label5, 0, 1);
             tableLayoutPanel3.Controls.Add(withGrantOptionCB, 0, 0);
             tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(531, 3);
+            tableLayoutPanel3.Location = new Point(532, 3);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 4;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 51.5625F));
@@ -308,7 +308,7 @@
             panel6.Dock = DockStyle.Top;
             panel6.Location = new Point(0, 642);
             panel6.Name = "panel6";
-            panel6.Size = new Size(1057, 223);
+            panel6.Size = new Size(1058, 223);
             panel6.TabIndex = 9;
             // 
             // GrantUserControl
@@ -322,7 +322,7 @@
             Controls.Add(panel1);
             Controls.Add(panel3);
             Name = "GrantUserControl";
-            Size = new Size(1057, 749);
+            Size = new Size(1058, 750);
             Load += GrantUserControl_Load;
             panel3.ResumeLayout(false);
             panel3.PerformLayout();

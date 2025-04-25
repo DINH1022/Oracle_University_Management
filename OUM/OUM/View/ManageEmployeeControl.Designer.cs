@@ -35,8 +35,8 @@
             panel1 = new Panel();
             addBtn = new Button();
             panel4 = new Panel();
-            searchTextBox = new TextBox();
-            searchButton = new Button();
+            textBox1 = new TextBox();
+            FindBtn = new Button();
             panel3 = new Panel();
             label1 = new Label();
             bindingSource1 = new BindingSource(components);
@@ -110,34 +110,33 @@
             // 
             panel4.BackColor = Color.White;
             panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(searchTextBox);
-            panel4.Controls.Add(searchButton);
+            panel4.Controls.Add(textBox1);
+            panel4.Controls.Add(FindBtn);
             panel4.Location = new Point(18, 8);
             panel4.Name = "panel4";
             panel4.Size = new Size(441, 38);
             panel4.TabIndex = 4;
             // 
-            // searchTextBox
+            // textBox1
             // 
-            searchTextBox.Dock = DockStyle.Fill;
-            searchTextBox.Location = new Point(88, 0);
-            searchTextBox.Multiline = true;
-            searchTextBox.Name = "searchTextBox";
-            searchTextBox.Size = new Size(351, 36);
-            searchTextBox.TabIndex = 2;
+            textBox1.Dock = DockStyle.Fill;
+            textBox1.Location = new Point(88, 0);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(351, 36);
+            textBox1.TabIndex = 2;
             // 
-            // searchButton
+            // FindBtn
             // 
-            searchButton.BackColor = Color.PaleGoldenrod;
-            searchButton.Dock = DockStyle.Left;
-            searchButton.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            searchButton.Location = new Point(0, 0);
-            searchButton.Name = "searchButton";
-            searchButton.Size = new Size(88, 36);
-            searchButton.TabIndex = 0;
-            searchButton.Text = "Tìm kiếm";
-            searchButton.UseVisualStyleBackColor = false;
-            searchButton.Click += searchButton_Click;
+            FindBtn.BackColor = Color.PaleGoldenrod;
+            FindBtn.Dock = DockStyle.Left;
+            FindBtn.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            FindBtn.Location = new Point(0, 0);
+            FindBtn.Name = "FindBtn";
+            FindBtn.Size = new Size(88, 36);
+            FindBtn.TabIndex = 0;
+            FindBtn.Text = "Tìm kiếm";
+            FindBtn.UseVisualStyleBackColor = false;
             // 
             // panel3
             // 
@@ -184,8 +183,8 @@
         private Panel panel1;
         private Button addBtn;
         private Panel panel4;
-        private TextBox searchTextBox;
-        private Button searchButton;
+        private TextBox textBox1;
+        private Button FindBtn;
         private Panel panel3;
         private Label label1;
         private SaveFileDialog saveFileDialog1;

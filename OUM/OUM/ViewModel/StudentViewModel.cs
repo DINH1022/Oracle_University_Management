@@ -29,6 +29,28 @@ namespace OUM.ViewModel
             OracleDAO dao = new OracleDAO();
             Students = dao.GetListStudents();
         }
-       
+
+        public void AddStudent(Student st)
+        {
+            OracleDAO dao = new OracleDAO();
+            dao.InsertStudent(st);
+            LoadData();
+        }
+        public void UpdateStudent(Student st)
+        {
+            OracleDAO dao = new OracleDAO();
+            dao.UpdateStudent(st);
+            LoadData();
+        }
+
+        public void DeleteStudent(Student st)
+        {
+            OracleDAO dao = new OracleDAO();
+            string username = "SV" + st.id;
+            dao.DropUser(username);
+            dao.DeleteStudent(st);
+            LoadData();
+        }
+
     }
 }

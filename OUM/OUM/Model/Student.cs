@@ -8,6 +8,8 @@ namespace OUM.Model
 {
     public class Student
     {
+        public string Username { get; set; }
+        public DateTime CreatedTime { get; set; }
         public string id { get; set; }
         public string name { get; set; }
         public string gender { get; set; }

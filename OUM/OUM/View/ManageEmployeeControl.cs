@@ -148,7 +148,8 @@ namespace OUM.View
                         emp.manld.ToLower().Contains(lowerKeyword) ||
                         emp.phone.ToLower().Contains(lowerKeyword) ||
                         emp.madv.ToLower().Contains(lowerKeyword) ||
-                        emp.role.ToLower().Contains(lowerKeyword)
+                        emp.role.ToLower().Contains(lowerKeyword) ||
+                        emp.gender.ToLower().Contains(lowerKeyword) 
                     )
                     .ToList();
 

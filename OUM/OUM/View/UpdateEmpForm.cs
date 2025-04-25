@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace OUM.View
 {
@@ -42,6 +43,54 @@ namespace OUM.View
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(txtHoTen.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập họ tên.");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtSDT.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập số điện thoại.");
+                    return;
+                }
+
+                if (!decimal.TryParse(txtLuong.Text, out decimal luong) || luong < 0)
+                {
+                    MessageBox.Show("Lương không hợp lệ. Vui lòng nhập số hợp lệ.");
+                    return;
+                }
+
+                if (!decimal.TryParse(txtPhuCap.Text, out decimal phuCap) || phuCap < 0)
+                {
+                    MessageBox.Show("Phụ cấp không hợp lệ. Vui lòng nhập số hợp lệ.");
+                    return;
+                }
+
+                if (dateTimePickerNgaySinh.Value >= DateTime.Now)
+                {
+                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.");
+                    return;
+                }
+
+                if (comboGioiTinh.SelectedItem == null)
+                {
+                    MessageBox.Show("Vui lòng chọn giới tính.");
+                    return;
+                }
+
+                if (comboMaDV.SelectedItem == null)
+                {
+                    MessageBox.Show("Vui lòng chọn mã đơn vị.");
+                    return;
+                }
+
+                if (comboVaiTro.SelectedItem == null)
+                {
+                    MessageBox.Show("Vui lòng chọn vai trò.");
+                    return;
+                }
+
                 EmpToEdit.name = txtHoTen.Text.Trim();
                 EmpToEdit.phone = txtSDT.Text.Trim();
                 EmpToEdit.salary = decimal.Parse(txtLuong.Text);
@@ -50,6 +99,8 @@ namespace OUM.View
                 EmpToEdit.gender = comboGioiTinh.SelectedItem?.ToString();
                 EmpToEdit.madv = comboMaDV.SelectedItem?.ToString();
                 EmpToEdit.role = comboVaiTro.SelectedItem?.ToString();
+
+                
 
                 EmployeeViewModel vm = new EmployeeViewModel();
                 vm.UpdateEmployee(EmpToEdit);

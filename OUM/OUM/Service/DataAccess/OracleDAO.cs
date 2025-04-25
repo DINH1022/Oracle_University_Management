@@ -119,7 +119,6 @@ namespace OUM.Service.DataAccess
             return employees;
         }
 
-
         public List<Student> GetListStudents()
         {
             List<Student> students = new List<Student>();
@@ -130,7 +129,21 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
 
-                    string query = "SELECT MASV, HOTEN, PHAI, NGSINH, DT, KHOA, TINHTRANG FROM SINHVIEN";
+                    string query = @"
+                        SELECT 
+                            S.MASV,
+                            S.HOTEN,
+                            S.PHAI,
+                            S.NGSINH,
+                            S.DT,
+                            S.KHOA,
+                            S.TINHTRANG,
+                            S.DCHI,
+                            U.USERNAME,
+                            U.CREATED AS THOIGIANTAO
+                        FROM SINHVIEN S
+                        LEFT JOIN DBA_USERS U ON S.MASV = SUBSTR(U.USERNAME, 3)
+                        ORDER BY S.MASV";
 
                     using (var command = new OracleCommand(query, connection))
                     using (var reader = command.ExecuteReader())
@@ -138,16 +151,18 @@ namespace OUM.Service.DataAccess
                         while (reader.Read())
                         {
                             Student s = new Student(
-
                                 id: reader["MASV"].ToString(),
-                                name : reader["HOTEN"].ToString(),
+                                name: reader["HOTEN"].ToString(),
                                 gender: reader["PHAI"].ToString(),
                                 dob: reader["NGSINH"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["NGSINH"]),
                                 phone: reader["DT"]?.ToString() ?? "",
                                 department: reader["KHOA"]?.ToString() ?? "",
-                                status : reader["TINHTRANG"]?.ToString() ?? "",
-                                address: ""
+                                status: reader["TINHTRANG"]?.ToString() ?? "",
+                                address: reader["DCHI"]?.ToString() ?? ""
                             );
+
+                            s.Username = reader["USERNAME"]?.ToString() ?? "";
+                            s.CreatedTime = reader["THOIGIANTAO"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["THOIGIANTAO"]);
 
                             students.Add(s);
                         }
@@ -163,6 +178,105 @@ namespace OUM.Service.DataAccess
 
             return students;
         }
+
+
+        public void InsertStudent(Student st)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    string username = "SV" + st.id.ToUpper();
+                    var checkCmd = connection.CreateCommand();
+                    checkCmd.CommandText = "SELECT COUNT(*) FROM ALL_USERS WHERE USERNAME = :username";
+                    checkCmd.Parameters.Add(new OracleParameter("username", username));
+
+                    int userExists = Convert.ToInt32(checkCmd.ExecuteScalar());
+
+                    if (userExists == 0)
+                    {
+                        var createUserCmd = connection.CreateCommand();
+                        createUserCmd.CommandText = $@"
+                            BEGIN
+                                EXECUTE IMMEDIATE 'CREATE USER {username} IDENTIFIED BY PASS123';
+                                EXECUTE IMMEDIATE 'GRANT CONNECT TO {username}';
+                                
+                            END;";
+                        createUserCmd.ExecuteNonQuery();
+                    }
+
+                    var insertCmd = connection.CreateCommand();
+                    insertCmd.CommandText = @"INSERT INTO SINHVIEN (MASV, HOTEN, PHAI, NGSINH, DT, KHOA, TINHTRANG, DCHI) 
+                                      VALUES (:id, :name, :gender, :dob, :phone, :department, :status, :address)";
+                    insertCmd.Parameters.Add(new OracleParameter("id", st.id));
+                    insertCmd.Parameters.Add(new OracleParameter("name", st.name));
+                    insertCmd.Parameters.Add(new OracleParameter("gender", st.gender));
+                    insertCmd.Parameters.Add(new OracleParameter("dob", st.dob));
+                    insertCmd.Parameters.Add(new OracleParameter("phone", st.phone));
+                    insertCmd.Parameters.Add(new OracleParameter("department", st.department));          
+                    insertCmd.Parameters.Add(new OracleParameter("status", st.status));
+                    insertCmd.Parameters.Add(new OracleParameter("address", st.address));   // phải đúng thứ tự !!!
+
+                 
+
+                    insertCmd.ExecuteNonQuery();
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi thêm sinh viên hoặc tạo user:\n" + ex.Message);
+                }
+            }
+        }
+
+        public void UpdateStudent(Student st)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var updateCmd = connection.CreateCommand();
+                    updateCmd.CommandText = @"
+                        UPDATE SINHVIEN 
+                        SET HOTEN = :name, 
+                            PHAI = :gender, 
+                            NGSINH = :dob, 
+                            DT = :phone, 
+                            KHOA = :department,
+                            TINHTRANG = :status,
+                            DCHI = :address
+                        WHERE MASV = :id";
+
+                    updateCmd.Parameters.Add(new OracleParameter("name", st.name));
+                    updateCmd.Parameters.Add(new OracleParameter("gender", st.gender));
+                    updateCmd.Parameters.Add(new OracleParameter("dob", st.dob));
+                    updateCmd.Parameters.Add(new OracleParameter("phone", st.phone));
+                    updateCmd.Parameters.Add(new OracleParameter("department", st.department));
+                    updateCmd.Parameters.Add(new OracleParameter("status", st.status));
+                    updateCmd.Parameters.Add(new OracleParameter("address", st.address));
+                    updateCmd.Parameters.Add(new OracleParameter("id", st.id)); 
+
+                    int rows = updateCmd.ExecuteNonQuery();
+
+                    if (rows == 0)
+                    {
+                        MessageBox.Show("Không tìm thấy sinh viên để cập nhật.");
+                    }
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi cập nhật sinh viên:\n" + ex.Message);
+                }
+            }
+        }
+
+
 
         public void InsertEmployee(Employee emp)
         {
@@ -301,6 +415,28 @@ namespace OUM.Service.DataAccess
                 catch (Exception ex)
                 {
                     MessageBox.Show("Lỗi khi xóa nhân viên:\n" + ex.Message);
+                }
+            }
+        }
+
+        public void DeleteStudent(Student st)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    var Cmd = connection.CreateCommand();
+                    Cmd.CommandText = "DELETE FROM SINHVIEN WHERE MASV = :masv";
+                    Cmd.Parameters.Add(new OracleParameter("masv", st.id.ToUpper()));
+                    Cmd.ExecuteNonQuery();
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi xóa sinh viên:\n" + ex.Message);
                 }
             }
         }

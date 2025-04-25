@@ -39,21 +39,63 @@ namespace OUM.View
                 string vaiTro = comboVaiTro.SelectedItem?.ToString();
 
                 decimal luong, phuCap;
-                if (string.IsNullOrEmpty(maNLD) || string.IsNullOrEmpty(hoTen) || string.IsNullOrEmpty(sdt))
+                if (string.IsNullOrWhiteSpace(maNLD))
                 {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin bắt buộc.");
+                    MessageBox.Show("Vui lòng nhập mã nhân lực.");
                     return;
                 }
 
-                if (!decimal.TryParse(luongText, out luong))
+                if (string.IsNullOrWhiteSpace(hoTen))
                 {
-                    MessageBox.Show("Lương không hợp lệ.");
+                    MessageBox.Show("Vui lòng nhập họ tên.");
                     return;
                 }
 
-                if (!decimal.TryParse(phuCapText, out phuCap))
+                if (string.IsNullOrWhiteSpace(sdt))
                 {
-                    MessageBox.Show("Phụ cấp không hợp lệ.");
+                    MessageBox.Show("Vui lòng nhập số điện thoại.");
+                    return;
+                }
+
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sdt, @"^\d{9,11}$"))
+                {
+                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập từ 9 đến 11 chữ số.");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(gioiTinh))
+                {
+                    MessageBox.Show("Vui lòng chọn giới tính.");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(maDV))
+                {
+                    MessageBox.Show("Vui lòng chọn mã đơn vị.");
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(vaiTro))
+                {
+                    MessageBox.Show("Vui lòng chọn vai trò.");
+                    return;
+                }
+
+                if (ngaySinh >= DateTime.Now)
+                {
+                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.");
+                    return;
+                }
+
+                if (!decimal.TryParse(luongText, out luong) || luong < 0)
+                {
+                    MessageBox.Show("Lương không hợp lệ. Vui lòng nhập lương hợp lệ (số dương).");
+                    return;
+                }
+
+                if (!decimal.TryParse(phuCapText, out phuCap) || phuCap < 0)
+                {
+                    MessageBox.Show("Phụ cấp không hợp lệ. Vui lòng nhập phụ cấp hợp lệ (số dương).");
                     return;
                 }
 

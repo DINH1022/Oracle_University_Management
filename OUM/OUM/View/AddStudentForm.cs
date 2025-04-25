@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OUM.Model;
+using OUM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -47,5 +49,57 @@ namespace OUM.View
             this.Close();
 
         }
-    }
+
+        private void addBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string id = txtMSSV.Text.Trim();
+                string name = txtHoTen.Text.Trim();
+                string phone = txtSDT.Text.Trim();
+                string gender = comboGioiTinh.SelectedItem?.ToString();
+                string department = comboKhoa.SelectedItem?.ToString();
+                string status = comboTinhTrang.SelectedItem?.ToString();
+                DateTime dob = dateTimePickerNgaySinh.Value.Date;
+                string address = txtDiaChi.Text.Trim();
+
+                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phone) ||
+                    string.IsNullOrEmpty(gender) || string.IsNullOrEmpty(department) ||
+                    string.IsNullOrEmpty(status) || string.IsNullOrEmpty(address))
+                {
+                    MessageBox.Show("Vui lòng điền đầy đủ thông tin sinh viên và chọn các mục từ ComboBox.");
+                    return;
+                }
+
+                
+                if (!System.Text.RegularExpressions.Regex.IsMatch(phone, @"^\d{9,11}$"))
+                {
+                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập từ 9 đến 11 chữ số.");
+                    return;
+                }
+
+                
+                if (dob >= DateTime.Now)
+                {
+                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.");
+                    return;
+                }
+
+                Student st = new Student(id, name, gender, dob, phone, department, status, address);
+
+                StudentViewModel vm = new StudentViewModel();
+                vm.AddStudent(st);
+
+                MessageBox.Show("Thêm sinh viên thành công!");
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm sinh viên: " + ex.Message);
+            }
+        }
+
+    
+}
 }

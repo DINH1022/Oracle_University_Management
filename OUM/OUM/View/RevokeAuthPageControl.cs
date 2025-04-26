@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace OUM.View
 {
@@ -211,6 +212,23 @@ namespace OUM.View
             configUICells();
         }
 
+        private void refresh_data_grid()
+        {
+            string label = label2.Text;
+            if (label.ToUpper() == TEXT_USER_AUTH_PAGE.ToUpper())
+            {
+                refresh_datagrid_user();
+            }
+            else if (label.ToUpper() == TEXT_ROLE_AUTH_PAGE.ToUpper())
+            {
+                refresh_datagrid_role();
+            }
+            else
+            {
+                refresh_datagrid_role_of_user();
+            }
+        }
+
         private void configUIHeaders()
         {
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -245,6 +263,19 @@ namespace OUM.View
             return false;
         }
 
+        private bool isRevokingExecutionPriv(DataGridViewCellEventArgs e)
+        {
+            const string EXECUTION_PRIV_INDICATOR = "EXECUTE";
+            string priv = dataGridView1
+                .Rows[e.RowIndex]
+                .Cells[HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_PRIV]]
+                .Value.ToString();
+            if (priv.ToUpper() == EXECUTION_PRIV_INDICATOR)
+            {
+                return true;
+            }
+            return false;
+        }
         private Boolean isRevokingAllColumns(DataGridViewCellEventArgs e)
         {
             //there is no need to split case for role_privs and user_privs, because they store in same table and same way,
@@ -289,8 +320,29 @@ namespace OUM.View
                         {
                             userRoleInformations.Remove(objectToRemove);
                         }
+                        refresh_data_grid();
                         dataGridView1.DataSource= userRoleInformations;
                         revokeDAO.revokeRoleFromUser(username, role);
+                        return;
+                    }
+                    if (isRevokingExecutionPriv(e))
+                    {
+                        string nameOfCol_username = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_NAME];
+                        string nameOfCol_object = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_OBJECT];
+
+                        string username = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_username].Value.ToString();
+                        string object_name = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_object].Value.ToString();
+                        var objectToRemove = grantInformations
+                            .FirstOrDefault(obj => obj.Name.ToUpper() == username
+                                                && obj.ObjectName.ToUpper() == object_name.ToUpper());
+                        dataGridView1.DataSource = null;
+                        if (objectToRemove != null)
+                        {
+                            grantInformations.Remove(objectToRemove);
+                        }
+                        refresh_data_grid();
+                        dataGridView1.DataSource = grantInformations;
+                        revokeDAO.revokeExecutePriv(username, object_name);
                         return;
                     }
                     if (isRevokingAllColumns(e))
@@ -310,7 +362,8 @@ namespace OUM.View
                         if (objectToRemove != null) {
                             grantInformations.Remove(objectToRemove);    
                         }
-                        dataGridView1.DataSource = userRoleInformations;
+                        refresh_data_grid();
+                        dataGridView1.DataSource = grantInformations;
                         revokeDAO.revokeAllColumnsPriv(username, object_name, query_type);
                         return;
                     }
@@ -333,7 +386,8 @@ namespace OUM.View
                     {
                         grantInformations.Remove(objectToRemove1);
                     }
-                    dataGridView1.DataSource = userRoleInformations;
+                    refresh_data_grid();
+                    dataGridView1.DataSource = grantInformations;
                     revokeDAO.revokeGivenColumnPriv(name, objectName, queryType, col);
                 }
             }

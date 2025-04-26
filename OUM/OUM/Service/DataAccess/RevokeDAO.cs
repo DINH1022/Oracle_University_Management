@@ -61,11 +61,11 @@ namespace OUM.Service.DataAccess
         private GrantInformation createNewGrantInfor(OracleDataReader reader, OracleConnection conn)
         {
 
-
+            const string EXECUTE_INCIDATOR = "EXECUTE";
             string name = reader[NAME_COL].ToString();
             string object_name = reader[OBJECT_COL].ToString();
-            string priv = reader[PRIVILEGE_COL].ToString();
-            string cols = "TẤT CẢ CÁC CỘT";
+            string priv = reader[PRIVILEGE_COL].ToString(); 
+            string cols = (priv.ToUpper()==EXECUTE_INCIDATOR)?"THỰC THI": "TẤT CẢ CÁC CỘT";
             string grantOpt = reader[GRANTOPT_COL].ToString();
             GrantInformation grantInformation = new GrantInformation(name, object_name, priv, cols, grantOpt);
             return grantInformation;
@@ -292,6 +292,26 @@ namespace OUM.Service.DataAccess
                 }
                 query = $@"GRANT {query_type.ToUpper()}({leftCols}) ON {PDBADMIN_USERNAME}.{object_name} TO {username}";
                 cmd = new OracleCommand(query, conn);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            finally
+            {
+                closeOracleConnection(conn);
+            }
+        }
+
+        public bool revokeExecutePriv(string username,string object_name)
+        {
+            OracleConnection conn = getOracleConnection();
+            try
+            {
+                string query = $@"REVOKE EXECUTE ON {PDBADMIN_USERNAME}.{object_name} FROM {username}";
+                OracleCommand cmd = new OracleCommand(query, conn);
                 cmd.ExecuteNonQuery();
                 return true;
             }

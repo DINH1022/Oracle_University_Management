@@ -117,6 +117,7 @@
             label1.Size = new Size(1091, 67);
             label1.TabIndex = 0;
             label1.Text = "Revoke Page";
+            label1.Click += label1_Click;
             // 
             // Column6
             // 

@@ -1,4 +1,5 @@
 ﻿using OUM.Model;
+using OUM.Service.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,14 +9,83 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace OUM.View
 {
     public partial class RevokeAuthPageControl : UserControl
     {
+        private RevokeDAO revokeDAO=new RevokeDAO();
+
+
         private const string TEXT_USER_AUTH_PAGE = "Quyền của người dùng";
         private const string TEXT_ROLE_AUTH_PAGE = "Quyền của vai trò";
         private const string TEXT_ROLE_OF_USER_PAGE = "Vai trò của người dùng";
+        private const string FULL_COLS_INDICATOR = "TẤT CẢ CÁC CỘT";
+
+        private const string HEADERTEXT_USER_PRIVS_NAME = "Người dùng";
+        private const string HEADERTEXT_USER_PRIVS_OBJECT = "Đối tượng";
+        private const string HEADERTEXT_USER_PRIVS_PRIV = "Quyền";
+        private const string HEADERTEXT_USER_PRIVS_COLS = "Cột";
+        private const string HEADERTEXT_USER_PRIVS_GRANTOPT = "WITH GRANT OPTION";
+
+        private const string HEADERTEXT_ROLE_PRIVS_NAME = "Vai trò";
+        private const string HEADERTEXT_ROLE_PRIVS_OBJECT = "Đối tượng";
+        private const string HEADERTEXT_ROLE_PRIVS_PRIV = "Quyền";
+        private const string HEADERTEXT_ROLE_PRIVS_COLS = "Cột";
+        private const string HEADERTEXT_ROLE_PRIVS_GRANTOPT = "WITH GRANT OPTION";
+
+        private const string HEADERTEXT_USER_ROLE_NAME = "Đối tượng";
+        private const string HEADERTEXT_USER_ROLE_ROLE = "Vai trò";
+        private const string HEADERTEXT_USER_ROLE_GRANTOPT = "WITH GRANT OPTION";
+
+        private Dictionary<String, String> HEADER_TEXT_TO_NAME_USER_PRIVS = new Dictionary<String, String>()
+        {
+            {HEADERTEXT_USER_PRIVS_NAME,"name"},
+            {HEADERTEXT_USER_PRIVS_OBJECT,"object_name"},
+            {HEADERTEXT_USER_PRIVS_PRIV,"privilege"},
+            {HEADERTEXT_USER_PRIVS_COLS,"columns" },
+            {HEADERTEXT_USER_PRIVS_GRANTOPT,"grantopt"}
+        };
+        private Dictionary<String, String> HEADER_TEXT_TO_DATAPROP_USER_PRIVS = new Dictionary<String, String>()
+        {
+            {HEADERTEXT_USER_PRIVS_NAME,"Name"},
+            {HEADERTEXT_USER_PRIVS_OBJECT,"ObjectName"},
+            {HEADERTEXT_USER_PRIVS_PRIV,"Authority"},
+            {HEADERTEXT_USER_PRIVS_COLS,"Columns" },
+            {HEADERTEXT_USER_PRIVS_GRANTOPT,"GrantOption"}
+        };
+        private Dictionary<String, String> HEADER_TEXT_TO_NAME_ROLE_PRIVS = new Dictionary<String, String>()
+        {
+            {HEADERTEXT_ROLE_PRIVS_NAME,"name"},
+            {HEADERTEXT_ROLE_PRIVS_OBJECT,"object_name"},
+            {HEADERTEXT_ROLE_PRIVS_PRIV,"privilege"},
+            {HEADERTEXT_ROLE_PRIVS_COLS,"columns" },
+            {HEADERTEXT_ROLE_PRIVS_GRANTOPT,"grantopt"}
+        };
+        private Dictionary<String, String> HEADER_TEXT_TO_DATAPROP_ROLE_PRIVS = new Dictionary<String, String>()
+        {
+            {HEADERTEXT_ROLE_PRIVS_NAME,"Name"},
+            {HEADERTEXT_ROLE_PRIVS_OBJECT,"ObjectName"},
+            {HEADERTEXT_ROLE_PRIVS_PRIV,"Authority"},
+            {HEADERTEXT_ROLE_PRIVS_COLS,"Columns" },
+            {HEADERTEXT_ROLE_PRIVS_GRANTOPT,"GrantOption"}
+        };
+        private Dictionary<String, String> HEADER_TEXT_TO_NAME_USER_ROLE = new Dictionary<String, String>()
+        {
+            {HEADERTEXT_USER_ROLE_NAME, "name"},
+            {HEADERTEXT_USER_ROLE_ROLE,"role"},
+            {HEADERTEXT_USER_ROLE_GRANTOPT ,"grantopt"}
+        };
+
+        private Dictionary<String, String> HEADER_TEXT_TO_DATAPROP_USER_ROLE = new Dictionary<String, String>()
+        {
+            {HEADERTEXT_USER_ROLE_NAME, "Name"},
+            {HEADERTEXT_USER_ROLE_ROLE,"Role"},
+            {HEADERTEXT_USER_ROLE_GRANTOPT ,"GrantOption"}
+        };
+
         private Boolean isDisplayingGrantInfor = true;
         private List<GrantInformation> grantInformations = new List<GrantInformation>();
         private List<UserRoleInformation> userRoleInformations = new List<UserRoleInformation>();
@@ -45,16 +115,23 @@ namespace OUM.View
             DataGridViewTextBoxColumn ColsCol = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn GrantOptCol = new DataGridViewTextBoxColumn();
 
-            UserCol.HeaderText = "Người dùng";
-            ObjCol.HeaderText = "Đối tượng";
-            AuthorCol.HeaderText = "Quyền";
-            ColsCol.HeaderText = "Cột";
-            GrantOptCol.HeaderText = "WITH GRANT OPTION";
-            UserCol.DataPropertyName = "Name";
-            ObjCol.DataPropertyName = "ObjectName";
-            AuthorCol.DataPropertyName = "Authority";
-            ColsCol.DataPropertyName = "Columns";
-            GrantOptCol.DataPropertyName = "GrantOption";
+            UserCol.HeaderText = HEADERTEXT_USER_PRIVS_NAME;
+            ObjCol.HeaderText = HEADERTEXT_USER_PRIVS_OBJECT;
+            AuthorCol.HeaderText = HEADERTEXT_USER_PRIVS_PRIV;
+            ColsCol.HeaderText = HEADERTEXT_USER_PRIVS_COLS;
+            GrantOptCol.HeaderText = HEADERTEXT_USER_PRIVS_GRANTOPT;
+
+            UserCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_USER_PRIVS[UserCol.HeaderText];
+            ObjCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_USER_PRIVS[ObjCol.HeaderText];
+            AuthorCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_USER_PRIVS[AuthorCol.HeaderText];
+            ColsCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_USER_PRIVS[ColsCol.HeaderText];
+            GrantOptCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_USER_PRIVS[GrantOptCol.HeaderText];
+
+            UserCol.Name = HEADER_TEXT_TO_NAME_USER_PRIVS[UserCol.HeaderText];
+            ObjCol.Name= HEADER_TEXT_TO_NAME_USER_PRIVS[ObjCol.HeaderText];
+            AuthorCol.Name= HEADER_TEXT_TO_NAME_USER_PRIVS[AuthorCol.HeaderText];
+            ColsCol.Name= HEADER_TEXT_TO_NAME_USER_PRIVS[ColsCol.HeaderText];
+            GrantOptCol.Name= HEADER_TEXT_TO_NAME_USER_PRIVS[GrantOptCol.HeaderText];
 
             DataGridViewButtonColumn deleteButtonColumn = createDeleteBtnColumn();
 
@@ -78,17 +155,23 @@ namespace OUM.View
             DataGridViewTextBoxColumn GrantOptCol = new DataGridViewTextBoxColumn();
             DataGridViewButtonColumn deleteButtonColumn = createDeleteBtnColumn();
 
-            UserCol.HeaderText = "Vai trò";
-            ObjCol.HeaderText = "Đối tượng";
-            AuthorCol.HeaderText = "Quyền";
-            ColsCol.HeaderText = "Cột";
-            GrantOptCol.HeaderText = "WITH GRANT OPTION";
+            UserCol.HeaderText = HEADERTEXT_ROLE_PRIVS_NAME;
+            ObjCol.HeaderText = HEADERTEXT_ROLE_PRIVS_OBJECT;
+            AuthorCol.HeaderText = HEADERTEXT_ROLE_PRIVS_PRIV;
+            ColsCol.HeaderText = HEADERTEXT_ROLE_PRIVS_COLS;
+            GrantOptCol.HeaderText = HEADERTEXT_ROLE_PRIVS_GRANTOPT;
 
-            UserCol.DataPropertyName = "Name";
-            ObjCol.DataPropertyName = "ObjectName";
-            AuthorCol.DataPropertyName = "Authority";
-            ColsCol.DataPropertyName = "Columns";
-            GrantOptCol.DataPropertyName = "GrantOption";
+            UserCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_ROLE_PRIVS[UserCol.HeaderText];
+            ObjCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_ROLE_PRIVS[ObjCol.HeaderText];
+            AuthorCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_ROLE_PRIVS[AuthorCol.HeaderText];
+            ColsCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_ROLE_PRIVS[ColsCol.HeaderText];
+            GrantOptCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_ROLE_PRIVS[GrantOptCol.HeaderText];
+
+            UserCol.Name = HEADER_TEXT_TO_NAME_ROLE_PRIVS[UserCol.HeaderText];
+            ObjCol.Name = HEADER_TEXT_TO_NAME_ROLE_PRIVS[ObjCol.HeaderText];
+            AuthorCol.Name= HEADER_TEXT_TO_NAME_ROLE_PRIVS[AuthorCol.HeaderText];
+            ColsCol.Name= HEADER_TEXT_TO_NAME_ROLE_PRIVS[ColsCol.HeaderText];
+            GrantOptCol.Name= HEADER_TEXT_TO_NAME_ROLE_PRIVS[GrantOptCol.HeaderText];
 
             dataGridView1.Columns.Add(UserCol);
             dataGridView1.Columns.Add(ObjCol);
@@ -108,14 +191,18 @@ namespace OUM.View
             DataGridViewTextBoxColumn RoleCol = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn GrantOptCol = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn DelCol = new DataGridViewTextBoxColumn();
-            UserCol.HeaderText = "Người dùng";
-            RoleCol.HeaderText = "Vai trò";
-            GrantOptCol.HeaderText = "WITH GRANT OPTION";
+            UserCol.HeaderText = HEADERTEXT_USER_ROLE_NAME;
+            RoleCol.HeaderText = HEADERTEXT_USER_ROLE_ROLE;
+            GrantOptCol.HeaderText = HEADERTEXT_USER_ROLE_GRANTOPT;
             DataGridViewButtonColumn deleteButtonColumn = createDeleteBtnColumn();
 
-            UserCol.DataPropertyName = "Name";
-            RoleCol.DataPropertyName = "Role";
-            GrantOptCol.DataPropertyName = "GrantOption";
+            UserCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_USER_ROLE[UserCol.HeaderText];
+            RoleCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_USER_ROLE[RoleCol.HeaderText];
+            GrantOptCol.DataPropertyName = HEADER_TEXT_TO_DATAPROP_USER_ROLE[GrantOptCol.HeaderText];
+
+            UserCol.Name = HEADER_TEXT_TO_NAME_USER_ROLE[UserCol.HeaderText];
+            RoleCol.Name= HEADER_TEXT_TO_NAME_USER_ROLE[RoleCol.HeaderText];
+            GrantOptCol.Name= HEADER_TEXT_TO_NAME_USER_ROLE[GrantOptCol.HeaderText];
 
             dataGridView1.Columns.Add(UserCol);
             dataGridView1.Columns.Add(RoleCol);
@@ -125,29 +212,21 @@ namespace OUM.View
             configUICells();
         }
 
-        private List<GrantInformation> mockListGrant()
+        private void refresh_data_grid()
         {
-            List<GrantInformation> grantInformation = new List<GrantInformation>();
-            GrantInformation a1 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-            GrantInformation a2 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT, UPDATE", "MANV,HOTEN,PHAI", "Không");
-            GrantInformation a3 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-            GrantInformation a4 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-            GrantInformation a5 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-            GrantInformation a6 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT, DELETE", "MANV,HOTEN,PHAI", "Không");
-            GrantInformation a7 = new GrantInformation("nvcb001", "NHANVIEN", "SELECT", "MANV,HOTEN,PHAI", "Không");
-            grantInformation.Add(a1);
-            grantInformation.Add(a2);
-            grantInformation.Add(a3);
-            grantInformation.Add(a4);
-            grantInformation.Add(a5);
-            grantInformation.Add(a6);
-            grantInformation.Add(a7);
-            return grantInformation;
-        }
-
-        private void initData()
-        {
-            grantInformations = mockListGrant();
+            string label = label2.Text;
+            if (label.ToUpper() == TEXT_USER_AUTH_PAGE.ToUpper())
+            {
+                refresh_datagrid_user();
+            }
+            else if (label.ToUpper() == TEXT_ROLE_AUTH_PAGE.ToUpper())
+            {
+                refresh_datagrid_role();
+            }
+            else
+            {
+                refresh_datagrid_role_of_user();
+            }
         }
 
         private void configUIHeaders()
@@ -168,29 +247,148 @@ namespace OUM.View
         private void RevokeAuthPageControl_Load(object sender, EventArgs e)
         {
             refresh_datagrid_user();
-            initData();
             configUIHeaders();
             configUICells();
+            grantInformations=revokeDAO.getUserPrivileges();
             dataGridView1.DataSource = grantInformations;
             dataGridView1.AutoResizeRows();
         }
 
+        private Boolean isRevokingRoleFromUser()
+        {
+            if (label2.Text == TEXT_ROLE_OF_USER_PAGE)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool isRevokingExecutionPriv(DataGridViewCellEventArgs e)
+        {
+            const string EXECUTION_PRIV_INDICATOR = "EXECUTE";
+            string priv = dataGridView1
+                .Rows[e.RowIndex]
+                .Cells[HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_PRIV]]
+                .Value.ToString();
+            if (priv.ToUpper() == EXECUTION_PRIV_INDICATOR)
+            {
+                return true;
+            }
+            return false;
+        }
+        private Boolean isRevokingAllColumns(DataGridViewCellEventArgs e)
+        {
+            //there is no need to split case for role_privs and user_privs, because they store in same table and same way,
+            //we can also do like this:
+            //string cols=dataGridView1.Rows[e.RowIndex].Cells[HEADER_TEXT_TO_NAME_ROLE_PRIVS[HEADERTEXT_ROLE_PRIVS_COLS]].ToString();
+            string cols =dataGridView1
+                .Rows[e.RowIndex]
+                .Cells[HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_COLS]]
+                .Value.ToString();
+            if (cols == FULL_COLS_INDICATOR)
+            {
+                return true;
+            }
+            return false;
+        }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Check if the clicked cell is in the delete button column
+            //
             if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["DeleteButton"].Index)
             {
-                // Confirm deletion
+                //there is no need to split case for role_privs and user_privs, because they store in same table and same way
+                //therefore, we can use the name interchangeably
                 DialogResult result = MessageBox.Show(
-                    "Are you sure you want to delete this grant?" + $"{label2.Text}",
+                    "Are you sure you want to delete this grant?",
                     "Confirm Delete ",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
                 );
-
                 if (result == DialogResult.Yes)
                 {
+                    if (isRevokingRoleFromUser()) {
+                        string nameOfCol_username = HEADER_TEXT_TO_NAME_USER_ROLE[HEADERTEXT_USER_ROLE_NAME];
+                        string nameOfCol_role = HEADER_TEXT_TO_NAME_USER_ROLE[HEADERTEXT_USER_ROLE_ROLE];
 
+                        string username = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_username].Value.ToString();
+                        string role = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_role].Value.ToString();
+                        var objectToRemove = userRoleInformations
+                            .FirstOrDefault(obj => obj.Name.ToUpper() == username
+                                                && obj.Role.ToUpper() == role);
+                        dataGridView1.DataSource = null;
+                        if (objectToRemove != null)
+                        {
+                            userRoleInformations.Remove(objectToRemove);
+                        }
+                        refresh_data_grid();
+                        dataGridView1.DataSource= userRoleInformations;
+                        revokeDAO.revokeRoleFromUser(username, role);
+                        return;
+                    }
+                    if (isRevokingExecutionPriv(e))
+                    {
+                        string nameOfCol_username = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_NAME];
+                        string nameOfCol_object = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_OBJECT];
+
+                        string username = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_username].Value.ToString();
+                        string object_name = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_object].Value.ToString();
+                        var objectToRemove = grantInformations
+                            .FirstOrDefault(obj => obj.Name.ToUpper() == username
+                                                && obj.ObjectName.ToUpper() == object_name.ToUpper());
+                        dataGridView1.DataSource = null;
+                        if (objectToRemove != null)
+                        {
+                            grantInformations.Remove(objectToRemove);
+                        }
+                        refresh_data_grid();
+                        dataGridView1.DataSource = grantInformations;
+                        revokeDAO.revokeExecutePriv(username, object_name);
+                        return;
+                    }
+                    if (isRevokingAllColumns(e))
+                    {
+                        string nameOfCol_username = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_NAME];
+                        string nameOfCol_objectName = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_OBJECT];
+                        string nameOfCol_queryType = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_PRIV];
+
+                        string username = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_username].Value.ToString();
+                        string object_name = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_objectName].Value.ToString();
+                        string query_type = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_queryType].Value.ToString();
+                        GrantInformation objectToRemove = grantInformations
+                            .FirstOrDefault(obj => obj.Name.ToUpper() == username.ToUpper()
+                                             && obj.ObjectName.ToUpper() == object_name.ToUpper()
+                                             && obj.Authority.ToUpper() == query_type.ToUpper());
+                        dataGridView1.DataSource = null;
+                        if (objectToRemove != null) {
+                            grantInformations.Remove(objectToRemove);    
+                        }
+                        refresh_data_grid();
+                        dataGridView1.DataSource = grantInformations;
+                        revokeDAO.revokeAllColumnsPriv(username, object_name, query_type);
+                        return;
+                    }
+                    string nameOfCol_name = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_NAME];
+                    string nameOfCol_objectname = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_OBJECT];
+                    string nameOfCol_querytype = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_PRIV];
+                    string nameOfCol_col = HEADER_TEXT_TO_NAME_USER_PRIVS[HEADERTEXT_USER_PRIVS_COLS];
+
+                    string name = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_name].Value.ToString();
+                    string objectName = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_objectname].Value.ToString();
+                    string queryType = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_querytype].Value.ToString();
+                    string col = dataGridView1.Rows[e.RowIndex].Cells[nameOfCol_col].Value.ToString();
+                    GrantInformation objectToRemove1 = grantInformations
+                        .FirstOrDefault(obj => obj.Name.ToUpper() == name &&
+                                   obj.ObjectName.ToUpper() == objectName &&
+                                   obj.Authority.ToUpper() == queryType &&
+                                   obj.Columns.ToUpper() == col);
+                    dataGridView1.DataSource = null;
+                    if (objectToRemove1 != null)
+                    {
+                        grantInformations.Remove(objectToRemove1);
+                    }
+                    refresh_data_grid();
+                    dataGridView1.DataSource = grantInformations;
+                    revokeDAO.revokeGivenColumnPriv(name, objectName, queryType, col);
                 }
             }
         }
@@ -198,17 +396,23 @@ namespace OUM.View
         private void button1_Click(object sender, EventArgs e)
         {
             refresh_datagrid_user();
+            grantInformations = revokeDAO.getUserPrivileges();
+            dataGridView1.DataSource = grantInformations;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             refresh_datagrid_role();
+            grantInformations=revokeDAO.getRolePrivileges();
+            dataGridView1.DataSource = grantInformations;
 
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             refresh_datagrid_role_of_user();
+            userRoleInformations=revokeDAO.getUserRolePrivs();
+            dataGridView1.DataSource=userRoleInformations;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -243,6 +447,11 @@ namespace OUM.View
                     ).ToList();
                 dataGridView1.DataSource = newDisplayingUserRoleInfors;
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

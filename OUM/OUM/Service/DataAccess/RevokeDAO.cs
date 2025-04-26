@@ -40,7 +40,8 @@ namespace OUM.Service.DataAccess
                 oracleConnection.Close();
                 return true;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return false;
             }
         }
@@ -64,8 +65,8 @@ namespace OUM.Service.DataAccess
             const string EXECUTE_INCIDATOR = "EXECUTE";
             string name = reader[NAME_COL].ToString();
             string object_name = reader[OBJECT_COL].ToString();
-            string priv = reader[PRIVILEGE_COL].ToString(); 
-            string cols = (priv.ToUpper()==EXECUTE_INCIDATOR)?"THỰC THI": "TẤT CẢ CÁC CỘT";
+            string priv = reader[PRIVILEGE_COL].ToString();
+            string cols = (priv.ToUpper() == EXECUTE_INCIDATOR) ? "THỰC THI" : "TẤT CẢ CÁC CỘT";
             string grantOpt = reader[GRANTOPT_COL].ToString();
             GrantInformation grantInformation = new GrantInformation(name, object_name, priv, cols, grantOpt);
             return grantInformation;
@@ -82,91 +83,91 @@ namespace OUM.Service.DataAccess
         }
         public List<GrantInformation> getUserPrivileges()
         {
-            OracleConnection conn = getOracleConnection();
+            List<GrantInformation> grantInformations = new List<GrantInformation>();
             try
             {
-                string queryString = $@"SELECT * FROM USER_TAB_PRIVS 
-                                        WHERE GRANTEE NOT LIKE '{PREFIX_ROLE}%'";
-                OracleCommand cmd = new OracleCommand(queryString, conn);
-                OracleDataReader reader = cmd.ExecuteReader();
-                List<GrantInformation> grantInformations = new List<GrantInformation>();
-                //permision on whole table,view
-                while (reader.Read())
+                using (OracleConnection conn = getOracleConnection())
                 {
-                    GrantInformation newGrantInfor = createNewGrantInfor(reader, conn);
-                    grantInformations.Add(newGrantInfor);
-                }
+                    //permision on whole table,view
+                    string queryString1 = $@"SELECT * FROM USER_TAB_PRIVS
+                             WHERE GRANTEE NOT LIKE '{PREFIX_ROLE}%'";
+                    using (OracleCommand cmd1 = new OracleCommand(queryString1, conn))
+                    using (OracleDataReader reader1 = cmd1.ExecuteReader())
+                    {
+                        while (reader1.Read())
+                        {
+                            GrantInformation newGrantInfor = createNewGrantInfor(reader1, conn);
+                            grantInformations.Add(newGrantInfor);
+                        }
+                    }
 
-                //permission on col
-                queryString = $@"SELECT * FROM USER_COL_PRIVS CPRIVS  
-                                WHERE GRANTEE NOT LIKE '{PREFIX_ROLE}%' 
-                                AND NOT EXISTS 
-                                    (SELECT 1 FROM USER_TAB_PRIVS TPRIVS 
-                                    WHERE CPRIVS.GRANTEE=TPRIVS.GRANTEE 
-                                    AND CPRIVS.TABLE_NAME=TPRIVS.TABLE_NAME 
-                                    AND CPRIVS.""PRIVILEGE""=TPRIVS.""PRIVILEGE"")
-                                ";
-                cmd = new OracleCommand(queryString, conn);
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    GrantInformation newGrantInfor = createNewGrantInfor_column(reader);
-                    grantInformations.Add(newGrantInfor);
+                    //permission on col
+                    string queryString2 = $@"SELECT * FROM USER_COL_PRIVS CPRIVS
+                             WHERE GRANTEE NOT LIKE '{PREFIX_ROLE}%'
+                             AND NOT EXISTS
+                                 (SELECT 1 FROM USER_TAB_PRIVS TPRIVS
+                                  WHERE CPRIVS.GRANTEE=TPRIVS.GRANTEE
+                                  AND CPRIVS.TABLE_NAME=TPRIVS.TABLE_NAME
+                                  AND CPRIVS.""PRIVILEGE""=TPRIVS.""PRIVILEGE"")";
+                    using (OracleCommand cmd2 = new OracleCommand(queryString2, conn))
+                    using (OracleDataReader reader2 = cmd2.ExecuteReader())
+                    {
+                        while (reader2.Read())
+                        {
+                            GrantInformation newGrantInfor = createNewGrantInfor_column(reader2);
+                            grantInformations.Add(newGrantInfor);
+                        }
+                    }
                 }
                 return grantInformations;
             }
             catch (Exception ex)
             {
                 return new List<GrantInformation>();
-            }
-            finally
-            {
-                closeOracleConnection(conn);
             }
         }
 
         public List<GrantInformation> getRolePrivileges()
         {
-            OracleConnection conn = getOracleConnection();
+            List<GrantInformation> grantInformations = new List<GrantInformation>();
             try
             {
-                string queryString = $@"SELECT * FROM USER_TAB_PRIVS 
-                                        WHERE GRANTEE LIKE '{PREFIX_ROLE}%'";
-                OracleCommand cmd = new OracleCommand(queryString, conn);
-                OracleDataReader reader = cmd.ExecuteReader();
-                List<GrantInformation> grantInformations = new List<GrantInformation>();
-                //permision on whole table,view
-                while (reader.Read())
+                using (OracleConnection conn = getOracleConnection())
                 {
-                    GrantInformation newGrantInfor = createNewGrantInfor(reader, conn);
-                    grantInformations.Add(newGrantInfor);
-                }
-
-                //permission on col
-                queryString = $@"SELECT * FROM USER_COL_PRIVS CPRIVS  
-                                WHERE GRANTEE LIKE '{PREFIX_ROLE}%' 
-                                AND NOT EXISTS 
-                                    (SELECT 1 FROM USER_TAB_PRIVS TPRIVS 
-                                    WHERE CPRIVS.GRANTEE=TPRIVS.GRANTEE 
-                                    AND CPRIVS.TABLE_NAME=TPRIVS.TABLE_NAME 
-                                    AND CPRIVS.""PRIVILEGE""=TPRIVS.""PRIVILEGE"")
-                                ";
-                cmd = new OracleCommand(queryString, conn);
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    GrantInformation newGrantInfor = createNewGrantInfor_column(reader);
-                    grantInformations.Add(newGrantInfor);
+                    // Permission on whole table/view for roles matching the prefix
+                    string queryString1 = $@"SELECT * FROM USER_TAB_PRIVS
+                             WHERE GRANTEE LIKE '{PREFIX_ROLE}%'";
+                    using (OracleCommand cmd1 = new OracleCommand(queryString1, conn))
+                    using (OracleDataReader reader1 = cmd1.ExecuteReader())
+                    {
+                        while (reader1.Read())
+                        {
+                            GrantInformation newGrantInfor = createNewGrantInfor(reader1, conn);
+                            grantInformations.Add(newGrantInfor);
+                        }
+                    }
+                    string queryString2 = $@"SELECT * FROM USER_COL_PRIVS CPRIVS
+                             WHERE GRANTEE LIKE '{PREFIX_ROLE}%'
+                             AND NOT EXISTS
+                                 (SELECT 1 FROM USER_TAB_PRIVS TPRIVS
+                                  WHERE CPRIVS.GRANTEE=TPRIVS.GRANTEE
+                                  AND CPRIVS.TABLE_NAME=TPRIVS.TABLE_NAME
+                                  AND CPRIVS.""PRIVILEGE""=TPRIVS.""PRIVILEGE"")";
+                    using (OracleCommand cmd2 = new OracleCommand(queryString2, conn))
+                    using (OracleDataReader reader2 = cmd2.ExecuteReader())
+                    {
+                        while (reader2.Read())
+                        {
+                            GrantInformation newGrantInfor = createNewGrantInfor_column(reader2);
+                            grantInformations.Add(newGrantInfor);
+                        }
+                    }
                 }
                 return grantInformations;
             }
             catch (Exception ex)
             {
                 return new List<GrantInformation>();
-            }
-            finally
-            {
-                closeOracleConnection(conn);
             }
         }
 
@@ -180,21 +181,25 @@ namespace OUM.Service.DataAccess
         }
         public List<UserRoleInformation> getUserRolePrivs()
         {
-            OracleConnection conn = getOracleConnection();
+            List<UserRoleInformation> grantInformations = new List<UserRoleInformation>();
             try
             {
-                string queryString = $@"SELECT * 
-                                        FROM dba_role_privs 
-                                        WHERE GRANTED_ROLE LIKE '{PREFIX_ROLE}%' 
-                                        AND GRANTEE NOT IN ('{PDBADMIN_USERNAME}')
-                                        ORDER BY grantee";
-                OracleCommand cmd = new OracleCommand(queryString, conn);
-                OracleDataReader reader = cmd.ExecuteReader();
-                List<UserRoleInformation> grantInformations = new List<UserRoleInformation>();
-                while (reader.Read())
+                using (OracleConnection conn = getOracleConnection())
                 {
-                    UserRoleInformation userRoleInfor = createNewUserRoleInfor(reader, conn);
-                    grantInformations.Add(userRoleInfor);
+                    string queryString = $@"SELECT *
+                             FROM dba_role_privs
+                             WHERE GRANTED_ROLE LIKE '{PREFIX_ROLE}%'
+                             AND GRANTEE NOT IN ('{PDBADMIN_USERNAME}')
+                             ORDER BY grantee";
+                    using (OracleCommand cmd = new OracleCommand(queryString, conn))
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            UserRoleInformation userRoleInfor = createNewUserRoleInfor(reader, conn);
+                            grantInformations.Add(userRoleInfor);
+                        }
+                    }
                 }
                 return grantInformations;
             }
@@ -202,49 +207,45 @@ namespace OUM.Service.DataAccess
             {
                 return new List<UserRoleInformation>();
             }
-            finally
-            {
-                closeOracleConnection(conn);
-            }
         }
 
         public bool revokeAllColumnsPriv(string username, string object_name, string query_type)
         {
-            OracleConnection conn = getOracleConnection();
             try
             {
-                string query = $@"REVOKE {query_type.ToUpper()} ON {PDBADMIN_USERNAME}.{object_name.ToUpper()} FROM {username}";
-                OracleCommand cmd = new OracleCommand(query, conn);
-                cmd.ExecuteNonQuery();
-                return true;
+                using (OracleConnection conn = getOracleConnection())
+                {
+                    string query = $@"REVOKE {query_type.ToUpper()} ON {PDBADMIN_USERNAME.ToUpper()}.{object_name.ToUpper()} FROM {username}";
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
             }
             catch (Exception e)
             {
                 return false;
-            }
-            finally
-            {
-                closeOracleConnection(conn);
             }
         }
 
         public bool revokeRoleFromUser(string username, string role)
         {
-            OracleConnection conn = getOracleConnection();
             try
             {
-                string query = $@"REVOKE {role} FROM {username}";
-                OracleCommand cmd = new OracleCommand(query, conn);
-                cmd.ExecuteNonQuery();
-                return true;
+                using (OracleConnection conn = getOracleConnection())
+                {
+                    string query = $@"REVOKE {role} FROM {username}";
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
             }
             catch (Exception e)
             {
                 return false;
-            }
-            finally
-            {
-                closeOracleConnection(conn);
             }
         }
 
@@ -252,10 +253,10 @@ namespace OUM.Service.DataAccess
         {
             List<string> cols = new List<string>();
             string queryString = $@"SELECT COLUMN_NAME FROM USER_COL_PRIVS 
-                                    WHERE GRANTEE='{username}'
-                                    AND TABLE_NAME='{object_name}'
-                                    AND ""PRIVILEGE""='{query_type}'
-                                    ";
+                            WHERE GRANTEE='{username}'
+                            AND TABLE_NAME='{object_name}'
+                            AND ""PRIVILEGE""='{query_type}'
+                            ";
             OracleCommand cmd = new OracleCommand(queryString, conn);
             OracleDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -273,55 +274,58 @@ namespace OUM.Service.DataAccess
             }
             return string.Join(",", cols);
         }
-        public bool revokeGivenColumnPriv(string username,string object_name,string query_type,string column_name)
+        public bool revokeGivenColumnPriv(string username, string object_name, string query_type, string column_name)
         {
-            OracleConnection conn = getOracleConnection();
             try
             {
-                List<string> cols = getAllColsOfGivenPriOfGivenUser(conn, username, object_name, query_type);
-                cols=cols
-                    .Where(str=>str.ToLower()!=column_name.ToLower())
-                    .ToList();
-                string leftCols=buildLeftCols(cols);
-                string query = $@"REVOKE {query_type} ON {PDBADMIN_USERNAME}.{object_name} FROM {username}";
-                OracleCommand cmd = new OracleCommand(query, conn);
-                cmd.ExecuteNonQuery();
-                if (leftCols.Length == 0)
+                using (OracleConnection conn = getOracleConnection())
                 {
+                    List<string> cols = getAllColsOfGivenPriOfGivenUser(conn, username, object_name, query_type);
+                    cols = cols
+                        .Where(str => !string.Equals(str, column_name, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+                    string leftCols = buildLeftCols(cols);
+                    string revokeQuery = $@"REVOKE {query_type.ToUpper()} ON {PDBADMIN_USERNAME.ToUpper()}.{object_name.ToUpper()} FROM {username}";
+                    using (OracleCommand revokeCmd = new OracleCommand(revokeQuery, conn))
+                    {
+                        revokeCmd.ExecuteNonQuery();
+                    }
+
+                    if (!string.IsNullOrEmpty(leftCols))
+                    {
+                        string grantQuery = $@"GRANT {query_type.ToUpper()}({leftCols}) ON {PDBADMIN_USERNAME.ToUpper()}.{object_name.ToUpper()} TO {username}";
+                        using (OracleCommand grantCmd = new OracleCommand(grantQuery, conn))
+                        {
+                            grantCmd.ExecuteNonQuery();
+                        }
+                    }
+
                     return true;
                 }
-                query = $@"GRANT {query_type.ToUpper()}({leftCols}) ON {PDBADMIN_USERNAME}.{object_name} TO {username}";
-                cmd = new OracleCommand(query, conn);
-                cmd.ExecuteNonQuery();
-                return true;
             }
             catch (Exception e)
             {
                 return false;
-            }
-            finally
-            {
-                closeOracleConnection(conn);
             }
         }
 
-        public bool revokeExecutePriv(string username,string object_name)
+        public bool revokeExecutePriv(string username, string object_name)
         {
-            OracleConnection conn = getOracleConnection();
             try
             {
-                string query = $@"REVOKE EXECUTE ON {PDBADMIN_USERNAME}.{object_name} FROM {username}";
-                OracleCommand cmd = new OracleCommand(query, conn);
-                cmd.ExecuteNonQuery();
-                return true;
+                using (OracleConnection conn = getOracleConnection())
+                {
+                    string query = $@"REVOKE EXECUTE ON {PDBADMIN_USERNAME.ToUpper()}.{object_name.ToUpper()} FROM {username}";
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
             }
             catch (Exception e)
             {
                 return false;
-            }
-            finally
-            {
-                closeOracleConnection(conn);
             }
         }
     }

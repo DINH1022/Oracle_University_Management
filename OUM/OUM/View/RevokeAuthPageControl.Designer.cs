@@ -57,7 +57,7 @@
             // 
             textBox1.Anchor = AnchorStyles.None;
             textBox1.Font = new Font("Segoe UI", 10F);
-            textBox1.Location = new Point(285, 18);
+            textBox1.Location = new Point(285, 14);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(795, 30);
             textBox1.TabIndex = 1;
@@ -68,25 +68,25 @@
             tableLayoutPanel4.ColumnCount = 2;
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25.17921F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 74.8207855F));
-            tableLayoutPanel4.Controls.Add(label3, 0, 0);
             tableLayoutPanel4.Controls.Add(textBox1, 1, 0);
+            tableLayoutPanel4.Controls.Add(label3, 0, 0);
             tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(3, 75);
+            tableLayoutPanel4.Location = new Point(3, 83);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 1;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel4.Size = new Size(1091, 66);
+            tableLayoutPanel4.Size = new Size(1091, 58);
             tableLayoutPanel4.TabIndex = 1;
             // 
             // label3
             // 
-            label3.Anchor = AnchorStyles.None;
             label3.AutoSize = true;
+            label3.Dock = DockStyle.Right;
             label3.Font = new Font("Segoe UI", 20F);
-            label3.Location = new Point(59, 10);
+            label3.Location = new Point(115, 0);
             label3.Name = "label3";
-            label3.Size = new Size(156, 46);
+            label3.Size = new Size(156, 58);
             label3.TabIndex = 0;
             label3.Text = "Tìm kiếm";
             // 
@@ -101,8 +101,8 @@
             tableLayoutPanel3.Location = new Point(3, 3);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 2;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 55.5555573F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 44.4444427F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel3.Size = new Size(1097, 144);
             tableLayoutPanel3.TabIndex = 9;
@@ -111,10 +111,10 @@
             // 
             label1.AutoSize = true;
             label1.Dock = DockStyle.Top;
-            label1.Font = new Font("Segoe UI", 30F, FontStyle.Bold);
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(1091, 67);
+            label1.Size = new Size(1091, 54);
             label1.TabIndex = 0;
             label1.Text = "Revoke Page";
             label1.Click += label1_Click;
@@ -239,7 +239,7 @@
             // button1
             // 
             button1.Dock = DockStyle.Fill;
-            button1.Font = new Font("Segoe UI", 10F);
+            button1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.Location = new Point(3, 3);
             button1.Name = "button1";
             button1.Size = new Size(359, 38);
@@ -251,7 +251,7 @@
             // button3
             // 
             button3.Dock = DockStyle.Fill;
-            button3.Font = new Font("Segoe UI", 10F);
+            button3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button3.Location = new Point(733, 3);
             button3.Name = "button3";
             button3.Size = new Size(361, 38);
@@ -263,7 +263,7 @@
             // button2
             // 
             button2.Dock = DockStyle.Fill;
-            button2.Font = new Font("Segoe UI", 10F);
+            button2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.Location = new Point(368, 3);
             button2.Name = "button2";
             button2.Size = new Size(359, 38);

@@ -129,9 +129,11 @@
             // roleSearchInput
             // 
             roleSearchInput.Dock = DockStyle.Fill;
+            roleSearchInput.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             roleSearchInput.Location = new Point(88, 0);
             roleSearchInput.Multiline = true;
             roleSearchInput.Name = "roleSearchInput";
+            roleSearchInput.PlaceholderText = "role";
             roleSearchInput.Size = new Size(351, 35);
             roleSearchInput.TabIndex = 2;
             // 
@@ -162,9 +164,11 @@
             // userSearchInput
             // 
             userSearchInput.Dock = DockStyle.Fill;
+            userSearchInput.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             userSearchInput.Location = new Point(88, 0);
             userSearchInput.Multiline = true;
             userSearchInput.Name = "userSearchInput";
+            userSearchInput.PlaceholderText = "username";
             userSearchInput.Size = new Size(351, 35);
             userSearchInput.TabIndex = 2;
             // 
@@ -227,7 +231,7 @@
             // grantPrivilegeBtn
             // 
             grantPrivilegeBtn.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            grantPrivilegeBtn.Location = new Point(19, 3);
+            grantPrivilegeBtn.Location = new Point(19, 0);
             grantPrivilegeBtn.Name = "grantPrivilegeBtn";
             grantPrivilegeBtn.Size = new Size(177, 44);
             grantPrivilegeBtn.TabIndex = 1;

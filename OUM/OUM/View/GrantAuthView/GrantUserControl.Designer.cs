@@ -108,9 +108,11 @@
             // searchInput
             // 
             searchInput.Dock = DockStyle.Fill;
+            searchInput.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             searchInput.Location = new Point(88, 0);
             searchInput.Multiline = true;
             searchInput.Name = "searchInput";
+            searchInput.PlaceholderText = "user";
             searchInput.Size = new Size(351, 36);
             searchInput.TabIndex = 2;
             // 

@@ -51,5 +51,15 @@ namespace OUM.View
         {
             LoadControl(new ManageRoleControl());
         }
+
+        private void GrantBtnNav_click(object sender, EventArgs e)
+        {
+            LoadControl(new GrantPageControl());
+        }
+
+        private void panelMainContent_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

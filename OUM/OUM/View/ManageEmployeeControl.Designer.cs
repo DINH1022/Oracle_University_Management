@@ -75,6 +75,11 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(1006, 267);
             dataGridView1.TabIndex = 2;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // oracleDAOBindingSource
+            // 
+            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
             // 
             // oracleDAOBindingSource
             // 
@@ -149,6 +154,7 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1006, 56);
             panel3.TabIndex = 0;
+            panel3.Paint += panel3_Paint;
             // 
             // label1
             // 

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NavPage));
             panel1 = new Panel();
+            button1 = new Button();
             RevokeBtnNav = new Button();
             RoleBtn = new Button();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -46,6 +47,7 @@
             // 
             panel1.BackColor = Color.LightGoldenrodYellow;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(button1);
             panel1.Controls.Add(RevokeBtnNav);
             panel1.Controls.Add(RoleBtn);
             panel1.Controls.Add(flowLayoutPanel1);
@@ -57,6 +59,18 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(231, 853);
             panel1.TabIndex = 0;
+            // 
+            // button1
+            // 
+            button1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.DarkGreen;
+            button1.Location = new Point(27, 485);
+            button1.Name = "button1";
+            button1.Size = new Size(175, 49);
+            button1.TabIndex = 5;
+            button1.Text = "Cấp quyền";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += GrantBtnNav_click;
             // 
             // RevokeBtnNav
             // 
@@ -146,6 +160,7 @@
             panelMainContent.Name = "panelMainContent";
             panelMainContent.Size = new Size(951, 853);
             panelMainContent.TabIndex = 1;
+            panelMainContent.Paint += panelMainContent_Paint;
             // 
             // NavPage
             // 
@@ -171,5 +186,6 @@
         private Button RoleBtn;
         private Panel panelMainContent;
         private Button RevokeBtnNav;
+        private Button button1;
     }
 }

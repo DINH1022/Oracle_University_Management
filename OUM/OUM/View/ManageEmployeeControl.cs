@@ -166,5 +166,15 @@ namespace OUM.View
             string keyword = searchTextBox.Text;
             FilterData(keyword);
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

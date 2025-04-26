@@ -81,10 +81,6 @@
             // 
             oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
             // 
-            // oracleDAOBindingSource
-            // 
-            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
-            // 
             // panel1
             // 
             panel1.BackColor = Color.WhiteSmoke;
@@ -125,6 +121,7 @@
             // searchTextBox
             // 
             searchTextBox.Dock = DockStyle.Fill;
+            searchTextBox.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             searchTextBox.Location = new Point(88, 0);
             searchTextBox.Multiline = true;
             searchTextBox.Name = "searchTextBox";

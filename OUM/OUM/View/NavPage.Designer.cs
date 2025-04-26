@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NavPage));
             panel1 = new Panel();
+            button2 = new Button();
             button1 = new Button();
             RevokeBtnNav = new Button();
             RoleBtn = new Button();
@@ -39,7 +40,6 @@
             EmpBtn = new Button();
             StudentBtn = new Button();
             panelMainContent = new Panel();
-            button2 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -62,11 +62,23 @@
             panel1.Size = new Size(231, 853);
             panel1.TabIndex = 0;
             // 
+            // button2
+            // 
+            button2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.DarkGreen;
+            button2.Location = new Point(27, 495);
+            button2.Name = "button2";
+            button2.Size = new Size(175, 49);
+            button2.TabIndex = 6;
+            button2.Text = "Xem quyền";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += PerViewBtn_Click;
+            // 
             // button1
             // 
             button1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.DarkGreen;
-            button1.Location = new Point(27, 421);
+            button1.Location = new Point(27, 417);
             button1.Name = "button1";
             button1.Size = new Size(175, 49);
             button1.TabIndex = 5;
@@ -78,7 +90,7 @@
             // 
             RevokeBtnNav.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             RevokeBtnNav.ForeColor = Color.DarkGreen;
-            RevokeBtnNav.Location = new Point(27, 561);
+            RevokeBtnNav.Location = new Point(27, 574);
             RevokeBtnNav.Name = "RevokeBtnNav";
             RevokeBtnNav.Size = new Size(175, 49);
             RevokeBtnNav.TabIndex = 4;
@@ -120,6 +132,7 @@
             // 
             // LogoutBtn
             // 
+            LogoutBtn.BackColor = Color.White;
             LogoutBtn.Dock = DockStyle.Fill;
             LogoutBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             LogoutBtn.ForeColor = Color.DarkGreen;
@@ -163,18 +176,6 @@
             panelMainContent.Size = new Size(951, 853);
             panelMainContent.TabIndex = 1;
             panelMainContent.Paint += panelMainContent_Paint;
-            // 
-            // button2
-            // 
-            button2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.DarkGreen;
-            button2.Location = new Point(27, 487);
-            button2.Name = "button2";
-            button2.Size = new Size(175, 49);
-            button2.TabIndex = 6;
-            button2.Text = "Xem quyền";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += PerViewBtn_Click;
             // 
             // NavPage
             // 

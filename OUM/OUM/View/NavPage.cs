@@ -15,6 +15,7 @@ namespace OUM.View
         public NavPage()
         {
             InitializeComponent();
+            LoadControl(new ManageStudentControl());
         }
 
         private void LoadControl(UserControl control)

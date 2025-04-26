@@ -61,9 +61,9 @@
             label2.Anchor = AnchorStyles.None;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 20F);
-            label2.Location = new Point(19, 2);
+            label2.Location = new Point(19, 0);
             label2.Name = "label2";
-            label2.Size = new Size(156, 46);
+            label2.Size = new Size(156, 45);
             label2.TabIndex = 1;
             label2.Text = "Tìm kiếm";
             // 
@@ -149,7 +149,7 @@
             // OBJECT_Combobox
             // 
             OBJECT_Combobox.FormattingEnabled = true;
-            OBJECT_Combobox.Location = new Point(681, 33);
+            OBJECT_Combobox.Location = new Point(681, 32);
             OBJECT_Combobox.Name = "OBJECT_Combobox";
             OBJECT_Combobox.Size = new Size(272, 28);
             OBJECT_Combobox.TabIndex = 5;
@@ -158,7 +158,7 @@
             // ROLE_Combobox
             // 
             ROLE_Combobox.FormattingEnabled = true;
-            ROLE_Combobox.Location = new Point(340, 33);
+            ROLE_Combobox.Location = new Point(340, 32);
             ROLE_Combobox.Name = "ROLE_Combobox";
             ROLE_Combobox.Size = new Size(272, 28);
             ROLE_Combobox.TabIndex = 4;
@@ -198,7 +198,7 @@
             // 
             USER_Combobox.ForeColor = Color.Black;
             USER_Combobox.FormattingEnabled = true;
-            USER_Combobox.Location = new Point(3, 33);
+            USER_Combobox.Location = new Point(3, 32);
             USER_Combobox.Name = "USER_Combobox";
             USER_Combobox.Size = new Size(283, 28);
             USER_Combobox.TabIndex = 3;
@@ -214,22 +214,22 @@
             tableLayoutPanel4.Controls.Add(ROLE_Combobox, 1, 1);
             tableLayoutPanel4.Controls.Add(label5, 2, 0);
             tableLayoutPanel4.Controls.Add(label4, 1, 0);
-            tableLayoutPanel4.Controls.Add(label3, 0, 0);
             tableLayoutPanel4.Controls.Add(USER_Combobox, 0, 1);
+            tableLayoutPanel4.Controls.Add(label3, 0, 0);
             tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(3, 46);
+            tableLayoutPanel4.Location = new Point(3, 72);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 2;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 77F));
-            tableLayoutPanel4.Size = new Size(1019, 107);
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
+            tableLayoutPanel4.Size = new Size(1019, 87);
             tableLayoutPanel4.TabIndex = 1;
             // 
             // textBox1
             // 
             textBox1.Anchor = AnchorStyles.None;
             textBox1.Font = new Font("Segoe UI", 10F);
-            textBox1.Location = new Point(198, 10);
+            textBox1.Location = new Point(198, 7);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(693, 30);
             textBox1.TabIndex = 2;
@@ -245,20 +245,20 @@
             tableLayoutPanel3.Location = new Point(3, 3);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 2;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5641022F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 72.4359F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 42.5925941F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 57.4074059F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel3.Size = new Size(1025, 156);
+            tableLayoutPanel3.Size = new Size(1025, 162);
             tableLayoutPanel3.TabIndex = 9;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Dock = DockStyle.Top;
-            label1.Font = new Font("Times New Roman", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(1019, 38);
+            label1.Size = new Size(1019, 54);
             label1.TabIndex = 0;
             label1.Text = "View permission";
             // 
@@ -269,11 +269,11 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 78.18792F));
             tableLayoutPanel1.Controls.Add(textBox1, 1, 0);
             tableLayoutPanel1.Controls.Add(label2, 0, 0);
-            tableLayoutPanel1.Location = new Point(3, 165);
+            tableLayoutPanel1.Location = new Point(3, 171);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(894, 50);
+            tableLayoutPanel1.Size = new Size(894, 45);
             tableLayoutPanel1.TabIndex = 10;
             // 
             // tableLayoutPanel2
@@ -289,9 +289,9 @@
             tableLayoutPanel2.Location = new Point(0, 0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 6;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 162F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 9F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 168F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 51F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 8F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle());
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 43F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));

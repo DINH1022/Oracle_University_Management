@@ -22,11 +22,18 @@ namespace OUM.ViewModel
                 _employees = value;
             }
         }
-
+        public EmployeeViewModel()
+        {
+            _employees = new List<Employee>();
+        }
         public void LoadData()
         {
             OracleDAO dao = new OracleDAO();
             Employees = dao.GetListEmployees();
+        }
+        public bool IsMaNLDExists(string maNLD)
+        {
+            return Employees.Any(e => e.manld.Equals(maNLD, StringComparison.OrdinalIgnoreCase));
         }
 
         public void AddEmployee(Employee emp)

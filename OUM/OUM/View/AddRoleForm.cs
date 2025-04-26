@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace OUM.View
 {
@@ -36,18 +37,31 @@ namespace OUM.View
                     MessageBox.Show("Vui lòng điền tên vai trò.");
                     return;
                 }
-                UserPerRole r = new UserPerRole(name, 0);
+                
 
                 RoleViewModel vm = new RoleViewModel();
+                if (vm.IsRolexists(name))
+                {
+                    MessageBox.Show("Role đã tồn tại. Vui lòng nhập role khác.");
+                    return;
+                }
+                UserPerRole r = new UserPerRole(name, 0);
                 vm.AddRole(r);
 
-                MessageBox.Show("Thêm role thành công!");
+                
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi thêm role: " + ex.Message);
+                if (ex.Message.Contains("ORA-00001"))
+                {
+                    MessageBox.Show("Role đã tồn tại. Vui lòng nhập role khác.");
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi khi thêm role: " + ex.Message);
+                }
             }
         }
 

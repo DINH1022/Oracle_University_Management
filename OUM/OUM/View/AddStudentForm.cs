@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace OUM.View
 {
@@ -85,18 +86,31 @@ namespace OUM.View
                     return;
                 }
 
-                Student st = new Student(id, name, gender, dob, phone, department, status, address);
+                
 
                 StudentViewModel vm = new StudentViewModel();
+                if (vm.IsMaSVExists(id))
+                {
+                    MessageBox.Show("Mã SV đã tồn tại. Vui lòng nhập mã khác.");
+                    return;
+                }
+                Student st = new Student(id, name, gender, dob, phone, department, status, address);
                 vm.AddStudent(st);
 
-                MessageBox.Show("Thêm sinh viên thành công!");
+                
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi thêm sinh viên: " + ex.Message);
+                if (ex.Message.Contains("ORA-00001"))
+                {
+                    MessageBox.Show("User đã tồn tại. Vui lòng nhập mã sinh viên khác.");
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi khi thêm sinh viên: " + ex.Message);
+                }
             }
         }
 

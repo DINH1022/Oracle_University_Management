@@ -22,6 +22,10 @@ namespace OUM.ViewModel
                 _userPerRoles = value;
             }
         }
+        public RoleViewModel()
+        {
+            _userPerRoles= new List<UserPerRole>();
+        }
 
         public void LoadData()
         {
@@ -29,6 +33,10 @@ namespace OUM.ViewModel
             UserPerRoles = dao.GetListRole();
         }
 
+        public bool IsRolexists(string role)
+        {
+            return UserPerRoles.Any(e => e.roleName.Equals(role, StringComparison.OrdinalIgnoreCase));
+        }
         public void DeleteRole(UserPerRole upr)
         {
             OracleDAO dao = new OracleDAO();

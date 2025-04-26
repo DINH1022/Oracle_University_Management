@@ -105,16 +105,29 @@ namespace OUM.View
                     return;
                 }
 
+                
+                EmployeeViewModel vm = new EmployeeViewModel();
+                if (vm.IsMaNLDExists(maNLD))
+                {
+                    MessageBox.Show("Mã nld đã tồn tại. Vui lòng nhập mã khác.");
+                    return;
+                }
                 Employee emp = new Employee(maNLD, hoTen, gioiTinh, ngaySinh, luong, phuCap, sdt, maDV, vaiTro);
 
-                EmployeeViewModel vm = new EmployeeViewModel();
                 vm.AddEmployee(emp);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message);
+                if (ex.Message.Contains("ORA-00001"))
+                {
+                    MessageBox.Show("User đã tồn tại. Vui lòng nhập mã nld khác.");
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi khi thêm nhân viên: " + ex.Message);
+                }
             }
         }
     }

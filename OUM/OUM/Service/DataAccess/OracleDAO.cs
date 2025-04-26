@@ -442,7 +442,14 @@ namespace OUM.Service.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi thêm sinh viên hoặc tạo user:\n" + ex.Message);
+                    if (ex.Message.Contains("ORA-00001"))
+                    {
+                        MessageBox.Show("User đã tồn tại. Vui lòng nhập mã sinh viên khác.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lỗi khi thêm sinh viên: " + ex.Message);
+                    }
                 }
             }
         }
@@ -539,7 +546,14 @@ namespace OUM.Service.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi thêm nhân viên hoặc tạo user:\n" + ex.Message);
+                    if (ex.Message.Contains("ORA-00001"))
+                    {
+                        MessageBox.Show("User đã tồn tại. Vui lòng nhập mã nld khác.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lỗi khi thêm nhân viên: " + ex.Message);
+                    }
                 }
             }
         }
@@ -731,7 +745,14 @@ namespace OUM.Service.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi thêm role:\n" + ex.Message);
+                    if (ex.Message.Contains("ORA-01921"))
+                    {
+                        MessageBox.Show("Role đã tồn tại. Vui lòng nhập role khác.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lỗi khi thêm role: " + ex.Message);
+                    }
                 }
             }
         }

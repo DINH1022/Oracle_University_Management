@@ -24,12 +24,20 @@ namespace OUM.ViewModel
             }
         }
 
+        public StudentViewModel()
+        {
+            _students = new List<Student>(); 
+        }
+
         public void LoadData()
         {
             OracleDAO dao = new OracleDAO();
             Students = dao.GetListStudents();
         }
-
+        public bool IsMaSVExists(string masv)
+        {
+            return Students.Any(e => e.id.Equals(masv, StringComparison.OrdinalIgnoreCase));
+        }
         public void AddStudent(Student st)
         {
             OracleDAO dao = new OracleDAO();

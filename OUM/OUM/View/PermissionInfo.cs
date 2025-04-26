@@ -139,7 +139,7 @@ namespace OUM.View
                 }
                 else
                 {
-                    MessageBox.Show("Không có quyền cho người dùng này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace OUM.View
             }
             else
             {
-                MessageBox.Show("Không có quyền cho vai trò này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               
             }
 
         }
@@ -276,7 +276,7 @@ namespace OUM.View
             }
             else
             {
-                MessageBox.Show("Không có quyền cho đối tượng này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
             }
         }
         private List<PermissionIn> GetObjectPermissions(string objectName)
@@ -314,6 +314,5 @@ namespace OUM.View
 
             return permissions;
         }
-
     }
 }

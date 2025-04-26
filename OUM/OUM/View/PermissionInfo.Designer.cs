@@ -80,7 +80,7 @@
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(1004, 625);
+            dataGridView1.Size = new Size(1025, 625);
             dataGridView1.TabIndex = 8;
             // 
             // Column1
@@ -149,24 +149,26 @@
             // OBJECT_Combobox
             // 
             OBJECT_Combobox.FormattingEnabled = true;
-            OBJECT_Combobox.Location = new Point(667, 33);
+            OBJECT_Combobox.Location = new Point(681, 33);
             OBJECT_Combobox.Name = "OBJECT_Combobox";
             OBJECT_Combobox.Size = new Size(272, 28);
             OBJECT_Combobox.TabIndex = 5;
+            OBJECT_Combobox.SelectedIndexChanged += OBJECT_Combobox_SelectedIndexChanged;
             // 
             // ROLE_Combobox
             // 
             ROLE_Combobox.FormattingEnabled = true;
-            ROLE_Combobox.Location = new Point(333, 33);
+            ROLE_Combobox.Location = new Point(340, 33);
             ROLE_Combobox.Name = "ROLE_Combobox";
             ROLE_Combobox.Size = new Size(272, 28);
             ROLE_Combobox.TabIndex = 4;
+            ROLE_Combobox.SelectedIndexChanged += ROLE_Combobox_SelectedIndexChanged;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(667, 0);
+            label5.Location = new Point(681, 0);
             label5.Name = "label5";
             label5.Size = new Size(78, 25);
             label5.TabIndex = 2;
@@ -176,7 +178,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(333, 0);
+            label4.Location = new Point(340, 0);
             label4.Name = "label4";
             label4.Size = new Size(57, 25);
             label4.TabIndex = 1;
@@ -200,6 +202,7 @@
             USER_Combobox.Name = "USER_Combobox";
             USER_Combobox.Size = new Size(283, 28);
             USER_Combobox.TabIndex = 3;
+            USER_Combobox.SelectedIndexChanged += USER_Combobox_SelectedIndexChanged;
             // 
             // tableLayoutPanel4
             // 
@@ -219,7 +222,7 @@
             tableLayoutPanel4.RowCount = 2;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 77F));
-            tableLayoutPanel4.Size = new Size(998, 107);
+            tableLayoutPanel4.Size = new Size(1019, 107);
             tableLayoutPanel4.TabIndex = 1;
             // 
             // textBox1
@@ -245,7 +248,7 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 27.5641022F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 72.4359F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel3.Size = new Size(1004, 156);
+            tableLayoutPanel3.Size = new Size(1025, 156);
             tableLayoutPanel3.TabIndex = 9;
             // 
             // label1
@@ -255,7 +258,7 @@
             label1.Font = new Font("Times New Roman", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(998, 38);
+            label1.Size = new Size(1019, 38);
             label1.TabIndex = 0;
             label1.Text = "View permission";
             // 

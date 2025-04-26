@@ -28,7 +28,7 @@ namespace OUM.Service.DataAccess
             }
             catch
             {
-                return true;
+                return false;
             }
         }
         public string GetConnectionString()
@@ -751,7 +751,7 @@ namespace OUM.Service.DataAccess
                     connection.Open();
 
                     // Lấy dữ liệu từ bảng NHANVIEN (Nhân viên)
-                    string query = "SELECT MANLD AS UserId, HOTEN AS UserName, 'Employee' AS UserType FROM NHANVIEN";
+                    string query = "SELECT MANLD AS UserId, HOTEN AS UserName, 'Employee' AS UserType FROM NHANVIEN ORDER BY MANLD";
                     using (var command = new OracleCommand(query, connection))
                     using (var reader = command.ExecuteReader())
                     {
@@ -767,7 +767,7 @@ namespace OUM.Service.DataAccess
                     }
 
                     // Lấy dữ liệu từ bảng SINHVIEN (Sinh viên)
-                    query = "SELECT  MASV AS UserId, HOTEN AS UserName, 'Student' AS UserType FROM SINHVIEN";
+                    query = "SELECT  MASV AS UserId, HOTEN AS UserName, 'Student' AS UserType FROM SINHVIEN ORDER BY MASV";
                     using (var command = new OracleCommand(query, connection))
                     using (var reader = command.ExecuteReader())
                     {

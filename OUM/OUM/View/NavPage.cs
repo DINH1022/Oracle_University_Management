@@ -61,5 +61,10 @@ namespace OUM.View
         {
 
         }
+
+        private void PerViewBtn_Click(object sender, EventArgs e)
+        {
+            LoadControl(new PermissionInfo());
+        }
     }
 }

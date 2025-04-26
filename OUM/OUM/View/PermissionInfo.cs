@@ -55,6 +55,7 @@ namespace OUM.View
             }
             else
             {
+                USER_Combobox.DataSource = null;
                 MessageBox.Show("Không có người dùng trong cơ sở dữ liệu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -68,6 +69,7 @@ namespace OUM.View
             }
             else
             {
+                ROLE_Combobox.DataSource = null;
                 MessageBox.Show("Không có roles trong cơ sở dữ liệu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -89,6 +91,7 @@ namespace OUM.View
             }
             else
             {
+                OBJECT_Combobox.DataSource = null;
                 MessageBox.Show("Không có đối tượng nào trong cơ sở dữ liệu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -139,7 +142,7 @@ namespace OUM.View
                 }
                 else
                 {
-                    
+                    dataGridView1.DataSource = new List<PermissionIn>();
                 }
             }
         }
@@ -219,7 +222,7 @@ namespace OUM.View
             }
             else
             {
-               
+                dataGridView1.DataSource = new List<PermissionIn>();
             }
 
         }
@@ -276,7 +279,7 @@ namespace OUM.View
             }
             else
             {
-                
+                dataGridView1.DataSource = new List<PermissionIn>();
             }
         }
         private List<PermissionIn> GetObjectPermissions(string objectName)

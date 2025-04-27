@@ -248,7 +248,7 @@ namespace OUM.View
             refresh_datagrid_user();
             configUIHeaders();
             configUICells();
-            //grantInformations=revokeDAO.getUserPrivileges();
+            grantInformations = revokeDAO.getUserPrivileges();
             dataGridView1.DataSource = grantInformations;
             dataGridView1.AutoResizeRows();
         }

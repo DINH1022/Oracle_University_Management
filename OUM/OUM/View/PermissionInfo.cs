@@ -1,4 +1,5 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using Oracle.ManagedDataAccess.Client;
 using OUM.Model;
 using OUM.Service.DataAccess;
 using OUM.Session;
@@ -37,7 +38,7 @@ namespace OUM.View
         {
             LoadAllRolesToComboBox();
             LoadAllUsersToComboBox();
-            LoadObjectsToComboBox();
+            //LoadObjectsToComboBox();
 
             textBox1.TextChanged += new EventHandler(textBox1_TextChanged);
         }
@@ -74,27 +75,27 @@ namespace OUM.View
             }
         }
 
-        private void LoadObjectsToComboBox()
-        {
-            List<string> tables = dao.GetAllTables();
-            List<string> procedures = dao.GetAllProcedures();
-            List<string> functions = dao.GetAllFunctions();
+        //private void LoadObjectsToComboBox()
+        //{
+        //    List<string> tables = dao.GetAllTables();
+        //    List<string> procedures = dao.GetAllProcedures();
+        //    List<string> functions = dao.GetAllFunctions();
 
-            List<string> allObjects = new List<string>();
-            allObjects.AddRange(tables);
-            allObjects.AddRange(procedures);
-            allObjects.AddRange(functions);
+        //    List<string> allObjects = new List<string>();
+        //    allObjects.AddRange(tables);
+        //    allObjects.AddRange(procedures);
+        //    allObjects.AddRange(functions);
 
-            if (allObjects.Count > 0)
-            {
-                OBJECT_Combobox.DataSource = allObjects;
-            }
-            else
-            {
-                OBJECT_Combobox.DataSource = null;
-                MessageBox.Show("Không có đối tượng nào trong cơ sở dữ liệu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
+        //    if (allObjects.Count > 0)
+        //    {
+        //        OBJECT_Combobox.DataSource = allObjects;
+        //    }
+        //    else
+        //    {
+        //        OBJECT_Combobox.DataSource = null;
+        //        MessageBox.Show("Không có đối tượng nào trong cơ sở dữ liệu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    }
+        //}
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -230,7 +231,11 @@ namespace OUM.View
         private List<PermissionIn> GetRolePermissions(string roleName)
         {
             List<PermissionIn> permissions = new List<PermissionIn>();
-            string query = "SELECT GRANTEE, TABLE_NAME, PRIVILEGE, 'NONE' AS COLUMN_NAME, GRANTABLE , GRANTOR  FROM DBA_TAB_PRIVS WHERE GRANTEE = :roleName";
+            string query = "SELECT GRANTEE, TABLE_NAME, PRIVILEGE, GRANTABLE, OWNER " +
+                   "FROM DBA_TAB_PRIVS WHERE GRANTEE LIKE :userId";
+
+            string query2 = "SELECT GRANTEE, OWNER, TABLE_NAME, COLUMN_NAME, PRIVILEGE " +
+                    "FROM DBA_COL_PRIVS WHERE GRANTEE LIKE :userId";
 
             using (OracleConnection connection = new OracleConnection(GetConnectionString()))
             {
@@ -238,50 +243,69 @@ namespace OUM.View
                 {
                     connection.Open();
                     OracleCommand command = new OracleCommand(query, connection);
-                    command.Parameters.Add(new OracleParameter(":roleName", roleName));
+                    command.Parameters.Add(new OracleParameter(":userId", roleName + "%"));
+
                     OracleDataReader reader = command.ExecuteReader();
 
                     while (reader.Read())
                     {
+
                         permissions.Add(new PermissionIn
                         {
-                            //Name = reader["GRANTEE"].ToString(),
-                            Role = reader["GRANTEE"].ToString(),
+                            Name = reader["GRANTEE"].ToString(),
                             ObjectName = reader["TABLE_NAME"].ToString(),
                             Authority = reader["PRIVILEGE"].ToString(),
-                            Columns = reader["COLUMN_NAME"].ToString(),
                             GrantOption = reader["GRANTABLE"].ToString(),
-                            Operation = reader["GRANTOR"]?.ToString()
+                            Operation = reader["OWNER"]?.ToString(),
+                            Columns = "NONE"
                         });
                     }
+
+                    OracleCommand command2 = new OracleCommand(query2, connection);
+                    command2.Parameters.Add(new OracleParameter(":userId", roleName + "%"));
+                    OracleDataReader reader2 = command2.ExecuteReader();
+
+                    while (reader2.Read())
+                    {
+                        permissions.Add(new PermissionIn
+                        {
+                            Name = reader2["GRANTEE"].ToString(),
+                            ObjectName = reader2["TABLE_NAME"].ToString(),
+                            Authority = reader2["PRIVILEGE"].ToString(),
+                            GrantOption = "NONE",  // Quyền cấp lại không có cho quyền cột
+                            Operation = reader2["OWNER"]?.ToString(),
+                            Columns = reader2["COLUMN_NAME"].ToString() // Thêm cột cho quyền trên cột
+                        });
+                    }
+
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi lấy quyền vai trò: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lỗi khi lấy quyền người dùng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
             return permissions;
         }
 
-        private void OBJECT_Combobox_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        //private void OBJECT_Combobox_SelectedIndexChanged(object sender, EventArgs e)
+        //{
 
-            string objectName = OBJECT_Combobox.SelectedItem.ToString();
-            var objectpermissions = GetObjectPermissions(objectName);
-            permissions = objectpermissions;
+        //    string objectName = OBJECT_Combobox.SelectedItem.ToString();
+        //    var objectpermissions = GetObjectPermissions(objectName);
+        //    permissions = objectpermissions;
 
 
 
-            if (permissions.Count > 0)
-            {
-                dataGridView1.DataSource = objectpermissions;
-            }
-            else
-            {
-                dataGridView1.DataSource = new List<PermissionIn>();
-            }
-        }
+        //    if (permissions.Count > 0)
+        //    {
+        //        dataGridView1.DataSource = objectpermissions;
+        //    }
+        //    else
+        //    {
+        //        dataGridView1.DataSource = new List<PermissionIn>();
+        //    }
+        //}
         private List<PermissionIn> GetObjectPermissions(string objectName)
         {
             List<PermissionIn> permissions = new List<PermissionIn>();

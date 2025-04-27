@@ -37,9 +37,7 @@
             Column4 = new DataGridViewTextBoxColumn();
             Column5 = new DataGridViewTextBoxColumn();
             Column6 = new DataGridViewTextBoxColumn();
-            OBJECT_Combobox = new ComboBox();
             ROLE_Combobox = new ComboBox();
-            label5 = new Label();
             label4 = new Label();
             label3 = new Label();
             USER_Combobox = new ComboBox();
@@ -146,15 +144,6 @@
             Column6.ReadOnly = true;
             Column6.Width = 125;
             // 
-            // OBJECT_Combobox
-            // 
-            OBJECT_Combobox.FormattingEnabled = true;
-            OBJECT_Combobox.Location = new Point(681, 32);
-            OBJECT_Combobox.Name = "OBJECT_Combobox";
-            OBJECT_Combobox.Size = new Size(272, 28);
-            OBJECT_Combobox.TabIndex = 5;
-            OBJECT_Combobox.SelectedIndexChanged += OBJECT_Combobox_SelectedIndexChanged;
-            // 
             // ROLE_Combobox
             // 
             ROLE_Combobox.FormattingEnabled = true;
@@ -163,16 +152,6 @@
             ROLE_Combobox.Size = new Size(272, 28);
             ROLE_Combobox.TabIndex = 4;
             ROLE_Combobox.SelectedIndexChanged += ROLE_Combobox_SelectedIndexChanged;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(681, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(78, 25);
-            label5.TabIndex = 2;
-            label5.Text = "OBJECT";
             // 
             // label4
             // 
@@ -210,9 +189,7 @@
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.1641273F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.50254F));
             tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel4.Controls.Add(OBJECT_Combobox, 2, 1);
             tableLayoutPanel4.Controls.Add(ROLE_Combobox, 1, 1);
-            tableLayoutPanel4.Controls.Add(label5, 2, 0);
             tableLayoutPanel4.Controls.Add(label4, 1, 0);
             tableLayoutPanel4.Controls.Add(USER_Combobox, 0, 1);
             tableLayoutPanel4.Controls.Add(label3, 0, 0);
@@ -328,9 +305,7 @@
         private DataGridViewTextBoxColumn Column4;
         private DataGridViewTextBoxColumn Column5;
         private DataGridViewTextBoxColumn Column6;
-        private ComboBox OBJECT_Combobox;
         private ComboBox ROLE_Combobox;
-        private Label label5;
         private Label label4;
         private Label label3;
         private ComboBox USER_Combobox;

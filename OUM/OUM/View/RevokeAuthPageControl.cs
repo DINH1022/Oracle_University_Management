@@ -86,7 +86,6 @@ namespace OUM.View
             {HEADERTEXT_USER_ROLE_GRANTOPT ,"GrantOption"}
         };
 
-        private Boolean isDisplayingGrantInfor = true;
         private List<GrantInformation> grantInformations = new List<GrantInformation>();
         private List<UserRoleInformation> userRoleInformations = new List<UserRoleInformation>();
         public RevokeAuthPageControl()
@@ -249,7 +248,7 @@ namespace OUM.View
             refresh_datagrid_user();
             configUIHeaders();
             configUICells();
-            grantInformations=revokeDAO.getUserPrivileges();
+            //grantInformations=revokeDAO.getUserPrivileges();
             dataGridView1.DataSource = grantInformations;
             dataGridView1.AutoResizeRows();
         }
@@ -414,13 +413,17 @@ namespace OUM.View
             userRoleInformations=revokeDAO.getUserRolePrivs();
             dataGridView1.DataSource=userRoleInformations;
         }
-
+        private bool isDisplayingGrantInfor()
+        {
+            return label2.Text.ToUpper()==TEXT_ROLE_AUTH_PAGE.ToUpper()
+                || label2.Text.ToUpper()==TEXT_USER_AUTH_PAGE.ToUpper();
+        }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             if (textBox1.Text.Length <= 0)
             {
                 //restore the old one;
-                if (isDisplayingGrantInfor)
+                if (isDisplayingGrantInfor())
                 {
                     dataGridView1.DataSource = grantInformations;
                 }
@@ -429,21 +432,23 @@ namespace OUM.View
                     dataGridView1.DataSource = userRoleInformations;
                 }
             }
-            if (isDisplayingGrantInfor)
+            if (isDisplayingGrantInfor())
             {
+                string text = textBox1.Text.ToLower();
                 List<GrantInformation> newDisplayingGrantInformations = grantInformations
-                    .Where(grant => grant.Name.ToLower().Contains(textBox1.Text.ToLower())
-                    || grant.ObjectName.ToLower().Contains(textBox1.Text.ToLower())
-                    || grant.Authority.ToLower().Contains(textBox1.Text.ToLower())
-                    || grant.Columns.ToLower().Contains(textBox1.Text.ToLower())
+                    .Where(grant => grant.Name.ToLower().Contains(text)
+                    || grant.ObjectName.ToLower().Contains(text)
+                    || grant.Authority.ToLower().Contains(text)
+                    || grant.Columns.ToLower().Contains(text)
                     ).ToList();
                 dataGridView1.DataSource = newDisplayingGrantInformations;
             }
             else
             {
+                string text = textBox1.Text.ToLower();
                 List<UserRoleInformation> newDisplayingUserRoleInfors = userRoleInformations
-                    .Where(obj => obj.Name.Contains(textBox1.Text.ToLower())
-                    || obj.Role.Contains(textBox1.Text.ToLower())
+                    .Where(obj => obj.Name.ToLower().Contains(text)
+                    || obj.Role.ToLower().Contains(text)
                     ).ToList();
                 dataGridView1.DataSource = newDisplayingUserRoleInfors;
             }

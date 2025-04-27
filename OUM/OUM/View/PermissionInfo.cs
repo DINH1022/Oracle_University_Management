@@ -97,6 +97,12 @@ namespace OUM.View
         //    }
         //}
 
+
+
+
+
+
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             string searchText = textBox1.Text.ToLower();  // Lấy văn bản từ TextBox và chuyển thành chữ thường để so sánh không phân biệt chữ hoa và chữ thường
@@ -107,14 +113,7 @@ namespace OUM.View
             }
             else
             {
-                var filteredPermissions = permissions.Where(p =>
-                    p.Name.ToLower().Contains(searchText) ||          // Kiểm tra theo Name (User)
-                    p.ObjectName.ToLower().Contains(searchText) ||    // Kiểm tra theo ObjectName
-                    p.Authority.ToLower().Contains(searchText) ||     // Kiểm tra theo Authority
-                    p.Operation.ToLower().Contains(searchText) ||     // Kiểm tra theo Operation
-                    p.Columns.ToLower().Contains(searchText) ||       // Kiểm tra theo Columns
-                    p.Role.ToLower().Contains(searchText)             // Kiểm tra theo Role (Role)
-                ).ToList();
+                var filteredPermissions = Search(searchText);
 
                 dataGridView1.DataSource = filteredPermissions;
             }
@@ -185,6 +184,65 @@ namespace OUM.View
 
                     OracleCommand command2 = new OracleCommand(query2, connection);
                     command2.Parameters.Add(new OracleParameter(":userId", userId + "%"));
+                    OracleDataReader reader2 = command2.ExecuteReader();
+
+                    while (reader2.Read())
+                    {
+                        permissions.Add(new PermissionIn
+                        {
+                            Name = reader2["GRANTEE"].ToString(),
+                            ObjectName = reader2["TABLE_NAME"].ToString(),
+                            Authority = reader2["PRIVILEGE"].ToString(),
+                            GrantOption = "NONE",  // Quyền cấp lại không có cho quyền cột
+                            Operation = reader2["OWNER"]?.ToString(),
+                            Columns = reader2["COLUMN_NAME"].ToString() // Thêm cột cho quyền trên cột
+                        });
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi lấy quyền người dùng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            return permissions;
+        }
+        private List<PermissionIn> Search(string keyword)
+        {
+            List<PermissionIn> permissions = new List<PermissionIn>();
+            string query = $@"SELECT GRANTEE, TABLE_NAME, PRIVILEGE, GRANTABLE, OWNER   
+                            FROM USER_TAB_PRIVS WHERE GRANTEE LIKE '%{keyword.ToUpper()}%'";
+
+            string query2 = $@"SELECT GRANTEE, OWNER, TABLE_NAME, COLUMN_NAME, PRIVILEGE   
+                            FROM USER_COL_PRIVS WHERE GRANTEE LIKE '%{keyword.ToUpper()}%'";
+
+            using (OracleConnection connection = new OracleConnection(GetConnectionString()))
+            {
+                try
+                {
+                    connection.Open();
+                    OracleCommand command = new OracleCommand(query, connection);
+                    //command.Parameters.Add(new OracleParameter(":userId", "%"+keyword + "%"));
+
+                    OracleDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+
+                        permissions.Add(new PermissionIn
+                        {
+                            Name = reader["GRANTEE"].ToString(),
+                            ObjectName = reader["TABLE_NAME"].ToString(),
+                            Authority = reader["PRIVILEGE"].ToString(),
+                            GrantOption = reader["GRANTABLE"].ToString(),
+                            Operation = reader["OWNER"]?.ToString(),
+                            Columns = "NONE"
+                        });
+                    }
+
+                    OracleCommand command2 = new OracleCommand(query2, connection);
+                    //command2.Parameters.Add(new OracleParameter(":userId","%"+ keyword + "%"));
                     OracleDataReader reader2 = command2.ExecuteReader();
 
                     while (reader2.Read())

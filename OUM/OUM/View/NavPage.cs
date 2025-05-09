@@ -72,5 +72,10 @@ namespace OUM.View
         {
             LoadControl(new RegistrationCoursePageControl());
         }
+
+        private void CloseApp(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NavPage));
             panel1 = new Panel();
+            button3 = new Button();
             button2 = new Button();
             button1 = new Button();
             RevokeBtnNav = new Button();
@@ -40,7 +41,6 @@
             EmpBtn = new Button();
             StudentBtn = new Button();
             panelMainContent = new Panel();
-            button3 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -63,6 +63,18 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(231, 853);
             panel1.TabIndex = 0;
+            // 
+            // button3
+            // 
+            button3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.ForeColor = Color.DarkGreen;
+            button3.Location = new Point(27, 659);
+            button3.Name = "button3";
+            button3.Size = new Size(175, 49);
+            button3.TabIndex = 7;
+            button3.Text = "Đăng ký học phần";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += registrationCourseBtn;
             // 
             // button2
             // 
@@ -179,18 +191,6 @@
             panelMainContent.TabIndex = 1;
             panelMainContent.Paint += panelMainContent_Paint;
             // 
-            // button3
-            // 
-            button3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.DarkGreen;
-            button3.Location = new Point(27, 659);
-            button3.Name = "button3";
-            button3.Size = new Size(175, 49);
-            button3.TabIndex = 7;
-            button3.Text = "Đăng ký học phần";
-            button3.UseVisualStyleBackColor = false;
-            button3.Click += registrationCourseBtn;
-            // 
             // NavPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -199,6 +199,7 @@
             Controls.Add(panelMainContent);
             Controls.Add(panel1);
             Name = "NavPage";
+            FormClosing += CloseApp;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             ResumeLayout(false);

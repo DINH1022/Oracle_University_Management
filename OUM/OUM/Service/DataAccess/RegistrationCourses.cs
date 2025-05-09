@@ -56,7 +56,46 @@ namespace OUM.Service.DataAccess
                 return courses;
             }
         }
-
+        public List<NewRegistrationCourse> GetNewRegistrationCourses(string keyword)
+        {
+            List<NewRegistrationCourse> courses = new List<NewRegistrationCourse>();
+            try
+            {
+                string connectionString = dao.GetConnectionString();
+                using (var connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = $@"SELECT MM.MAMM, MM.MAHP, HP.TENHP,HP.SOTC, HP.STLT, HP.STTH
+                                      FROM {PDBADMIN_USERNAME}.{MOMON_VIEW_NAME} MM JOIN
+                                           {PDBADMIN_USERNAME}.{HOCPHAN_TABLE_NAME} HP ON (MM.MAHP=HP.MAHP)" +(!string.IsNullOrEmpty(keyword) ? " WHERE UPPER(HP.TENHP) LIKE UPPER(:keyword)" :"");
+                    OracleCommand command = new OracleCommand(query,connection);
+                    if(!string.IsNullOrEmpty(keyword))
+                    {
+                        command.Parameters.Add(new OracleParameter("keyword","%"+keyword+"%"));
+                    }
+                    OracleDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        NewRegistrationCourse course = new NewRegistrationCourse(
+                            mamm: reader["MAMM"].ToString(),
+                            mahp: reader["MAHP"].ToString(),
+                            tenhp: reader["TENHP"].ToString(),
+                            sotc: Convert.ToInt32(reader["SOTC"]),
+                            stth: Convert.ToInt32(reader["STTH"]),
+                            stlt: Convert.ToInt32(reader["STLT"])
+                        );
+                        courses.Add(course);
+                    }
+                    connection.Close();
+                    return courses;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return courses;
+            }
+        }
         public bool CancelRegistrationCourse(string masv,string mamm)
         {
             try

@@ -26,6 +26,9 @@ namespace OUM.View
             panelMainContent.Controls.Add(control);
         }
 
-       
+        private void registerNewCourseBtnClick(object sender, EventArgs e)
+        {
+            LoadControl(new RegisterNewCoursePage());
+        }
     }
 }

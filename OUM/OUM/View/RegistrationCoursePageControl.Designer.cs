@@ -92,6 +92,7 @@
             button1.TabIndex = 2;
             button1.Text = "Đăng ký học phần mới";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += registerNewCourseBtnClick;
             // 
             // panelMainContent
             // 

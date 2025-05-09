@@ -11,8 +11,17 @@ namespace OUM.Model
         public string MAMM {  get; set; } 
         public string MAHP { get; set; }
         public string TENHP { get; set; }
-        public string SOTC { get; set; }
-        public string STLT { get; set; }
-        public string STTH { get; set; }
+        public int SOTC { get; set; }
+        public int STTH { get; set; }
+        public int STLT { get; set; }
+        public NewRegistrationCourse(string mamm, string mahp, string tenhp, int sotc, int stlt, int stth)
+        {
+            MAMM = mamm;
+            MAHP = mahp;
+            TENHP = tenhp;
+            SOTC = sotc;
+            STTH = stth;
+            STLT = stlt;
+        }
     }
 }

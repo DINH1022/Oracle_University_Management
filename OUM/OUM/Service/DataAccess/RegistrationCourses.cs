@@ -46,6 +46,7 @@ namespace OUM.Service.DataAccess
                         );
                         courses.Add(course);
                     }
+                    con.Close();
                 }
                 return courses;
             }
@@ -53,6 +54,29 @@ namespace OUM.Service.DataAccess
             {
                 Console.WriteLine("Error when get registered course",ex.Message);
                 return courses;
+            }
+        }
+
+        public bool CancelRegistrationCourse(string masv,string mamm)
+        {
+            try
+            {
+                string connectionString = dao.GetConnectionString();
+                using (var connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = $@"DELETE FROM {PDBADMIN_USERNAME}.{DANGKY_TABLE_NAME} WHERE MASV =:masv AND MAMM =:mamm";
+                    var command = new OracleCommand(query,connection);
+                    command.Parameters.Add(new OracleParameter("masv", masv));
+                    command.Parameters.Add(new OracleParameter("mamm", mamm));
+                    int count= command.ExecuteNonQuery();
+                    return count >0;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
         }
     }

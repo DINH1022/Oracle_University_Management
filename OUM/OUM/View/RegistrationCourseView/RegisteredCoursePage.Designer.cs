@@ -42,6 +42,7 @@
             listRegisteredCourses.RowHeadersWidth = 51;
             listRegisteredCourses.Size = new Size(1058, 750);
             listRegisteredCourses.TabIndex = 0;
+            listRegisteredCourses.CellClick += cancelBtnClick;
             // 
             // RegisteredCoursePage
             // 

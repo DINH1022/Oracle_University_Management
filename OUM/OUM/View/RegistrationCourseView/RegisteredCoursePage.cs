@@ -28,6 +28,25 @@ namespace OUM.View.RegistrationCourseView
             listRegisteredCourses.AutoGenerateColumns = true;
             listRegisteredCourses.DataSource = registeredCourses;
             listRegisteredCourses.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            DataGridViewButtonColumn cancelBtn = new DataGridViewButtonColumn
+            {
+                HeaderText = "Thao tác",
+                Text = "Hủy đăng ký",
+                UseColumnTextForButtonValue = true,
+                Name = "cancelBtn"
+            };
+            listRegisteredCourses.Columns.Add(cancelBtn);
+
+        }
+
+        private void cancelBtnClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.ColumnIndex== listRegisteredCourses.Columns["cancelBtn"].Index && e.RowIndex >= 0)
+            {
+                RegisteredCourse selectedCourse = registeredCourses[e.RowIndex];
+                // THEM SU KIEN XOA HOC PHAN O DAY
+            }
         }
     }
 }

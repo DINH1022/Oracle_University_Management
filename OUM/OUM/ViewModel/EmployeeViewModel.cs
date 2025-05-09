@@ -28,32 +28,32 @@ namespace OUM.ViewModel
         }
         public void LoadData()
         {
-            OracleDAO dao = new OracleDAO();
+            EmpDao dao = new EmpDao();
             Employees = dao.GetListEmployees();
         }
         public bool IsMaNLDExists(string maNLD)
         {
-            return Employees.Any(e => e.manld.Equals(maNLD, StringComparison.OrdinalIgnoreCase));
+            EmpDao dao = new EmpDao();
+            return dao.IsMaNLDExists(maNLD);
         }
 
         public void AddEmployee(Employee emp)
         {
-            OracleDAO dao = new OracleDAO();
+            EmpDao dao = new EmpDao();
             dao.InsertEmployee(emp); 
             LoadData();
         }
 
         public void UpdateEmployee(Employee emp)
         {
-            OracleDAO dao = new OracleDAO();
+            EmpDao dao = new EmpDao();
             dao.UpdateEmployee(emp);
             LoadData();
         }
 
         public void DeleteEmployee(Employee emp)
         {
-            OracleDAO dao = new OracleDAO();
-            dao.DropUser(emp.Username);
+            EmpDao dao = new EmpDao();
             dao.DeleteEmployee(emp);
             LoadData();
         }

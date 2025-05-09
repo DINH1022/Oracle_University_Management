@@ -31,31 +31,30 @@ namespace OUM.ViewModel
 
         public void LoadData()
         {
-            OracleDAO dao = new OracleDAO();
+            StudentDao dao = new StudentDao();
             Students = dao.GetListStudents();
         }
         public bool IsMaSVExists(string masv)
         {
-            return Students.Any(e => e.id.Equals(masv, StringComparison.OrdinalIgnoreCase));
+            StudentDao dao = new StudentDao();
+            return dao.IsMaSVExists(masv);
         }
         public void AddStudent(Student st)
         {
-            OracleDAO dao = new OracleDAO();
+            StudentDao dao = new StudentDao();
             dao.InsertStudent(st);
             LoadData();
         }
         public void UpdateStudent(Student st)
         {
-            OracleDAO dao = new OracleDAO();
+            StudentDao dao = new StudentDao();
             dao.UpdateStudent(st);
             LoadData();
         }
 
         public void DeleteStudent(Student st)
         {
-            OracleDAO dao = new OracleDAO();
-            string username = "SV" + st.id;
-            dao.DropUser(username);
+            StudentDao dao = new StudentDao();           
             dao.DeleteStudent(st);
             LoadData();
         }

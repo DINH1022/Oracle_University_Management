@@ -103,6 +103,7 @@
             listCourses.RowHeadersWidth = 51;
             listCourses.Size = new Size(1058, 669);
             listCourses.TabIndex = 13;
+            listCourses.CellClick += registerBtnClick;
             // 
             // MAMM
             // 
@@ -157,8 +158,8 @@
             THAOTAC.HeaderText = "THAO TÁC";
             THAOTAC.MinimumWidth = 6;
             THAOTAC.Name = "THAOTAC";
-            THAOTAC.Resizable = DataGridViewTriState.True;
-            THAOTAC.Text = "ĐĂNG KÝ";
+            THAOTAC.Text = "Đăng ký";
+            THAOTAC.UseColumnTextForButtonValue = true;
             THAOTAC.Width = 125;
             // 
             // RegisterNewCoursePage

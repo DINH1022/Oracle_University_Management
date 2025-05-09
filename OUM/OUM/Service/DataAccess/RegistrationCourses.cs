@@ -1,6 +1,7 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using OUM.Model;
+using OUM.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,8 +68,13 @@ namespace OUM.Service.DataAccess
                     connection.Open();
                     string query = $@"SELECT MM.MAMM, MM.MAHP, HP.TENHP,HP.SOTC, HP.STLT, HP.STTH
                                       FROM {PDBADMIN_USERNAME}.{MOMON_VIEW_NAME} MM JOIN
-                                           {PDBADMIN_USERNAME}.{HOCPHAN_TABLE_NAME} HP ON (MM.MAHP=HP.MAHP)" +(!string.IsNullOrEmpty(keyword) ? " WHERE UPPER(HP.TENHP) LIKE UPPER(:keyword)" :"");
+                                           {PDBADMIN_USERNAME}.{HOCPHAN_TABLE_NAME} HP ON (MM.MAHP=HP.MAHP)
+                                            WHERE MM.MAMM NOT IN (SELECT MAMM FROM {PDBADMIN_USERNAME}.{DANGKY_TABLE_NAME} WHERE MASV=:masv)"
+                                            +(!string.IsNullOrEmpty(keyword) ? " AND UPPER(HP.TENHP) LIKE UPPER(:keyword)" :"");
                     OracleCommand command = new OracleCommand(query,connection);
+                    //Cần bỏ bớt 2 kí tự SV trong tài khoản user SV 
+                    string mssv = AdminSession.Username.Substring(2);
+                    command.Parameters.Add(new OracleParameter("mssv",mssv));
                     if(!string.IsNullOrEmpty(keyword))
                     {
                         command.Parameters.Add(new OracleParameter("keyword","%"+keyword+"%"));
@@ -110,6 +116,30 @@ namespace OUM.Service.DataAccess
                     command.Parameters.Add(new OracleParameter("mamm", mamm));
                     int count= command.ExecuteNonQuery();
                     return count >0;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+        public bool RegisterCourse(string mamm)
+        {
+            string connectionString = dao.GetConnectionString();
+            try
+            {
+                using(var connection  = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = $@"INSERT INTO {PDBADMIN_USERNAME}.{DANGKY_TABLE_NAME} (MASV,MAMM) VALUES(:mssv,:mamm)";
+                    OracleCommand command = new OracleCommand(query,connection);
+                    //Cần bỏ bớt 2 kí tự SV trong tài khoản user SV để tránh lỗi khóa ngoại
+                    string mssv = AdminSession.Username.Substring(2);
+                    command.Parameters.Add(new OracleParameter("mssv",mssv));
+                    command.Parameters.Add(new OracleParameter("mamm", mamm));
+                    int count =command.ExecuteNonQuery();
+                    return count > 0;
                 }
             }
             catch(Exception ex)

@@ -30,16 +30,6 @@ namespace OUM.View.RegistrationCourseView
             listCourses.DataSource = null;
             listCourses.DataSource = courses;
             listCourses.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-            //DataGridViewButtonColumn cancelBtn = new DataGridViewButtonColumn
-            //{
-            //    HeaderText = "Thao tác",
-            //    Text = "Đăng ký",
-            //    UseColumnTextForButtonValue = true,
-            //    Name = "registerBtn"
-            //};
-            //listCourses.Columns.Add(cancelBtn);
-
         }
 
         private void searchBtn(object sender, EventArgs e)
@@ -54,6 +44,28 @@ namespace OUM.View.RegistrationCourseView
             string keyword = searchInput.Text;
             courses = dao.GetNewRegistrationCourses(keyword);
             setUpListRegisteredCourseDataGridView();
+        }
+
+        private void registerBtnClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == listCourses.Columns["THAOTAC"].Index && e.RowIndex >= 0)
+            {
+                NewRegistrationCourse selectedCourse = courses[e.RowIndex];
+                bool success = dao.RegisterCourse(selectedCourse.MAMM);
+                if (success)
+                {
+                    MessageBox.Show("Đăng ký thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string keyword = searchInput.Text;
+                    courses = dao.GetNewRegistrationCourses(keyword);
+                    setUpListRegisteredCourseDataGridView();
+
+                }
+                else
+                {
+                    MessageBox.Show("Đăng ký không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                }
+            }
         }
     }
 }

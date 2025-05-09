@@ -40,6 +40,7 @@
             EmpBtn = new Button();
             StudentBtn = new Button();
             panelMainContent = new Panel();
+            button3 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -48,6 +49,7 @@
             // 
             panel1.BackColor = Color.LightGoldenrodYellow;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(button3);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(RevokeBtnNav);
@@ -177,6 +179,18 @@
             panelMainContent.TabIndex = 1;
             panelMainContent.Paint += panelMainContent_Paint;
             // 
+            // button3
+            // 
+            button3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.ForeColor = Color.DarkGreen;
+            button3.Location = new Point(27, 659);
+            button3.Name = "button3";
+            button3.Size = new Size(175, 49);
+            button3.TabIndex = 7;
+            button3.Text = "Đăng ký học phần";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += registrationCourseBtn;
+            // 
             // NavPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -203,5 +217,6 @@
         private Button RevokeBtnNav;
         private Button button1;
         private Button button2;
+        private Button button3;
     }
 }

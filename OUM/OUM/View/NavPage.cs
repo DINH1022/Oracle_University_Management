@@ -67,5 +67,10 @@ namespace OUM.View
         {
             LoadControl(new PermissionInfo());
         }
+
+        private void registrationCourseBtn(object sender, EventArgs e)
+        {
+            LoadControl(new RegistrationCoursePageControl());
+        }
     }
 }

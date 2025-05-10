@@ -74,7 +74,12 @@ namespace OUM.Service.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Lỗi khi lấy danh sách sinh viên: " + ex.Message);
+                    MessageBox.Show(
+                        $"Lỗi khi lấy danh sách sinh viên: {ex.Message}",
+                        "Lỗi Truy Vấn Dữ Liệu",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
                 }
             }
 
@@ -96,16 +101,26 @@ namespace OUM.Service.DataAccess
 
                     int userExists = Convert.ToInt32(checkCmd.ExecuteScalar());
 
-                    if (userExists == 0)
+                    if (userExists > 0)
                     {
-                        var createUserCmd = connection.CreateCommand();
-                        createUserCmd.CommandText = $@"
-                            BEGIN
-                                EXECUTE IMMEDIATE 'CREATE USER {username} IDENTIFIED BY PASS123';
-                                EXECUTE IMMEDIATE 'GRANT CONNECT TO {username}';
-                            END;";
-                        createUserCmd.ExecuteNonQuery();
+                        MessageBox.Show(
+                            $"Mã sinh viên {st.id} đã tồn tại trong hệ thống. Vui lòng sử dụng mã số khác.",
+                            "Sinh viên đã tồn tại",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                        return;
                     }
+
+                    
+                    var createUserCmd = connection.CreateCommand();
+                    createUserCmd.CommandText = $@"
+                        BEGIN
+                            EXECUTE IMMEDIATE 'CREATE USER {username} IDENTIFIED BY PASS123';
+                            EXECUTE IMMEDIATE 'GRANT CONNECT TO {username}';
+                        END;";
+                    createUserCmd.ExecuteNonQuery();
+                    
 
                     var insertCmd = connection.CreateCommand();
                     insertCmd.CommandText = @"INSERT INTO SINHVIEN (MASV, HOTEN, PHAI, NGSINH, DT, KHOA, TINHTRANG, DCHI) 
@@ -120,16 +135,62 @@ namespace OUM.Service.DataAccess
                     insertCmd.Parameters.Add(new OracleParameter("address", st.address));
 
                     insertCmd.ExecuteNonQuery();
+
+                    
+                    MessageBox.Show(
+                        $"Đã thêm sinh viên {st.name} thành công.",
+                        "Thêm Sinh Viên Thành Công",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+
                 }
                 catch (Exception ex)
                 {
                     if (ex.Message.Contains("ORA-00001"))
                     {
-                        MessageBox.Show("User đã tồn tại. Vui lòng nhập mã sinh viên khác.");
+                        MessageBox.Show(
+                            $"Sinh viên với mã số {st.id} đã tồn tại trong hệ thống. Vui lòng sử dụng mã số khác.",
+                            "Trùng Mã Sinh Viên",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-01400")) 
+                    {
+                        MessageBox.Show(
+                            "Thiếu thông tin bắt buộc. Vui lòng điền đầy đủ thông tin sinh viên.",
+                            "Lỗi Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-02290")) 
+                    {
+                        MessageBox.Show(
+                            "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại các thông tin như giới tính và trạng thái.",
+                            "Lỗi Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-02291")) 
+                    {
+                        MessageBox.Show(
+                            "Khoa không tồn tại trong hệ thống. Vui lòng chọn khoa hợp lệ.",
+                            "Lỗi Ràng Buộc Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
                     }
                     else
                     {
-                        MessageBox.Show("Lỗi khi thêm sinh viên: " + ex.Message);
+                        MessageBox.Show(
+                            $"Lỗi khi thêm sinh viên:\n{ex.Message}",
+                            "Lỗi Hệ Thống",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
                     }
                 }
             }
@@ -169,17 +230,66 @@ namespace OUM.Service.DataAccess
 
                     if (rows == 0)
                     {
-                        MessageBox.Show("Không tìm thấy sinh viên để cập nhật.");
+                        MessageBox.Show(
+                            $"Không tìm thấy sinh viên có mã số {st.id} để cập nhật.",
+                            "Không Tìm Thấy Sinh Viên",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            $"Đã cập nhật thông tin sinh viên {st.name} thành công.",
+                            "Cập Nhật Thành Công",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi cập nhật sinh viên:\n" + ex.Message);
+                    if (ex.Message.Contains("ORA-01400")) 
+                    {
+                        MessageBox.Show(
+                            "Thiếu thông tin bắt buộc. Vui lòng điền đầy đủ thông tin sinh viên.",
+                            "Lỗi Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-02290")) 
+                    {
+                        MessageBox.Show(
+                            "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại các thông tin như giới tính và trạng thái.",
+                            "Lỗi Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-02291")) 
+                    {
+                        MessageBox.Show(
+                            "Khoa không tồn tại trong hệ thống. Vui lòng chọn khoa hợp lệ.",
+                            "Lỗi Ràng Buộc Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            $"Lỗi khi cập nhật sinh viên:\n{ex.Message}",
+                            "Lỗi Hệ Thống",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
                 }
             }
         }
 
-        
+
         public void DeleteStudent(Student st)
         {
             using (var connection = GetOracleConnection())
@@ -187,6 +297,20 @@ namespace OUM.Service.DataAccess
                 try
                 {
                     connection.Open();
+
+                    
+                    var checkConstraintsCmd = connection.CreateCommand();
+                    checkConstraintsCmd.CommandText = @"
+                        SELECT COUNT(*) FROM DANGKY WHERE MASV = :masv";
+                    checkConstraintsCmd.Parameters.Add(new OracleParameter("masv", st.id.ToUpper()));
+                    int dangkyCount = Convert.ToInt32(checkConstraintsCmd.ExecuteScalar());
+
+                    if (dangkyCount > 0)
+                    {
+                        MessageBox.Show($"Không thể xóa sinh viên này vì sinh viên đang có {dangkyCount} đăng ký học phần.",
+                            "Lỗi ràng buộc dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     
                     var deleteStudentCmd = connection.CreateCommand();
@@ -201,15 +325,30 @@ namespace OUM.Service.DataAccess
                         dropUserCmd.CommandText = $"DROP USER {st.Username} CASCADE";
                         dropUserCmd.ExecuteNonQuery();
                     }
+
+                    MessageBox.Show("Sinh viên đã được xóa thành công.",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi xóa sinh viên:\n" + ex.Message);
+                    string errorMessage = "Lỗi khi xóa sinh viên";
+
+                    if (ex.Message.Contains("integrity constraint"))
+                    {
+                        errorMessage = "Không thể xóa sinh viên này vì còn dữ liệu liên quan trong hệ thống.";
+                    }
+                    else
+                    {
+                        errorMessage += ":\n" + ex.Message;
+                    }
+
+                    MessageBox.Show(errorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        
+
+
         public bool IsMaSVExists(string maSV)
         {
             using (var connection = GetOracleConnection())

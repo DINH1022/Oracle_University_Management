@@ -43,51 +43,84 @@ namespace OUM.View
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtHoTen.Text))
+                string hoTen = txtHoTen.Text.Trim();
+                string sdt = txtSDT.Text.Trim();
+                string luongText = txtLuong.Text.Trim();
+                string phuCapText = txtPhuCap.Text.Trim();
+                DateTime ngaySinh = dateTimePickerNgaySinh.Value.Date;
+                string gioiTinh = comboGioiTinh.SelectedItem?.ToString();
+                string maDV = comboMaDV.SelectedItem?.ToString();
+                string vaiTro = comboVaiTro.SelectedItem?.ToString();
+
+                // Validate employee name
+                if (string.IsNullOrWhiteSpace(hoTen))
                 {
-                    MessageBox.Show("Vui lòng nhập họ tên.");
+                    MessageBox.Show("Vui lòng nhập họ tên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtHoTen.Focus();
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(txtSDT.Text))
+                // Validate phone number
+                if (string.IsNullOrWhiteSpace(sdt))
                 {
-                    MessageBox.Show("Vui lòng nhập số điện thoại.");
+                    MessageBox.Show("Vui lòng nhập số điện thoại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSDT.Focus();
                     return;
                 }
 
-                if (!decimal.TryParse(txtLuong.Text, out decimal luong) || luong < 0)
+                // Validate phone number format
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sdt, @"^\d{9,11}$"))
                 {
-                    MessageBox.Show("Lương không hợp lệ. Vui lòng nhập số hợp lệ.");
+                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập từ 9 đến 11 chữ số.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSDT.Focus();
                     return;
                 }
 
-                if (!decimal.TryParse(txtPhuCap.Text, out decimal phuCap) || phuCap < 0)
+                // Validate salary
+                if (!decimal.TryParse(luongText, out decimal luong) || luong < 0)
                 {
-                    MessageBox.Show("Phụ cấp không hợp lệ. Vui lòng nhập số hợp lệ.");
+                    MessageBox.Show("Lương không hợp lệ. Vui lòng nhập lương hợp lệ (số dương).", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtLuong.Focus();
                     return;
                 }
 
-                if (dateTimePickerNgaySinh.Value >= DateTime.Now)
+                // Validate allowance
+                if (!decimal.TryParse(phuCapText, out decimal phuCap) || phuCap < 0)
                 {
-                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.");
+                    MessageBox.Show("Phụ cấp không hợp lệ. Vui lòng nhập phụ cấp hợp lệ (số dương).", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtPhuCap.Focus();
                     return;
                 }
 
-                if (comboGioiTinh.SelectedItem == null)
+                // Validate date of birth
+                if (ngaySinh >= DateTime.Now)
                 {
-                    MessageBox.Show("Vui lòng chọn giới tính.");
+                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dateTimePickerNgaySinh.Focus();
                     return;
                 }
 
-                if (comboMaDV.SelectedItem == null)
+                // Validate gender selection
+                if (string.IsNullOrWhiteSpace(gioiTinh))
                 {
-                    MessageBox.Show("Vui lòng chọn mã đơn vị.");
+                    MessageBox.Show("Vui lòng chọn giới tính.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboGioiTinh.Focus();
                     return;
                 }
 
-                if (comboVaiTro.SelectedItem == null)
+                // Validate department selection
+                if (string.IsNullOrWhiteSpace(maDV))
                 {
-                    MessageBox.Show("Vui lòng chọn vai trò.");
+                    MessageBox.Show("Vui lòng chọn mã đơn vị.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboMaDV.Focus();
+                    return;
+                }
+
+                // Validate role selection
+                if (string.IsNullOrWhiteSpace(vaiTro))
+                {
+                    MessageBox.Show("Vui lòng chọn vai trò.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboVaiTro.Focus();
                     return;
                 }
 
@@ -105,12 +138,11 @@ namespace OUM.View
                 EmployeeViewModel vm = new EmployeeViewModel();
                 vm.UpdateEmployee(EmpToEdit);
 
-                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi cập nhật: " + ex.Message);
+                MessageBox.Show("Lỗi khi cập nhật: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -64,36 +64,88 @@ namespace OUM.View
                 DateTime dob = dateTimePickerNgaySinh.Value.Date;
                 string address = txtDiaChi.Text.Trim();
 
-                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(phone) ||
-                    string.IsNullOrEmpty(gender) || string.IsNullOrEmpty(department) ||
-                    string.IsNullOrEmpty(status) || string.IsNullOrEmpty(address))
+                if (string.IsNullOrWhiteSpace(id))
                 {
-                    MessageBox.Show("Vui lòng điền đầy đủ thông tin sinh viên và chọn các mục từ ComboBox.");
+                    MessageBox.Show("Vui lòng nhập mã số sinh viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtMSSV.Focus();
+                    return;
+                }
+
+               
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    MessageBox.Show("Vui lòng nhập họ tên sinh viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtHoTen.Focus();
+                    return;
+                }
+
+                
+                if (string.IsNullOrWhiteSpace(phone))
+                {
+                    MessageBox.Show("Vui lòng nhập số điện thoại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSDT.Focus();
                     return;
                 }
 
                 
                 if (!System.Text.RegularExpressions.Regex.IsMatch(phone, @"^\d{9,11}$"))
                 {
-                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập từ 9 đến 11 chữ số.");
+                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập từ 9 đến 11 chữ số.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSDT.Focus();
+                    return;
+                }
+
+                
+                if (string.IsNullOrWhiteSpace(gender))
+                {
+                    MessageBox.Show("Vui lòng chọn giới tính.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboGioiTinh.Focus();
+                    return;
+                }
+
+                
+                if (string.IsNullOrWhiteSpace(department))
+                {
+                    MessageBox.Show("Vui lòng chọn khoa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboKhoa.Focus();
+                    return;
+                }
+
+                
+                if (string.IsNullOrWhiteSpace(status))
+                {
+                    MessageBox.Show("Vui lòng chọn tình trạng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboTinhTrang.Focus();
                     return;
                 }
 
                 
                 if (dob >= DateTime.Now)
                 {
-                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.");
+                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dateTimePickerNgaySinh.Focus();
+                    return;
+                }
+
+
+               
+                if (string.IsNullOrWhiteSpace(address))
+                {
+                    MessageBox.Show("Vui lòng nhập địa chỉ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtDiaChi.Focus();
                     return;
                 }
 
                 
-
                 StudentViewModel vm = new StudentViewModel();
                 if (vm.IsMaSVExists(id))
                 {
-                    MessageBox.Show("Mã SV đã tồn tại. Vui lòng nhập mã khác.");
+                    MessageBox.Show("Mã số sinh viên đã tồn tại. Vui lòng nhập mã khác.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtMSSV.Focus();
                     return;
                 }
+
+               
                 Student st = new Student(id, name, gender, dob, phone, department, status, address);
                 vm.AddStudent(st);
 
@@ -105,11 +157,12 @@ namespace OUM.View
             {
                 if (ex.Message.Contains("ORA-00001"))
                 {
-                    MessageBox.Show("User đã tồn tại. Vui lòng nhập mã sinh viên khác.");
+                    MessageBox.Show("Sinh viên đã tồn tại. Vui lòng nhập mã số sinh viên khác.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtMSSV.Focus();
                 }
                 else
                 {
-                    MessageBox.Show("Lỗi khi thêm sinh viên: " + ex.Message);
+                    MessageBox.Show("Lỗi khi thêm sinh viên: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

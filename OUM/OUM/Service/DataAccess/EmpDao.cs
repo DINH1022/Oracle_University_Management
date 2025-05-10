@@ -77,7 +77,12 @@ namespace OUM.Service.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Lỗi khi lấy danh sách nhân viên: " + ex.Message);
+                    MessageBox.Show(
+                        $"Lỗi khi lấy danh sách nhân viên: {ex.Message}",
+                        "Lỗi Truy Vấn Dữ Liệu",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
                 }
             }
 
@@ -98,16 +103,25 @@ namespace OUM.Service.DataAccess
 
                     int userExists = Convert.ToInt32(checkCmd.ExecuteScalar());
 
-                    if (userExists == 0)
+                    if (userExists > 0)
                     {
-                        var createUserCmd = connection.CreateCommand();
-                        createUserCmd.CommandText = $@"
+                        MessageBox.Show(
+                            $"Mã nhân viên {emp.manld} đã tồn tại trong hệ thống. Vui lòng sử dụng mã số khác.",
+                            "Nhân viên đã tồn tại",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                        return;
+                    }
+
+                    var createUserCmd = connection.CreateCommand();
+                    createUserCmd.CommandText = $@"
                             BEGIN
                                 EXECUTE IMMEDIATE 'CREATE USER {emp.manld} IDENTIFIED BY PASS123';
                                 EXECUTE IMMEDIATE 'GRANT CONNECT TO {emp.manld}';
                             END;";
-                        createUserCmd.ExecuteNonQuery();
-                    }
+                    createUserCmd.ExecuteNonQuery();
+
 
                     var insertCmd = connection.CreateCommand();
                     insertCmd.CommandText = @"INSERT INTO NHANVIEN (MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO) 
@@ -123,16 +137,63 @@ namespace OUM.Service.DataAccess
                     insertCmd.Parameters.Add(new OracleParameter("role", emp.role));
 
                     insertCmd.ExecuteNonQuery();
+
+                    MessageBox.Show(
+                        $"Đã thêm nhân viên {emp.name} thành công.",
+                        "Thêm Nhân Viên Thành Công",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
                 }
                 catch (Exception ex)
                 {
                     if (ex.Message.Contains("ORA-00001"))
                     {
-                        MessageBox.Show("User đã tồn tại. Vui lòng nhập mã nld khác.");
+                        MessageBox.Show(
+                            $"Nhân viên với mã số {emp.manld} đã tồn tại trong hệ thống. Vui lòng sử dụng mã số khác.",
+                            "Trùng Mã Nhân Viên",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-01400")) 
+                    {
+                        MessageBox.Show(
+                            "Thiếu thông tin bắt buộc. Vui lòng điền đầy đủ các trường:\n" +
+                            "- Mã nhân viên\n- Họ tên\n- Giới tính",
+                            "Lỗi Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-02290")) 
+                    {
+                        MessageBox.Show(
+                            "Dữ liệu không hợp lệ. Vui lòng kiểm tra:\n" +
+                            "- Giới tính chỉ chấp nhận 'Nam' hoặc 'Nữ'\n" +
+                            "- Vai trò phải nằm trong danh sách cho phép",
+                            "Lỗi Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-02291")) 
+                    {
+                        MessageBox.Show(
+                            $"Đơn vị '{emp.madv}' không tồn tại trong hệ thống. Vui lòng chọn đơn vị hợp lệ.",
+                            "Lỗi Ràng Buộc Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
                     }
                     else
                     {
-                        MessageBox.Show("Lỗi khi thêm nhân viên: " + ex.Message);
+                        MessageBox.Show(
+                            $"Lỗi khi thêm nhân viên:\n{ex.Message}",
+                            "Lỗi Hệ Thống",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
                     }
                 }
             }
@@ -174,17 +235,66 @@ namespace OUM.Service.DataAccess
 
                     if (rows == 0)
                     {
-                        MessageBox.Show("Không tìm thấy nhân viên để cập nhật.");
+                        MessageBox.Show(
+                            $"Không tìm thấy nhân viên có mã số {emp.manld} để cập nhật.",
+                            "Không Tìm Thấy Nhân Viên",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            $"Đã cập nhật thông tin nhân viên {emp.name} thành công.",
+                            "Cập Nhật Thành Công",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi cập nhật nhân viên:\n" + ex.Message);
+                    if (ex.Message.Contains("ORA-01400")) 
+                    {
+                        MessageBox.Show(
+                            "Thiếu thông tin bắt buộc. Vui lòng điền đầy đủ thông tin nhân viên.",
+                            "Lỗi Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-02290")) 
+                    {
+                        MessageBox.Show(
+                            "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại các thông tin như giới tính và vai trò.",
+                            "Lỗi Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-02291")) 
+                    {
+                        MessageBox.Show(
+                            "Đơn vị không tồn tại trong hệ thống. Vui lòng chọn đơn vị hợp lệ.",
+                            "Lỗi Ràng Buộc Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            $"Lỗi khi cập nhật nhân viên:\n{ex.Message}",
+                            "Lỗi Hệ Thống",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
                 }
             }
         }
 
-        
+
         public void DeleteEmployee(Employee emp)
         {
             using (var connection = GetOracleConnection())
@@ -193,7 +303,35 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
 
-                   
+                    
+                    var checkDonviCmd = connection.CreateCommand();
+                    checkDonviCmd.CommandText = @"
+                        SELECT COUNT(*) FROM DONVI WHERE TRGDV = :manld";
+                    checkDonviCmd.Parameters.Add(new OracleParameter("manld", emp.manld.ToUpper()));
+                    int donviCount = Convert.ToInt32(checkDonviCmd.ExecuteScalar());
+
+                    if (donviCount > 0)
+                    {
+                        MessageBox.Show($"Không thể xóa nhân viên này vì đang là trưởng {donviCount} đơn vị.",
+                            "Lỗi ràng buộc dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    
+                    var checkMomonCmd = connection.CreateCommand();
+                    checkMomonCmd.CommandText = @"
+                        SELECT COUNT(*) FROM MOMON WHERE MAGV = :manld";
+                    checkMomonCmd.Parameters.Add(new OracleParameter("manld", emp.manld.ToUpper()));
+                    int momonCount = Convert.ToInt32(checkMomonCmd.ExecuteScalar());
+
+                    if (momonCount > 0)
+                    {
+                        MessageBox.Show($"Không thể xóa nhân viên này vì đang phụ trách {momonCount} môn.",
+                            "Lỗi ràng buộc dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    
                     var deleteEmpCmd = connection.CreateCommand();
                     deleteEmpCmd.CommandText = "DELETE FROM NHANVIEN WHERE MANLD = :manld";
                     deleteEmpCmd.Parameters.Add(new OracleParameter("manld", emp.manld.ToUpper()));
@@ -206,15 +344,30 @@ namespace OUM.Service.DataAccess
                         dropUserCmd.CommandText = $"DROP USER {emp.Username} CASCADE";
                         dropUserCmd.ExecuteNonQuery();
                     }
+
+                    MessageBox.Show("Nhân viên đã được xóa thành công.",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi xóa nhân viên:\n" + ex.Message);
+                    string errorMessage = "Lỗi khi xóa nhân viên";
+
+                    if (ex.Message.Contains("integrity constraint"))
+                    {
+                        errorMessage = "Không thể xóa nhân viên này vì còn dữ liệu liên quan trong hệ thống.";
+                    }
+                    else
+                    {
+                        errorMessage += ":\n" + ex.Message;
+                    }
+
+                    MessageBox.Show(errorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        
+
+
         public bool IsMaNLDExists(string maNLD)
         {
             using (var connection = GetOracleConnection())

@@ -45,51 +45,76 @@ namespace OUM.View
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtHoTen.Text))
+                string id = txtMSSV.Text.Trim();
+                string name = txtHoTen.Text.Trim();
+                string phone = txtSDT.Text.Trim();
+                string gender = comboGioiTinh.SelectedItem?.ToString();
+                string department = comboKhoa.SelectedItem?.ToString();
+                string status = comboTinhTrang.SelectedItem?.ToString();
+                DateTime dob = dateTimePickerNgaySinh.Value.Date;
+                string address = txtDiaChi.Text.Trim();
+
+                
+                if (string.IsNullOrWhiteSpace(name))
                 {
-                    MessageBox.Show("Vui lòng nhập họ tên.");
+                    MessageBox.Show("Vui lòng nhập họ tên sinh viên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtHoTen.Focus();
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(txtSDT.Text))
+                
+                if (string.IsNullOrWhiteSpace(phone))
                 {
-                    MessageBox.Show("Vui lòng nhập số điện thoại.");
+                    MessageBox.Show("Vui lòng nhập số điện thoại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSDT.Focus();
                     return;
                 }
 
-                if (!System.Text.RegularExpressions.Regex.IsMatch(txtSDT.Text.Trim(), @"^\d{9,11}$"))
+                
+                if (!System.Text.RegularExpressions.Regex.IsMatch(phone, @"^\d{9,11}$"))
                 {
-                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập từ 9 đến 11 chữ số.");
+                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập từ 9 đến 11 chữ số.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSDT.Focus();
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(txtDiaChi.Text))
+                
+                if (string.IsNullOrWhiteSpace(gender))
                 {
-                    MessageBox.Show("Vui lòng nhập địa chỉ.");
+                    MessageBox.Show("Vui lòng chọn giới tính.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboGioiTinh.Focus();
                     return;
                 }
 
-                if (dateTimePickerNgaySinh.Value >= DateTime.Now)
+               
+                if (string.IsNullOrWhiteSpace(department))
                 {
-                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.");
+                    MessageBox.Show("Vui lòng chọn khoa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboKhoa.Focus();
                     return;
                 }
 
-                if (comboGioiTinh.SelectedItem == null)
+                
+                if (string.IsNullOrWhiteSpace(status))
                 {
-                    MessageBox.Show("Vui lòng chọn giới tính.");
+                    MessageBox.Show("Vui lòng chọn tình trạng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboTinhTrang.Focus();
                     return;
                 }
 
-                if (comboKhoa.SelectedItem == null)
+                
+                if (dob >= DateTime.Now)
                 {
-                    MessageBox.Show("Vui lòng chọn khoa.");
+                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dateTimePickerNgaySinh.Focus();
                     return;
                 }
 
-                if (comboTinhTrang.SelectedItem == null)
+                
+                if (string.IsNullOrWhiteSpace(address))
                 {
-                    MessageBox.Show("Vui lòng chọn tình trạng.");
+                    MessageBox.Show("Vui lòng nhập địa chỉ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtDiaChi.Focus();
                     return;
                 }
 
@@ -109,7 +134,7 @@ namespace OUM.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi cập nhật: " + ex.Message);
+                MessageBox.Show("Lỗi khi cập nhật: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

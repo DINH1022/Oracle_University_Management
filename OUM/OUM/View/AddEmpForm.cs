@@ -41,75 +41,87 @@ namespace OUM.View
                 decimal luong, phuCap;
                 if (string.IsNullOrWhiteSpace(maNLD))
                 {
-                    MessageBox.Show("Vui lòng nhập mã nhân lực.");
+                    MessageBox.Show("Vui lòng nhập mã nhân lực.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtMaNLD.Focus();
+                    return;
+                }
+
+                if (!maNLD.StartsWith("NV", StringComparison.OrdinalIgnoreCase))
+                {
+                    MessageBox.Show("Mã nhân lực phải bắt đầu bằng 'NV'.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtMaNLD.Focus();
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(hoTen))
                 {
-                    MessageBox.Show("Vui lòng nhập họ tên.");
+                    MessageBox.Show("Vui lòng nhập họ tên.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtHoTen.Focus();
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(sdt))
                 {
-                    MessageBox.Show("Vui lòng nhập số điện thoại.");
+                    MessageBox.Show("Vui lòng nhập số điện thoại.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtSDT.Focus();
                     return;
                 }
 
                 if (!System.Text.RegularExpressions.Regex.IsMatch(sdt, @"^\d{9,11}$"))
                 {
-                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập từ 9 đến 11 chữ số.");
+                    MessageBox.Show("Số điện thoại không hợp lệ. Vui lòng nhập từ 9 đến 11 chữ số.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSDT.Focus();
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(gioiTinh))
                 {
-                    MessageBox.Show("Vui lòng chọn giới tính.");
+                    MessageBox.Show("Vui lòng chọn giới tính.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboGioiTinh.Focus();
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(maDV))
                 {
-                    MessageBox.Show("Vui lòng chọn mã đơn vị.");
+                    MessageBox.Show("Vui lòng chọn mã đơn vị.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboMaDV.Focus();
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(vaiTro))
                 {
-                    MessageBox.Show("Vui lòng chọn vai trò.");
+                    MessageBox.Show("Vui lòng chọn vai trò.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboVaiTro.Focus();
                     return;
                 }
 
                 if (ngaySinh >= DateTime.Now)
                 {
-                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.");
+                    MessageBox.Show("Ngày sinh phải nhỏ hơn ngày hiện tại.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dateTimePickerNgaySinh.Focus();
                     return;
                 }
 
                 if (!decimal.TryParse(luongText, out luong) || luong < 0)
                 {
-                    MessageBox.Show("Lương không hợp lệ. Vui lòng nhập lương hợp lệ (số dương).");
+                    MessageBox.Show("Lương không hợp lệ. Vui lòng nhập lương hợp lệ (số dương).", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtLuong.Focus();
                     return;
                 }
 
                 if (!decimal.TryParse(phuCapText, out phuCap) || phuCap < 0)
                 {
-                    MessageBox.Show("Phụ cấp không hợp lệ. Vui lòng nhập phụ cấp hợp lệ (số dương).");
+                    MessageBox.Show("Phụ cấp không hợp lệ. Vui lòng nhập phụ cấp hợp lệ (số dương).", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtPhuCap.Focus();
                     return;
                 }
 
-                if (!maNLD.StartsWith("NV"))
-                {
-                    MessageBox.Show("Mã NLD phải bắt đầu bằng 'NV'.");
-                    return;
-                }
 
-                
                 EmployeeViewModel vm = new EmployeeViewModel();
                 if (vm.IsMaNLDExists(maNLD))
                 {
-                    MessageBox.Show("Mã nld đã tồn tại. Vui lòng nhập mã khác.");
+                    MessageBox.Show("Mã nld đã tồn tại. Vui lòng nhập mã khác.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtMaNLD.Focus();
                     return;
                 }
                 Employee emp = new Employee(maNLD, hoTen, gioiTinh, ngaySinh, luong, phuCap, sdt, maDV, vaiTro);
@@ -122,11 +134,12 @@ namespace OUM.View
             {
                 if (ex.Message.Contains("ORA-00001"))
                 {
-                    MessageBox.Show("User đã tồn tại. Vui lòng nhập mã nld khác.");
+                    MessageBox.Show("Nhân viên đã tồn tại. Vui lòng nhập mã nhân lực khác.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtMaNLD.Focus();
                 }
                 else
                 {
-                    MessageBox.Show("Lỗi khi thêm nhân viên: " + ex.Message);
+                    MessageBox.Show("Lỗi khi thêm nhân viên: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

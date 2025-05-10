@@ -47,7 +47,7 @@ namespace OUM
             if (logined)
             {
                 this.Hide();
-                NavPage navPage = new NavPage();
+                StudentNavPage navPage = new StudentNavPage();
                 navPage.Show();
             }
             else

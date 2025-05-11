@@ -118,13 +118,13 @@ namespace OUM.Service.DataAccess
                     createUserCmd.CommandText = $@"
                             BEGIN
                                 EXECUTE IMMEDIATE 'CREATE USER {emp.manld} IDENTIFIED BY PASS123';
-                                EXECUTE IMMEDIATE 'GRANT CONNECT TO {emp.manld}';
+                                EXECUTE IMMEDIATE 'GRANT CREATE SESSION TO {emp.manld}';
                             END;";
                     createUserCmd.ExecuteNonQuery();
 
 
                     var insertCmd = connection.CreateCommand();
-                    insertCmd.CommandText = @"INSERT INTO NHANVIEN (MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO) 
+                    insertCmd.CommandText = @"INSERT INTO pdb_admin.NHANVIEN (MANLD, HOTEN, PHAI, NGSINH, LUONG, PHUCAP, DT, MADV, VAITRO) 
                                       VALUES (:manld, :name, :gender, :dob, :salary, :allowance, :phone, :madv, :role)";
                     insertCmd.Parameters.Add(new OracleParameter("manld", emp.manld));
                     insertCmd.Parameters.Add(new OracleParameter("name", emp.name));
@@ -182,6 +182,15 @@ namespace OUM.Service.DataAccess
                         MessageBox.Show(
                             $"Đơn vị '{emp.madv}' không tồn tại trong hệ thống. Vui lòng chọn đơn vị hợp lệ.",
                             "Lỗi Ràng Buộc Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-01031"))
+                    {
+                        MessageBox.Show(
+                            $"Bạn không có quyền thêm dữ liệu nhân viên mới.",
+                            "Hạn Chế Quyền Của Vai Trò",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
@@ -306,7 +315,7 @@ namespace OUM.Service.DataAccess
                     
                     var checkDonviCmd = connection.CreateCommand();
                     checkDonviCmd.CommandText = @"
-                        SELECT COUNT(*) FROM DONVI WHERE TRGDV = :manld";
+                        SELECT COUNT(*) FROM pdb_admin.DONVI WHERE TRGDV = :manld";
                     checkDonviCmd.Parameters.Add(new OracleParameter("manld", emp.manld.ToUpper()));
                     int donviCount = Convert.ToInt32(checkDonviCmd.ExecuteScalar());
 
@@ -320,7 +329,7 @@ namespace OUM.Service.DataAccess
                     
                     var checkMomonCmd = connection.CreateCommand();
                     checkMomonCmd.CommandText = @"
-                        SELECT COUNT(*) FROM MOMON WHERE MAGV = :manld";
+                        SELECT COUNT(*) FROM pdb_admin.MOMON WHERE MAGV = :manld";
                     checkMomonCmd.Parameters.Add(new OracleParameter("manld", emp.manld.ToUpper()));
                     int momonCount = Convert.ToInt32(checkMomonCmd.ExecuteScalar());
 
@@ -333,35 +342,45 @@ namespace OUM.Service.DataAccess
 
                     
                     var deleteEmpCmd = connection.CreateCommand();
-                    deleteEmpCmd.CommandText = "DELETE FROM NHANVIEN WHERE MANLD = :manld";
+                    deleteEmpCmd.CommandText = "DELETE FROM pdb_admin.NHANVIEN WHERE MANLD = :manld";
                     deleteEmpCmd.Parameters.Add(new OracleParameter("manld", emp.manld.ToUpper()));
                     deleteEmpCmd.ExecuteNonQuery();
 
                     
-                    if (!string.IsNullOrEmpty(emp.Username))
-                    {
-                        var dropUserCmd = connection.CreateCommand();
-                        dropUserCmd.CommandText = $"DROP USER {emp.Username} CASCADE";
-                        dropUserCmd.ExecuteNonQuery();
-                    }
+                    
+                    var dropUserCmd = connection.CreateCommand();
+                    dropUserCmd.CommandText = $"DROP USER {emp.manld} CASCADE";
+                    dropUserCmd.ExecuteNonQuery();
+                    
 
                     MessageBox.Show("Nhân viên đã được xóa thành công.",
                         "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    string errorMessage = "Lỗi khi xóa nhân viên";
-
-                    if (ex.Message.Contains("integrity constraint"))
+                    
+                    if (ex.Message.Contains("ORA-01031") || ex.Message.Contains("ORA-00942"))
                     {
-                        errorMessage = "Không thể xóa nhân viên này vì còn dữ liệu liên quan trong hệ thống.";
+                        //NOTE: LỖI 00942 LÀ LỖI KHÔNG TÌM THẤY BẢNG DONVI, MOMON ĐỂ KIỂM TRA FK, NVCB KHÔNG ĐƯỢC CẤP QUYỀN TRUY CẬP 2 BẢNG NÀY NÊN QUY CHUNG LÀ LỖI QUYỀN HẠN
+                        MessageBox.Show(
+                            $"Bạn không có quyền xóa dữ liệu nhân viên.",
+                            "Hạn Chế Quyền Của Vai Trò",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("integrity constraint"))
+                    {
+                        
+                        MessageBox.Show("Không thể xóa nhân viên này vì còn dữ liệu liên quan trong hệ thống.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                     }
                     else
                     {
-                        errorMessage += ":\n" + ex.Message;
+                        MessageBox.Show("Lỗi khi xóa nhân viên:\n" + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    MessageBox.Show(errorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
                 }
             }
         }

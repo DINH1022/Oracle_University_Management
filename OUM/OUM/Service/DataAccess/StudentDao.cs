@@ -117,7 +117,7 @@ namespace OUM.Service.DataAccess
                     createUserCmd.CommandText = $@"
                         BEGIN
                             EXECUTE IMMEDIATE 'CREATE USER {username} IDENTIFIED BY PASS123';
-                            EXECUTE IMMEDIATE 'GRANT CONNECT TO {username}';
+                            EXECUTE IMMEDIATE 'GRANT CREATE SESSION TO {username}';
                         END;";
                     createUserCmd.ExecuteNonQuery();
                     
@@ -319,12 +319,11 @@ namespace OUM.Service.DataAccess
                     deleteStudentCmd.ExecuteNonQuery();
 
                     
-                    if (!string.IsNullOrEmpty(st.Username))
-                    {
-                        var dropUserCmd = connection.CreateCommand();
-                        dropUserCmd.CommandText = $"DROP USER {st.Username} CASCADE";
-                        dropUserCmd.ExecuteNonQuery();
-                    }
+                    
+                    var dropUserCmd = connection.CreateCommand();
+                    dropUserCmd.CommandText = $"DROP USER {st.Username} CASCADE";
+                    dropUserCmd.ExecuteNonQuery();
+                    
 
                     MessageBox.Show("Sinh viên đã được xóa thành công.",
                         "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

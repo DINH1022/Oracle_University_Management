@@ -101,6 +101,7 @@
             LogoutBtn.TabIndex = 3;
             LogoutBtn.Text = "Đăng Xuất";
             LogoutBtn.UseVisualStyleBackColor = false;
+            LogoutBtn.TextChanged += LogoutBtn_Click;
             LogoutBtn.Click += LogoutBtn_Click;
             // 
             // EmpBtn
@@ -151,6 +152,7 @@
             Controls.Add(panelMainContent);
             Name = "DepartmentHeadNavPage";
             Text = "DepartmentHeadNavPage";
+            TextChanged += InfoBtn_Click;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panelMainContent.ResumeLayout(false);

@@ -112,6 +112,7 @@
             LogoutBtn.TabIndex = 3;
             LogoutBtn.Text = "Đăng Xuất";
             LogoutBtn.UseVisualStyleBackColor = false;
+            LogoutBtn.Click += LogoutBtn_Click_1;
             // 
             // InfoBtn
             // 
@@ -123,6 +124,7 @@
             InfoBtn.TabIndex = 0;
             InfoBtn.Text = "Thông tin cá nhân";
             InfoBtn.UseVisualStyleBackColor = false;
+            InfoBtn.TextChanged += InfoBtn_Click;
             InfoBtn.Click += InfoBtn_Click;
             // 
             // panelMainContent

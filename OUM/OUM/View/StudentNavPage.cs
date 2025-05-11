@@ -29,7 +29,7 @@ namespace OUM.View
         }
 
 
-        private void LogoutBtn_Click(object sender, EventArgs e)
+        private void LogoutBtn_Click_1(object sender, EventArgs e)
         {
             this.Close();
             LoginPage loginPage = new LoginPage();

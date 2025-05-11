@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace OUM.View
 {
@@ -24,18 +25,20 @@ namespace OUM.View
         private AdminViewModel viewModel;
         private OracleDAO dao;
 
-        public string GetConnectionString()
+        public string
+            GetConnectionString()
         {
-            return $"User Id={"PDB_ADMIN"};Password={AdminSession.Password};Data Source=localhost:1521/DKHP;";
+            return $"User Id={AdminSession.Username};Password={AdminSession.Password};Data Source=localhost:1521/DKHP;";
         }
 
 
         public Account()
         {
             InitializeComponent();
-            //viewModel = new AdminViewModel();
-            //dao = new OracleDAO();
+            viewModel = new AdminViewModel();
+            dao = new OracleDAO();
             this.Load += Account_Load;
+
         }
 
         private void Account_Load(object sender, EventArgs e)
@@ -44,15 +47,30 @@ namespace OUM.View
 
             if (userId.StartsWith("SV"))
             {
-                // Nếu là sinh viên, lấy thông tin sinh viên
                 var student = GetStudentById(userId);
                 DisplayStudentInfo(student);
+                lbSalary.Visible = false;
+                lbPC.Visible = false;
+
             }
             else if (userId.StartsWith("NV"))
             {
-                // Nếu là nhân viên, lấy thông tin nhân viên
                 var employee = GetEmployeeById(userId);
                 DisplayEmployeeInfo(employee);
+                txtSalary.Visible = true;
+                txtPC.Visible = true;
+                txtDC.Visible = false;
+                lbDC.Visible = false;
+                txtDC.Visible = false;
+                lbSalary.Visible = true;
+                lbPC.Visible = true;
+                txtStatus.Visible = false;
+                lbStatus.Visible = false;
+                lbSalary.Visible = true;
+                lbPC.Visible = true;
+
+                lbKhoa.Location = new Point(465, 202);
+                txtKhoa.Location = new Point(588, 203);
             }
             else
             {
@@ -65,13 +83,15 @@ namespace OUM.View
         {
             if (student != null)
             {
-                textBox1.Text = student.id;
-                textBox2.Text = student.name;
-                // txtGender.Text = student.Gender;
-                //txtPhone.Text = student.Phone;
-                //txtDepartment.Text = student.Department;
-                //txtStatus.Text = student.Status;
-                //txtAddress.Text = student.Address;
+                textBoxUserType.Text = student.id + " - " + student.name;
+                txtMa.Text = student.id;
+                txtName.Text = student.name;
+                txt_gen.Text = student.gender;
+                txtPhone.Text = student.phone;
+                txtKhoa.Text = student.department;
+                txtStatus.Text = student.status;
+                txtDC.Text = student.address;
+                dateTimePickerdob.Text = student.dob.ToString("yyyy-MM-dd");
             }
         }
 
@@ -80,23 +100,18 @@ namespace OUM.View
         {
             if (employee != null)
             {
-                textBox1.Text = employee.manld;
-                textBox2.Text = employee.name;
-                //txtGender.Text = employee.Gender;
-                //txtPhone.Text = employee.Phone;
-                //txtDepartment.Text = employee.Department;
-                //txtRole.Text = employee.Role;
-                //txtSalary.Text = employee.Salary.ToString();
-                //txtAllowance.Text = employee.Allowance.ToString();
+                textBoxUserType.Text = employee.manld + " - " + employee.name;
+                txtMa.Text = employee.manld;
+                txtName.Text = employee.name;
+                txt_gen.Text = employee.gender;
+                txtPhone.Text = employee.phone;
+                txtKhoa.Text = employee.madv;
+                txtSalary.Text = employee.salary.ToString();
+                txtPC.Text = employee.allowance.ToString();
             }
         }
 
 
-
-        private void textBoxUserType_TextChanged(object sender, EventArgs e)
-        {
-            textBoxUserType.Text = textBox1.Text = "HIHI";
-        }
 
 
 
@@ -111,27 +126,17 @@ namespace OUM.View
                     connection.Open();
 
                     string query = @"
-                SELECT 
-                    S.MASV,
-                    S.HOTEN,
-                    S.PHAI,
-                    S.NGSINH,
-                    S.DT,
-                    S.KHOA,
-                    S.TINHTRANG,
-                    S.DCHI,
-                    U.USERNAME,
-                    U.CREATED AS THOIGIANTAO
-                FROM SINHVIEN S
-                LEFT JOIN DBA_USERS U ON S.MASV = SUBSTR(U.USERNAME, 3)
-                WHERE U.USERNAME = :username";
+                SELECT MASV, HOTEN, PHAI, NGSINH, DT, KHOA, TINHTRANG, DCHI
+                FROM PDB_ADMIN.SINHVIEN
+                WHERE MASV = :masv";
 
                     using (var command = new OracleCommand(query, connection))
                     {
-                        command.Parameters.Add(new OracleParameter(":username", username));
+                        command.Parameters.Add(new OracleParameter(":masv", username.Substring(2)));
+
                         using (var reader = command.ExecuteReader())
                         {
-                            if (reader.Read()) // Kiểm tra nếu có dữ liệu trả về
+                            if (reader.Read())
                             {
                                 student = new Student(
                                     id: reader["MASV"].ToString(),
@@ -143,9 +148,6 @@ namespace OUM.View
                                     status: reader["TINHTRANG"]?.ToString() ?? "",
                                     address: reader["DCHI"]?.ToString() ?? ""
                                 );
-
-                                student.Username = reader["USERNAME"]?.ToString() ?? "";
-                                student.CreatedTime = reader["THOIGIANTAO"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["THOIGIANTAO"]);
                             }
                         }
                     }
@@ -158,7 +160,7 @@ namespace OUM.View
                 }
             }
 
-            return student; // Trả về sinh viên tìm được, nếu không có thì trả về null
+            return student;
         }
 
 
@@ -175,27 +177,24 @@ namespace OUM.View
 
                     string query = @"
                 SELECT 
-                    N.MANLD,
-                    N.HOTEN,
-                    N.PHAI,
-                    N.NGSINH,
-                    N.DT,
-                    N.MADV,
-                    N.VAITRO,
-                    N.LUONG,
-                    N.PHUCAP,
-                    U.USERNAME,
-                    U.CREATED AS THOIGIANTAO
-                FROM NHANVIEN N
-                LEFT JOIN DBA_USERS U ON N.MANLD = SUBSTR(U.USERNAME, 3)
-                WHERE U.USERNAME = :username";
+                        N.MANLD,
+                        N.HOTEN,
+                        N.PHAI,
+                        N.NGSINH,
+                        N.DT,
+                        N.MADV,
+                        N.VAITRO,
+                        N.LUONG,
+                        N.PHUCAP
+                    FROM PDB_ADMIN.NHANVIEN N
+                    WHERE N.MANLD =:username";
 
                     using (var command = new OracleCommand(query, connection))
                     {
-                       // command.Parameters.Add(new OracleParameter(":username", username));
+                        command.Parameters.Add(new OracleParameter(":username", username));
                         using (var reader = command.ExecuteReader())
                         {
-                            if (reader.Read()) // Kiểm tra nếu có dữ liệu trả về
+                            if (reader.Read())
                             {
                                 employee = new Employee(
                                     manld: reader["MANLD"].ToString(),
@@ -220,9 +219,169 @@ namespace OUM.View
                 }
             }
 
-            return employee; // Trả về nhân viên tìm được, nếu không có thì trả về null
+            return employee;
         }
 
-       
+
+
+        public bool UpdateStudentPhone(string username, string newPhone)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                connection.Open();
+
+                string query = "UPDATE PDB_ADMIN.SINHVIEN SET DT = :newPhone WHERE MASV = :masv";
+                using (var command = new OracleCommand(query, connection))
+                {
+                    command.Parameters.Add(new OracleParameter(":newPhone", newPhone));
+                    command.Parameters.Add(new OracleParameter(":masv", username.Substring(2)));
+
+                    try
+                    {
+                        int rowsAffected = command.ExecuteNonQuery();
+                        return rowsAffected > 0;  
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi cập nhật số điện thoại: " + ex.Message);
+                        return false;
+                    }
+                }
+
+            }
+        }
+
+
+        public bool UpdateEmployeePhone(string manld, string newPhone)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                connection.Open();
+
+                string query = "UPDATE PDB_ADMIN.NHANVIEN SET DT = :newPhone WHERE MANLD = :manld";
+                using (var command = new OracleCommand(query, connection))
+                {
+                    command.Parameters.Add(new OracleParameter(":newPhone", newPhone));
+                    command.Parameters.Add(new OracleParameter(":manld", manld));
+
+                    try
+                    {
+                        int rowsAffected = command.ExecuteNonQuery();
+                        return rowsAffected > 0;  
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi cập nhật số điện thoại: " + ex.Message);
+                        return false;
+                    }
+                }
+
+            }
+        }
+
+
+        public bool UpdateStudentAddress(string username, string newAddress)
+        {
+            using (var connection = new OracleConnection(GetConnectionString()))
+            {
+                connection.Open();
+
+                string query = "UPDATE PDB_ADMIN.SINHVIEN SET DCHI = :newAddress WHERE MASV = :masv";
+                using (var command = new OracleCommand(query, connection))
+                {
+                    command.Parameters.Add(new OracleParameter(":newAddress", newAddress));
+                    command.Parameters.Add(new OracleParameter(":masv", username.Substring(2)));  // Lấy mã sinh viên từ username (VD: SVxxxx)
+
+                    try
+                    {
+                        int rowsAffected = command.ExecuteNonQuery();
+                        return rowsAffected > 0;  // Trả về true nếu có ít nhất một dòng bị ảnh hưởng
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi cập nhật địa chỉ: " + ex.Message);
+                        return false;
+                    }
+                }
+            }
+        }
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            string newPhone = txtNewP.Text; 
+            string newAddress = txtNewAd.Text;
+            string username = AdminSession.Username;
+
+            bool updateSuccessPhone = false;
+            bool updateSuccessAddress = false;
+
+            if (username.StartsWith("NV"))
+            {
+                bool updateSuccess = UpdateEmployeePhone(username, newPhone);
+                if (updateSuccess)
+                {
+                    txtPhone.Text = newPhone;
+                    lbNewPhone.Visible = false;
+                    txtNewP.Visible = false;
+                    MessageBox.Show("Cập nhật số điện thoại thành công!");
+                }
+            }
+            else if (username.StartsWith("SV"))
+            {
+                if (!string.IsNullOrEmpty(newPhone))
+                {
+                    updateSuccessPhone = UpdateStudentPhone(username, newPhone);
+                    if (updateSuccessPhone)
+                    {
+                        txtPhone.Text = newPhone;  
+                        lbNewPhone.Visible = false; 
+                        txtNewP.Visible = false;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(newAddress))
+                {
+                    updateSuccessAddress = UpdateStudentAddress(username, newAddress);
+                    if (updateSuccessAddress)
+                    {
+                        txtDC.Text = newAddress;  
+                        lbNAddress.Visible = false;
+                        txtNewAd.Visible = false;
+                    }
+                }
+            }
+
+            if (updateSuccessPhone || updateSuccessAddress)
+            {
+                MessageBox.Show("Cập nhật thông tin thành công!");
+            }
+            else
+            {
+                MessageBox.Show("Không có thay đổi nào được cập nhật.");
+            }
+
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            string username = AdminSession.Username;
+
+            if (username.StartsWith("NV"))
+            {
+                lbNewPhone.Visible = true;
+                txtNewP.Visible = true;
+            }
+            else
+            {
+                lbNewPhone.Visible = true;
+                txtNewP.Visible = true;
+                lbNAddress.Visible = true;
+                txtNewAd.Visible = true;
+            }
+            //txtNewP.Clear();
+
+        }
     }
 }

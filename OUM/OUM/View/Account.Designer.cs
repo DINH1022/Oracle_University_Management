@@ -28,138 +28,133 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox6 = new TextBox();
-            textBox5 = new TextBox();
-            textBox4 = new TextBox();
-            textBox3 = new TextBox();
-            comboBox3 = new ComboBox();
-            comboBox2 = new ComboBox();
-            comboBox1 = new ComboBox();
-            dateTimePicker1 = new DateTimePicker();
-            label11 = new Label();
-            label10 = new Label();
-            label9 = new Label();
-            label8 = new Label();
-            label7 = new Label();
+            txtDC = new TextBox();
+            txtPC = new TextBox();
+            txtSalary = new TextBox();
+            txtPhone = new TextBox();
+            dateTimePickerdob = new DateTimePicker();
+            lbPC = new Label();
+            lbSalary = new Label();
+            lbStatus = new Label();
+            lbKhoa = new Label();
+            lbDC = new Label();
             label6 = new Label();
             label5 = new Label();
             label4 = new Label();
-            textBox2 = new TextBox();
+            txtName = new TextBox();
             label3 = new Label();
-            textBox1 = new TextBox();
+            txtMa = new TextBox();
             label2 = new Label();
             textBoxUserType = new TextBox();
             label1 = new Label();
+            button2 = new Button();
+            txt_gen = new TextBox();
+            txtKhoa = new TextBox();
+            txtStatus = new TextBox();
+            lbNewPhone = new Label();
+            txtNewP = new TextBox();
+            btnUpdate = new Button();
+            lbNAddress = new Label();
+            txtNewAd = new TextBox();
             SuspendLayout();
             // 
-            // textBox6
+            // txtDC
             // 
-            textBox6.Location = new Point(588, 95);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(250, 27);
-            textBox6.TabIndex = 44;
+            txtDC.Location = new Point(588, 95);
+            txtDC.Name = "txtDC";
+            txtDC.Size = new Size(287, 27);
+            txtDC.TabIndex = 44;
+            txtDC.TextChanged += Account_Load;
             // 
-            // textBox5
+            // txtPC
             // 
-            textBox5.Location = new Point(588, 317);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(250, 27);
-            textBox5.TabIndex = 43;
+            txtPC.Location = new Point(588, 317);
+            txtPC.Name = "txtPC";
+            txtPC.ReadOnly = true;
+            txtPC.Size = new Size(250, 27);
+            txtPC.TabIndex = 43;
+            txtPC.Visible = false;
+            txtPC.TextChanged += Account_Load;
             // 
-            // textBox4
+            // txtSalary
             // 
-            textBox4.Location = new Point(588, 257);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(250, 27);
-            textBox4.TabIndex = 42;
+            txtSalary.Location = new Point(588, 257);
+            txtSalary.Name = "txtSalary";
+            txtSalary.ReadOnly = true;
+            txtSalary.Size = new Size(250, 27);
+            txtSalary.TabIndex = 42;
+            txtSalary.Visible = false;
+            txtSalary.TextChanged += Account_Load;
             // 
-            // textBox3
+            // txtPhone
             // 
-            textBox3.Location = new Point(125, 318);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(250, 27);
-            textBox3.TabIndex = 41;
+            txtPhone.Location = new Point(147, 318);
+            txtPhone.Name = "txtPhone";
+            txtPhone.Size = new Size(250, 27);
+            txtPhone.TabIndex = 41;
+            txtPhone.TextChanged += Account_Load;
             // 
-            // comboBox3
+            // dateTimePickerdob
             // 
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(588, 203);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(250, 28);
-            comboBox3.TabIndex = 40;
+            dateTimePickerdob.CustomFormat = "";
+            dateTimePickerdob.Format = DateTimePickerFormat.Short;
+            dateTimePickerdob.Location = new Point(147, 255);
+            dateTimePickerdob.Name = "dateTimePickerdob";
+            dateTimePickerdob.Size = new Size(250, 27);
+            dateTimePickerdob.TabIndex = 37;
+            dateTimePickerdob.ValueChanged += Account_Load;
             // 
-            // comboBox2
+            // lbPC
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(588, 144);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(250, 28);
-            comboBox2.TabIndex = 39;
+            lbPC.AutoSize = true;
+            lbPC.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbPC.Location = new Point(465, 317);
+            lbPC.Name = "lbPC";
+            lbPC.Size = new Size(80, 25);
+            lbPC.TabIndex = 36;
+            lbPC.Text = "Phụ cấp";
+            lbPC.Visible = false;
             // 
-            // comboBox1
+            // lbSalary
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(94, 199);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(281, 28);
-            comboBox1.TabIndex = 38;
+            lbSalary.AutoSize = true;
+            lbSalary.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbSalary.Location = new Point(465, 257);
+            lbSalary.Name = "lbSalary";
+            lbSalary.Size = new Size(65, 25);
+            lbSalary.TabIndex = 35;
+            lbSalary.Text = "Lương";
+            lbSalary.Visible = false;
             // 
-            // dateTimePicker1
+            // lbStatus
             // 
-            dateTimePicker1.Location = new Point(125, 255);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(250, 27);
-            dateTimePicker1.TabIndex = 37;
+            lbStatus.AutoSize = true;
+            lbStatus.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbStatus.Location = new Point(465, 202);
+            lbStatus.Name = "lbStatus";
+            lbStatus.Size = new Size(103, 25);
+            lbStatus.TabIndex = 34;
+            lbStatus.Text = "Tình trạng";
             // 
-            // label11
+            // lbKhoa
             // 
-            label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label11.Location = new Point(465, 317);
-            label11.Name = "label11";
-            label11.Size = new Size(80, 25);
-            label11.TabIndex = 36;
-            label11.Text = "Phụ cấp";
+            lbKhoa.AutoSize = true;
+            lbKhoa.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbKhoa.Location = new Point(465, 147);
+            lbKhoa.Name = "lbKhoa";
+            lbKhoa.Size = new Size(56, 25);
+            lbKhoa.TabIndex = 33;
+            lbKhoa.Text = "Khoa";
             // 
-            // label10
+            // lbDC
             // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label10.Location = new Point(465, 257);
-            label10.Name = "label10";
-            label10.Size = new Size(65, 25);
-            label10.TabIndex = 35;
-            label10.Text = "Lương";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label9.Location = new Point(465, 202);
-            label9.Name = "label9";
-            label9.Size = new Size(103, 25);
-            label9.TabIndex = 34;
-            label9.Text = "Tình trạng";
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label8.Location = new Point(465, 147);
-            label8.Name = "label8";
-            label8.Size = new Size(56, 25);
-            label8.TabIndex = 33;
-            label8.Text = "Khoa";
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label7.Location = new Point(465, 99);
-            label7.Name = "label7";
-            label7.Size = new Size(73, 25);
-            label7.TabIndex = 32;
-            label7.Text = "Địa chỉ";
+            lbDC.AutoSize = true;
+            lbDC.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbDC.Location = new Point(465, 99);
+            lbDC.Name = "lbDC";
+            lbDC.Size = new Size(73, 25);
+            lbDC.TabIndex = 32;
+            lbDC.Text = "Địa chỉ";
             // 
             // label6
             // 
@@ -191,13 +186,14 @@
             label4.TabIndex = 29;
             label4.Text = "Phái";
             // 
-            // textBox2
+            // txtName
             // 
-            textBox2.Location = new Point(94, 145);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(281, 27);
-            textBox2.TabIndex = 28;
-            textBox2.TextChanged += Account_Load;
+            txtName.Location = new Point(94, 145);
+            txtName.Name = "txtName";
+            txtName.ReadOnly = true;
+            txtName.Size = new Size(281, 27);
+            txtName.TabIndex = 28;
+            txtName.TextChanged += Account_Load;
             // 
             // label3
             // 
@@ -209,14 +205,13 @@
             label3.TabIndex = 27;
             label3.Text = "Họ tên ";
             // 
-            // textBox1
+            // txtMa
             // 
-            textBox1.Location = new Point(93, 95);
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.Size = new Size(281, 27);
-            textBox1.TabIndex = 26;
-            textBox1.TextChanged += Account_Load;
+            txtMa.Location = new Point(93, 95);
+            txtMa.Name = "txtMa";
+            txtMa.ReadOnly = true;
+            txtMa.Size = new Size(281, 27);
+            txtMa.TabIndex = 26;
             // 
             // label2
             // 
@@ -232,9 +227,9 @@
             // 
             textBoxUserType.Location = new Point(15, 57);
             textBoxUserType.Name = "textBoxUserType";
+            textBoxUserType.ReadOnly = true;
             textBoxUserType.Size = new Size(448, 27);
             textBoxUserType.TabIndex = 24;
-            textBoxUserType.TextChanged += textBoxUserType_TextChanged;
             // 
             // label1
             // 
@@ -246,61 +241,165 @@
             label1.TabIndex = 23;
             label1.Text = "Thông tin cá nhân";
             // 
+            // button2
+            // 
+            button2.FlatStyle = FlatStyle.Popup;
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            button2.Location = new Point(530, 436);
+            button2.Name = "button2";
+            button2.Size = new Size(195, 40);
+            button2.TabIndex = 46;
+            button2.Text = "Lưu";
+            button2.UseVisualStyleBackColor = true;
+            button2.TextChanged += button2_Click;
+            button2.Click += button2_Click;
+            // 
+            // txt_gen
+            // 
+            txt_gen.Location = new Point(94, 200);
+            txt_gen.Name = "txt_gen";
+            txt_gen.ReadOnly = true;
+            txt_gen.Size = new Size(281, 27);
+            txt_gen.TabIndex = 47;
+            txt_gen.TextChanged += Account_Load;
+            // 
+            // txtKhoa
+            // 
+            txtKhoa.Location = new Point(588, 148);
+            txtKhoa.Name = "txtKhoa";
+            txtKhoa.ReadOnly = true;
+            txtKhoa.Size = new Size(250, 27);
+            txtKhoa.TabIndex = 48;
+            txtKhoa.TextChanged += Account_Load;
+            // 
+            // txtStatus
+            // 
+            txtStatus.Location = new Point(588, 203);
+            txtStatus.Name = "txtStatus";
+            txtStatus.ReadOnly = true;
+            txtStatus.Size = new Size(250, 27);
+            txtStatus.TabIndex = 49;
+            txtStatus.TextChanged += Account_Load;
+            // 
+            // lbNewPhone
+            // 
+            lbNewPhone.AutoSize = true;
+            lbNewPhone.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbNewPhone.Location = new Point(12, 366);
+            lbNewPhone.Name = "lbNewPhone";
+            lbNewPhone.Size = new Size(140, 25);
+            lbNewPhone.TabIndex = 50;
+            lbNewPhone.Text = "Điện thoại mới";
+            lbNewPhone.Visible = false;
+            lbNewPhone.TextChanged += btnUpdate_Click;
+            // 
+            // txtNewP
+            // 
+            txtNewP.Location = new Point(147, 367);
+            txtNewP.Name = "txtNewP";
+            txtNewP.Size = new Size(250, 27);
+            txtNewP.TabIndex = 51;
+            txtNewP.Visible = false;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.FlatStyle = FlatStyle.Popup;
+            btnUpdate.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            btnUpdate.Location = new Point(288, 436);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(195, 40);
+            btnUpdate.TabIndex = 52;
+            btnUpdate.Text = "Cập nhật";
+            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
+            // 
+            // lbNAddress
+            // 
+            lbNAddress.AutoSize = true;
+            lbNAddress.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lbNAddress.Location = new Point(465, 369);
+            lbNAddress.Name = "lbNAddress";
+            lbNAddress.Size = new Size(111, 25);
+            lbNAddress.TabIndex = 53;
+            lbNAddress.Text = "Địa chỉ mới";
+            lbNAddress.Visible = false;
+            // 
+            // txtNewAd
+            // 
+            txtNewAd.Location = new Point(588, 367);
+            txtNewAd.Name = "txtNewAd";
+            txtNewAd.Size = new Size(287, 27);
+            txtNewAd.TabIndex = 54;
+            txtNewAd.Visible = false;
+            // 
             // Account
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(textBox6);
-            Controls.Add(textBox5);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
-            Controls.Add(comboBox3);
-            Controls.Add(comboBox2);
-            Controls.Add(comboBox1);
-            Controls.Add(dateTimePicker1);
-            Controls.Add(label11);
-            Controls.Add(label10);
-            Controls.Add(label9);
-            Controls.Add(label8);
-            Controls.Add(label7);
+            Controls.Add(txtNewAd);
+            Controls.Add(lbNAddress);
+            Controls.Add(btnUpdate);
+            Controls.Add(txtNewP);
+            Controls.Add(lbNewPhone);
+            Controls.Add(txtStatus);
+            Controls.Add(txtKhoa);
+            Controls.Add(txt_gen);
+            Controls.Add(button2);
+            Controls.Add(txtDC);
+            Controls.Add(txtPC);
+            Controls.Add(txtSalary);
+            Controls.Add(txtPhone);
+            Controls.Add(dateTimePickerdob);
+            Controls.Add(lbPC);
+            Controls.Add(lbSalary);
+            Controls.Add(lbStatus);
+            Controls.Add(lbKhoa);
+            Controls.Add(lbDC);
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
-            Controls.Add(textBox2);
+            Controls.Add(txtName);
             Controls.Add(label3);
-            Controls.Add(textBox1);
+            Controls.Add(txtMa);
             Controls.Add(label2);
             Controls.Add(textBoxUserType);
             Controls.Add(label1);
             Name = "Account";
-            Size = new Size(1182, 853);
+            Size = new Size(1164, 806);
+            TextChanged += Account_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private TextBox textBox6;
-        private TextBox textBox5;
-        private TextBox textBox4;
-        private TextBox textBox3;
-        private ComboBox comboBox3;
-        private ComboBox comboBox2;
-        private ComboBox comboBox1;
-        private DateTimePicker dateTimePicker1;
-        private Label label11;
-        private Label label10;
-        private Label label9;
-        private Label label8;
-        private Label label7;
+        private TextBox txtDC;
+        private TextBox txtPC;
+        private TextBox txtSalary;
+        private TextBox txtPhone;
+        private DateTimePicker dateTimePickerdob;
+        private Label lbPC;
+        private Label lbSalary;
+        private Label lbStatus;
+        private Label lbKhoa;
+        private Label lbDC;
         private Label label6;
         private Label label5;
         private Label label4;
-        private TextBox textBox2;
+        private TextBox txtName;
         private Label label3;
-        private TextBox textBox1;
+        private TextBox txtMa;
         private Label label2;
         private TextBox textBoxUserType;
         private Label label1;
+        private Button button2;
+        private TextBox txt_gen;
+        private TextBox txtKhoa;
+        private TextBox txtStatus;
+        private Label lbNewPhone;
+        private TextBox txtNewP;
+        private Button btnUpdate;
+        private Label lbNAddress;
+        private TextBox txtNewAd;
     }
 }

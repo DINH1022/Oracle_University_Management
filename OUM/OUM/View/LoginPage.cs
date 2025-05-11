@@ -1,4 +1,5 @@
-﻿using OUM.View;
+﻿using OUM.Session;
+using OUM.View;
 using OUM.ViewModel;
 
 namespace OUM
@@ -46,6 +47,8 @@ namespace OUM
             bool logined = viewModel.AdminLogin();
             if (logined)
             {
+                AdminSession.Username = viewModel.username;
+                AdminSession.Password = viewModel.password;
                 this.Hide();
                 StudentNavPage navPage = new StudentNavPage();
                 navPage.Show();

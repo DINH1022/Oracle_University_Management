@@ -58,5 +58,11 @@ namespace OUM.ViewModel
             LoadData();
         }
 
+        public bool IsPhoneOnlyUpdateMode(string employeeId)
+        {
+            EmpDao dao = new EmpDao();
+            return dao.IsPhoneOnlyUpdateMode(employeeId);
+        }
+
     }
 }

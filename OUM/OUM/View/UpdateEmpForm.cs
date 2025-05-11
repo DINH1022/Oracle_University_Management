@@ -289,7 +289,11 @@ namespace OUM.View
                         );
 
                         if (result == DialogResult.Yes)
+                        {
+                            this.DialogResult = DialogResult.OK;
                             this.Close();
+                        }    
+                            
                     }
                     else
                     {
@@ -325,7 +329,7 @@ namespace OUM.View
                     
                     _viewModel.UpdateEmployee(updatedEmp);
 
-                    
+                    this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
             }

@@ -393,7 +393,7 @@
             // 
             panel10.Controls.Add(listCourse);
             panel10.Controls.Add(panel11);
-            panel10.Dock = DockStyle.Fill;
+            panel10.Dock = DockStyle.Top;
             panel10.Location = new Point(0, 800);
             panel10.Name = "panel10";
             panel10.Size = new Size(1058, 429);
@@ -518,6 +518,7 @@
             searchInputCourse.PlaceholderText = "Học phần";
             searchInputCourse.Size = new Size(510, 44);
             searchInputCourse.TabIndex = 2;
+            searchInputCourse.TextChanged += searchInputCourseTextChange;
             // 
             // findBtnCourse
             // 
@@ -535,12 +536,13 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             Controls.Add(panel10);
             Controls.Add(panel5);
             Controls.Add(panel2);
             Controls.Add(panel3);
             Name = "PDTManagementRegistrationCourse";
-            Size = new Size(1058, 1229);
+            Size = new Size(1058, 1270);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             panel1.ResumeLayout(false);

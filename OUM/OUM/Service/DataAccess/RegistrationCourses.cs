@@ -111,6 +111,52 @@ namespace OUM.Service.DataAccess
         }
 
 
+        public List<NewRegistrationCourse> getNewRegistrationCoursesByMASV(string keyword, string masv)
+        {
+            string connectString = dao.GetConnectionString();
+            List<NewRegistrationCourse> courses = new List<NewRegistrationCourse>();
+            try
+            {
+                using (var con = new OracleConnection(connectString))
+                {
+                    con.Open();
+                    string query = @$"SELECT MM.MAMM, MM.MAHP, HP.TENHP,HP.SOTC, HP.STLT, HP.STTH
+                                      FROM {PDBADMIN_USERNAME}.{PDT_MOMON_VIEW_NAME} MM JOIN
+                                           {PDBADMIN_USERNAME}.{HOCPHAN_TABLE_NAME} HP ON (MM.MAHP = HP.MAHP) JOIN
+                                           {PDBADMIN_USERNAME}.{SINHVIEN_TABLE_NAME} SV ON (SV.KHOA = HP.MADV)
+                                            WHERE SV.MASV =:masv"
+                                           + (!string.IsNullOrEmpty(keyword) ? " AND UPPER(HP.TENHP) LIKE UPPER(:keyword)" : "");
+                    OracleCommand oracleCommand = new OracleCommand(query, con);
+                    oracleCommand.Parameters.Add(new OracleParameter("masv", masv));
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        oracleCommand.Parameters.Add(new OracleParameter("keyword", "%" + keyword + "%"));
+                    }
+                    OracleDataReader reader = oracleCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        NewRegistrationCourse course = new NewRegistrationCourse(
+                            mamm: reader["MAMM"].ToString(),
+                            mahp: reader["MAHP"].ToString(),
+                            tenhp: reader["TENHP"].ToString(),
+                            sotc: Convert.ToInt32(reader["SOTC"]),
+                            stth: Convert.ToInt32(reader["STTH"]),
+                            stlt: Convert.ToInt32(reader["STLT"])
+                        );
+                        courses.Add(course);
+                    }
+                    con.Close();
+                }
+                return courses;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error when get registered course", ex.Message);
+                return courses;
+            }
+        }
+
+
 
         public List<NewRegistrationCourse> GetNewRegistrationCourses(string keyword)
         {

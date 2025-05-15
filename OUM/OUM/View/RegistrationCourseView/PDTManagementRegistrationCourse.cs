@@ -16,6 +16,8 @@ namespace OUM.View.RegistrationCourseView
     {
         private List<Student> students;
         private List<NewRegistrationCourse> registeredCourses;
+        private List<NewRegistrationCourse> courses;
+
         private RegistrationCourses dao;
         public PDTManagementRegistrationCourse()
         {
@@ -25,8 +27,9 @@ namespace OUM.View.RegistrationCourseView
             dao = new RegistrationCourses();
             students = dao.GetAllStudent("");
             registeredCourses = dao.getRegisteredCoursesByMASV("", "");
+            courses = dao.getNewRegistrationCoursesByMASV("", "");
             setUpStudentDGW();
-            setRegisteredCourseDGW();
+            setUpRegisteredCourseDGW();
         }
 
         private void setUpStudentDGW()
@@ -36,12 +39,19 @@ namespace OUM.View.RegistrationCourseView
             listStudent.DataSource = students;
             listStudent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
-        private void setRegisteredCourseDGW()
+        private void setUpRegisteredCourseDGW()
         {
             listRegisteredCourse.AutoGenerateColumns = false;
             listRegisteredCourse.DataSource = null;
             listRegisteredCourse.DataSource = registeredCourses;
             listRegisteredCourse.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+        private void setUpNewRegisterCourseDGW()
+        {
+            listCourse.AutoGenerateColumns = false;
+            listCourse.DataSource = null;
+            listCourse.DataSource = courses;
+            listCourse.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
         private void searchInputStudentTextChanged(object sender, EventArgs e)
         {
@@ -59,7 +69,9 @@ namespace OUM.View.RegistrationCourseView
                 {
                     string keyword = searchInputRegisteredCourse.Text;
                     registeredCourses = dao.getRegisteredCoursesByMASV(keyword, selectedStudent.id);
-                    setRegisteredCourseDGW();
+                    courses = dao.getNewRegistrationCoursesByMASV(keyword, selectedStudent.id);
+                    setUpRegisteredCourseDGW();
+                    setUpNewRegisterCourseDGW();
                 }
             }
         }
@@ -73,10 +85,25 @@ namespace OUM.View.RegistrationCourseView
                 {
                     string keyword = searchInputRegisteredCourse.Text;
                     registeredCourses = dao.getRegisteredCoursesByMASV(keyword, selectedStudent.id);
-                    setRegisteredCourseDGW();
+                    setUpRegisteredCourseDGW();
                 }
             }
         }
+
+        private void searchInputCourseTextChange(object sender, EventArgs e)
+        {
+            if (listStudent.SelectedRows.Count > 0)
+            {
+                var selectedStudent = listStudent.SelectedRows[0].DataBoundItem as Student;
+                if (selectedStudent != null)
+                {
+                    string keyword = searchInputRegisteredCourse.Text;
+                    courses = dao.getNewRegistrationCoursesByMASV(keyword, selectedStudent.id);
+                    setUpNewRegisterCourseDGW();
+                }
+            }
+        }
+
 
 
 

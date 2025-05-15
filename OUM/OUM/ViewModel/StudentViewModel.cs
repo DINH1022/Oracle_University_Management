@@ -39,11 +39,15 @@ namespace OUM.ViewModel
             StudentDao dao = new StudentDao();
             return dao.IsMaSVExists(masv);
         }
-        public void AddStudent(Student st)
+        public bool AddStudent(Student st)
         {
             StudentDao dao = new StudentDao();
-            dao.InsertStudent(st);
-            LoadData();
+            bool success  = dao.InsertStudent(st);
+            if (success)
+            {
+                LoadData();
+            }
+            return success;
         }
         public void UpdateStudent(Student st)
         {

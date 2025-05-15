@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -126,21 +127,19 @@ namespace OUM.View
                 }
                 Employee emp = new Employee(maNLD, hoTen, gioiTinh, ngaySinh, luong, phuCap, sdt, maDV, vaiTro);
 
-                vm.AddEmployee(emp);
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                bool success = vm.AddEmployee(emp);
+                if (success)
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("ORA-00001"))
-                {
-                    MessageBox.Show("Nhân viên đã tồn tại. Vui lòng nhập mã nhân lực khác.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtMaNLD.Focus();
-                }
-                else
-                {
+                
                     MessageBox.Show("Lỗi khi thêm nhân viên: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                
             }
         }
     }

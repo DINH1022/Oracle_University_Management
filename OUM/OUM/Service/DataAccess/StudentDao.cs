@@ -131,7 +131,7 @@ namespace OUM.Service.DataAccess
         }
 
         
-        public void InsertStudent(Student st)
+        public bool InsertStudent(Student st)
         {
             using (var connection = GetOracleConnection())
             {
@@ -153,7 +153,7 @@ namespace OUM.Service.DataAccess
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
-                        return;
+                        return false;
                     }
 
                     
@@ -167,7 +167,7 @@ namespace OUM.Service.DataAccess
                     
 
                     var insertCmd = connection.CreateCommand();
-                    insertCmd.CommandText = @"INSERT INTO SINHVIEN (MASV, HOTEN, PHAI, NGSINH, DT, KHOA, TINHTRANG, DCHI) 
+                    insertCmd.CommandText = @"INSERT INTO pdb_admin.SINHVIEN (MASV, HOTEN, PHAI, NGSINH, DT, KHOA, TINHTRANG, DCHI) 
                                       VALUES (:id, :name, :gender, :dob, :phone, :department, :status, :address)";
                     insertCmd.Parameters.Add(new OracleParameter("id", st.id));
                     insertCmd.Parameters.Add(new OracleParameter("name", st.name));
@@ -187,7 +187,7 @@ namespace OUM.Service.DataAccess
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
                     );
-
+                    return true;
                 }
                 catch (Exception ex)
                 {
@@ -200,29 +200,41 @@ namespace OUM.Service.DataAccess
                             MessageBoxIcon.Warning
                         );
                     }
-                    else if (ex.Message.Contains("ORA-01400")) 
+                    else if (ex.Message.Contains("ORA-01400"))
                     {
                         MessageBox.Show(
-                            "Thiếu thông tin bắt buộc. Vui lòng điền đầy đủ thông tin sinh viên.",
+                            "Thiếu thông tin bắt buộc. Vui lòng điền đầy đủ các trường:\n" +
+                            "- Mã sinh viên\n- Họ tên\n- Giới tính",
                             "Lỗi Dữ Liệu",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
                     }
-                    else if (ex.Message.Contains("ORA-02290")) 
+                    else if (ex.Message.Contains("ORA-02290"))
                     {
                         MessageBox.Show(
-                            "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại các thông tin như giới tính và trạng thái.",
+                            "Dữ liệu không hợp lệ. Vui lòng kiểm tra:\n" +
+                            "- Giới tính chỉ chấp nhận 'Nam' hoặc 'Nữ'\n" +
+                            "- Vai trò phải nằm trong danh sách cho phép",
                             "Lỗi Dữ Liệu",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
                     }
-                    else if (ex.Message.Contains("ORA-02291")) 
+                    else if (ex.Message.Contains("ORA-02291"))
                     {
                         MessageBox.Show(
-                            "Khoa không tồn tại trong hệ thống. Vui lòng chọn khoa hợp lệ.",
+                            $"Khoa '{st.department}' không tồn tại trong hệ thống. Vui lòng chọn đơn vị hợp lệ.",
                             "Lỗi Ràng Buộc Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("ORA-01031"))
+                    {
+                        MessageBox.Show(
+                            $"Bạn không có quyền thêm dữ liệu sinh viên mới.",
+                            "Hạn Chế Quyền Của Vai Trò",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
@@ -235,7 +247,9 @@ namespace OUM.Service.DataAccess
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error
                         );
+
                     }
+                    return false;
                 }
             }
         }

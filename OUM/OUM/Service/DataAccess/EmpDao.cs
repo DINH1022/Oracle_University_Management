@@ -187,7 +187,7 @@ namespace OUM.Service.DataAccess
                             MessageBoxIcon.Warning
                         );
                     }
-                    else if (ex.Message.Contains("ORA-01031"))
+                    else if (ex.Message.Contains("ORA-01031") || ex.Message.Contains("ORA-00942"))
                     {
                         MessageBox.Show(
                             $"Bạn không có quyền thêm dữ liệu nhân viên mới.",

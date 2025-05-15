@@ -147,23 +147,18 @@ namespace OUM.View
 
                
                 Student st = new Student(id, name, gender, dob, phone, department, status, address);
-                vm.AddStudent(st);
-
-                
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                bool success = vm.AddStudent(st);
+                if (success)
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("ORA-00001"))
-                {
-                    MessageBox.Show("Sinh viên đã tồn tại. Vui lòng nhập mã số sinh viên khác.", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtMSSV.Focus();
-                }
-                else
-                {
+                
                     MessageBox.Show("Lỗi khi thêm sinh viên: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                
             }
         }
 

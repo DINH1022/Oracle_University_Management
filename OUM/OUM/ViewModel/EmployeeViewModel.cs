@@ -37,11 +37,16 @@ namespace OUM.ViewModel
             return dao.IsMaNLDExists(maNLD);
         }
 
-        public void AddEmployee(Employee emp)
+        public bool AddEmployee(Employee emp)
         {
             EmpDao dao = new EmpDao();
-            dao.InsertEmployee(emp); 
-            LoadData();
+            bool success = dao.InsertEmployee(emp);
+            if (success)
+            {
+                LoadData();
+            }
+            return success;
+            
         }
 
         public void UpdateEmployee(Employee emp)

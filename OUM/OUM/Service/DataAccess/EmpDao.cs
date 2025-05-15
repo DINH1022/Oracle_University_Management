@@ -89,7 +89,7 @@ namespace OUM.Service.DataAccess
         //    return employees;
         //}
 
-        public void InsertEmployee(Employee emp)
+        public bool InsertEmployee(Employee emp)
         {
             using (var connection = GetOracleConnection())
             {
@@ -111,7 +111,7 @@ namespace OUM.Service.DataAccess
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Warning
                         );
-                        return;
+                        return false;
                     }
 
                     var createUserCmd = connection.CreateCommand();
@@ -144,6 +144,7 @@ namespace OUM.Service.DataAccess
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information
                     );
+                    return true;
                 }
                 catch (Exception ex)
                 {
@@ -203,7 +204,9 @@ namespace OUM.Service.DataAccess
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error
                         );
+                       
                     }
+                    return false;
                 }
             }
         }

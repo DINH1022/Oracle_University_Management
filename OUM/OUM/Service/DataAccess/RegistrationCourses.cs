@@ -16,7 +16,11 @@ namespace OUM.Service.DataAccess
         private const string PDBADMIN_USERNAME = "PDB_ADMIN";
         private const string DANGKY_TABLE_NAME = "DANGKY";
         private const string MOMON_VIEW_NAME = "SV_MOMON_VIEW";
+        private const string PDT_MOMON_VIEW_NAME = "NV_PDT_MOMON_VIEW";
+
         private const string HOCPHAN_TABLE_NAME = "HOCPHAN";
+        private const string SINHVIEN_TABLE_NAME = "SINHVIEN";
+
 
         public List<RegisteredCourse> getAllRegisteredCourses()
         {
@@ -57,6 +61,57 @@ namespace OUM.Service.DataAccess
                 return courses;
             }
         }
+
+
+
+
+        public List<NewRegistrationCourse> getRegisteredCoursesByMASV(string keyword,string masv)
+        {
+            string connectString = dao.GetConnectionString();
+            List<NewRegistrationCourse> courses = new List<NewRegistrationCourse>();
+            try
+            {
+                using (var con = new OracleConnection(connectString))
+                {
+                    con.Open();
+                    string query = @$"SELECT DK.MAMM,HP.MAHP,HP.TENHP,HP.SOTC, HP.STTH,HP.STLT
+                                      FROM {PDBADMIN_USERNAME}.{DANGKY_TABLE_NAME} DK JOIN 
+                                           {PDBADMIN_USERNAME}.{PDT_MOMON_VIEW_NAME} MM ON (DK.MAMM = MM.MAMM) JOIN
+                                           {PDBADMIN_USERNAME}.{HOCPHAN_TABLE_NAME} HP ON (MM.MAHP = HP.MAHP) 
+                                           WHERE DK.MASV =:masv"
+                                           +(!string.IsNullOrEmpty(keyword) ? " AND UPPER(HP.TENHP) LIKE UPPER(:keyword)" : "");
+                    OracleCommand oracleCommand = new OracleCommand(query, con);
+                    oracleCommand.Parameters.Add(new OracleParameter("masv", masv));
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        oracleCommand.Parameters.Add(new OracleParameter("keyword", "%" + keyword + "%"));
+                    }
+                    OracleDataReader reader = oracleCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        NewRegistrationCourse course = new NewRegistrationCourse(
+                            mamm: reader["MAMM"].ToString(),
+                            mahp: reader["MAHP"].ToString(),
+                            tenhp: reader["TENHP"].ToString(),
+                            sotc: Convert.ToInt32(reader["SOTC"]),
+                            stth: Convert.ToInt32(reader["STTH"]),
+                            stlt: Convert.ToInt32(reader["STLT"])
+                        );
+                        courses.Add(course);
+                    }
+                    con.Close();
+                }
+                return courses;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error when get registered course", ex.Message);
+                return courses;
+            }
+        }
+
+
+
         public List<NewRegistrationCourse> GetNewRegistrationCourses(string keyword)
         {
             List<NewRegistrationCourse> courses = new List<NewRegistrationCourse>();
@@ -100,6 +155,51 @@ namespace OUM.Service.DataAccess
             {
                 Console.WriteLine(ex.Message);
                 return courses;
+            }
+        }
+
+
+
+        public List<Student> GetAllStudent(string keyword)
+        {
+            List<Student> students = new List<Student>();
+            try
+            {
+                string connectionString = dao.GetConnectionString();
+                using (var connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = $@"SELECT MASV, HOTEN, PHAI, NGSINH, KHOA, DT, TINHTRANG, DCHI
+                                      FROM {PDBADMIN_USERNAME}.{SINHVIEN_TABLE_NAME}"                                 
+                                            + (!string.IsNullOrEmpty(keyword) ? " WHERE (UPPER(MASV) LIKE UPPER(:keyword))  OR (UPPER(HOTEN) LIKE UPPER(:keyword))"  : "");
+                    OracleCommand command = new OracleCommand(query, connection);                 
+                    if (!string.IsNullOrEmpty(keyword))
+                    {
+                        command.Parameters.Add(new OracleParameter("keyword", "%" + keyword + "%"));
+                    }
+                    OracleDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Student student = new Student(
+                            id: reader["MASV"].ToString(),
+                                name: reader["HOTEN"].ToString(),
+                                gender: reader["PHAI"].ToString(),
+                                dob: reader["NGSINH"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["NGSINH"]),
+                                phone: reader["DT"]?.ToString() ?? "",
+                                department: reader["KHOA"]?.ToString() ?? "",
+                                status: reader["TINHTRANG"]?.ToString() ?? "",
+                                address: reader["DCHI"]?.ToString() ?? ""
+                        );
+                        students.Add(student);
+                    }
+                    connection.Close();
+                    return students;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return students;
             }
         }
         public bool CancelRegistrationCourse(string masv,string mamm)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OUM.View.RegistrationCourseView;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -70,7 +71,7 @@ namespace OUM.View
 
         private void registrationCourseBtn(object sender, EventArgs e)
         {
-            LoadControl(new RegistrationCoursePageControl());
+            LoadControl(new PDTManagementRegistrationCourse());
         }
 
         private void CloseApp(object sender, FormClosingEventArgs e)

@@ -33,7 +33,19 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
 
-                    string query = @"
+                    bool isAdmin = false;
+                    using (var adminCheckCmd = new OracleCommand(
+                        "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL", connection))
+                    {
+                        string currentUser = adminCheckCmd.ExecuteScalar()?.ToString() ?? "";
+                        isAdmin = (currentUser.ToUpper() == "PDB_ADMIN");
+                    }
+
+                    string query;
+
+                    if (isAdmin)
+                    {
+                        query = @"
                         SELECT 
                             S.MASV,
                             S.HOTEN,
@@ -48,38 +60,70 @@ namespace OUM.Service.DataAccess
                         FROM SINHVIEN S
                         LEFT JOIN DBA_USERS U ON S.MASV = SUBSTR(U.USERNAME, 3)
                         ORDER BY S.MASV";
-
-                    using (var command = new OracleCommand(query, connection))
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Student s = new Student(
-                                id: reader["MASV"].ToString(),
-                                name: reader["HOTEN"].ToString(),
-                                gender: reader["PHAI"].ToString(),
-                                dob: reader["NGSINH"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["NGSINH"]),
-                                phone: reader["DT"]?.ToString() ?? "",
-                                department: reader["KHOA"]?.ToString() ?? "",
-                                status: reader["TINHTRANG"]?.ToString() ?? "",
-                                address: reader["DCHI"]?.ToString() ?? ""
-                            );
-
-                            s.Username = reader["USERNAME"]?.ToString() ?? "";
-                            s.CreatedTime = reader["THOIGIANTAO"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["THOIGIANTAO"]);
-
-                            students.Add(s);
-                        }
                     }
+                    else
+                    {
+                        query = @"
+                        SELECT 
+                            S.MASV,
+                            S.HOTEN,
+                            S.PHAI,
+                            S.NGSINH,
+                            S.DT,
+                            S.KHOA,
+                            S.TINHTRANG,
+                            S.DCHI,
+                            NULL AS USERNAME,
+                            NULL AS THOIGIANTAO
+                        FROM pdb_admin.SINHVIEN S
+                        ORDER BY S.MASV";
+
+                    }
+
+                        using (var command = new OracleCommand(query, connection))
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Student s = new Student(
+                                    id: reader["MASV"].ToString(),
+                                    name: reader["HOTEN"].ToString(),
+                                    gender: reader["PHAI"].ToString(),
+                                    dob: reader["NGSINH"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["NGSINH"]),
+                                    phone: reader["DT"]?.ToString() ?? "",
+                                    department: reader["KHOA"]?.ToString() ?? "",
+                                    status: reader["TINHTRANG"]?.ToString() ?? "",
+                                    address: reader["DCHI"]?.ToString() ?? ""
+                                );
+
+                                s.Username = reader["USERNAME"]?.ToString() ?? "";
+                                s.CreatedTime = reader["THOIGIANTAO"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["THOIGIANTAO"]);
+
+                                students.Add(s);
+                            }
+                        }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(
-                        $"Lỗi khi lấy danh sách sinh viên: {ex.Message}",
-                        "Lỗi Truy Vấn Dữ Liệu",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
+                    if (ex.Message.Contains("ORA-00942"))
+                    {
+                        MessageBox.Show(
+                            "Bạn không có quyền truy cập dữ liệu này.",
+                            "Lỗi Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            $"Lỗi khi lấy danh sách sinh viên: {ex.Message}",
+                            "Lỗi Truy Vấn Dữ Liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
+                        
                 }
             }
 

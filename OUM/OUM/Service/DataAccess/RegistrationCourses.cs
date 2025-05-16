@@ -17,6 +17,8 @@ namespace OUM.Service.DataAccess
         private OracleDAO dao = new OracleDAO();
         private const string PDBADMIN_USERNAME = "PDB_ADMIN";
         private const string DANGKY_TABLE_NAME = "DANGKY";
+        private const string DANGKY_HOCPHAN_TABLE_NAME = "DANGKY_HOCPHAN";
+
         private const string MOMON_VIEW_NAME = "SV_MOMON_VIEW";
         private const string PDT_MOMON_VIEW_NAME = "NV_PDT_MOMON_VIEW";
         private const string GV_MOMON_VIEW_NAME = "GV_SELF_MOMON_VIEW";
@@ -393,7 +395,7 @@ namespace OUM.Service.DataAccess
                 using(var connection  = new OracleConnection(connectionString))
                 {
                     connection.Open();
-                    string query = $@"INSERT INTO {PDBADMIN_USERNAME}.{DANGKY_TABLE_NAME} (MASV,MAMM) VALUES(:masv,:mamm)";
+                    string query = $@"INSERT INTO {PDBADMIN_USERNAME}.{DANGKY_HOCPHAN_TABLE_NAME} (MASV,MAMM) VALUES(:masv,:mamm)";
                     OracleCommand command = new OracleCommand(query,connection);
                     command.Parameters.Add(new OracleParameter("masv",masv));
                     command.Parameters.Add(new OracleParameter("mamm", mamm));

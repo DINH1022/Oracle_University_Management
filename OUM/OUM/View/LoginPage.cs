@@ -1,6 +1,8 @@
-﻿using OUM.Session;
+﻿using Oracle.ManagedDataAccess.Client;
+using OUM.Session;
 using OUM.View;
 using OUM.ViewModel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace OUM
 {
@@ -41,6 +43,41 @@ namespace OUM
           
 
         }
+        public string GetConnectionString()
+        {
+            return $"User Id={AdminSession.Username};Password={AdminSession.Password};Data Source=localhost:1521/DKHP;";
+        }
+
+        public List<string> GetUserRoles()
+        {
+            List<string> roles = new List<string>();
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(GetConnectionString()))
+                {
+                    conn.Open();
+                    string query = "SELECT GRANTED_ROLE FROM USER_ROLE_PRIVS";
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            roles.Add(reader.GetString(0));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Ghi log nếu cần
+                MessageBox.Show("Lỗi khi truy vấn vai trò người dùng: " + ex.Message,
+                                "Lỗi hệ thống",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+            return roles;
+        }
+
 
         private void LoginBtn_MouseClick(object sender, MouseEventArgs e)
         {
@@ -49,13 +86,54 @@ namespace OUM
             {
                 AdminSession.Username = viewModel.username;
                 AdminSession.Password = viewModel.password;
-                this.Hide();
-                StudentNavPage navPage = new StudentNavPage();
-                navPage.Show();
+                Form navPage = null;
+
+                if (AdminSession.Username.Equals("pdb_admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    navPage = new NavPage();
+                }
+
+                else
+                {
+                    List<string> roles = GetUserRoles();
+
+
+
+                    if (roles.Contains("ROLE_SV"))
+                        navPage = new StudentNavPage();
+                    else if (roles.Contains("ROLE_GV"))
+                        navPage = new TeacherNavPage();
+                    else if (roles.Contains("ROLE_NVCB"))
+                        navPage = new StaffNavPage();
+                    else if (roles.Contains("ROLE_NV_PĐT"))
+                        navPage = new AcademicAdminNavPage();
+                    else if (roles.Contains("ROLE_NV_PKT"))
+                        navPage = new ExamStaffNavPage();
+                    else if (roles.Contains("ROLE_NV_TCHC"))
+                        navPage = new AdminOfficeNavPage();
+                    else if (roles.Contains("ROLE_NV_CTSV"))
+                        navPage = new StudentAffairNavPage();
+                    else if (roles.Contains("ROLE_TRGDV"))
+                        navPage = new DepartmentHeadNavPage();
+                }
+
+                if (navPage != null)
+                {
+                    this.Hide();
+                    navPage.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Bạn không có vai trò phù hợp để truy cập hệ thống.",
+                        "Không có quyền truy cập",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                        );
+                }
             }
             else
             {
-                MessageBox.Show("Đăng nhập thất bại. Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu.", 
+                MessageBox.Show("Đăng nhập thất bại. Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu.",
                     "Lỗi đăng nhập",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error

@@ -118,25 +118,26 @@ namespace OUM.View
 
 
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
-            string newPhone = txtNewP.Text; 
-            string newAddress = txtNewAd.Text;
-            string username = AdminSession.Username;
+private void button2_Click(object sender, EventArgs e)
+{
+    string newPhone = txtNewP.Text; 
+    string newAddress = txtNewAd.Text;
+    string username = AdminSession.Username;
 
-            bool updateSuccessPhone = false;
-            bool updateSuccessAddress = false;
+    bool updateSuccessPhone = false;
+    bool updateSuccessAddress = false;
 
             if (username.StartsWith("NV"))
             {
-                bool updateSuccess = dao.UpdateEmployeePhone(username, newPhone);
-                if (updateSuccess)
+                if (!string.IsNullOrEmpty(newPhone))
                 {
-                    txtPhone.Text = newPhone;
-                    lbNewPhone.Visible = false;
-                    txtNewP.Visible = false;
-                    MessageBox.Show("Cập nhật số điện thoại thành công!");
+                    updateSuccessPhone = dao.UpdateEmployeePhone(username, newPhone);
+                    if (updateSuccessPhone)
+                    {
+                        txtPhone.Text = newPhone;
+                        lbNewPhone.Visible = false;
+                        txtNewP.Visible = false;
+                    }
                 }
             }
             else if (username.StartsWith("SV"))
@@ -146,8 +147,8 @@ namespace OUM.View
                     updateSuccessPhone = dao.UpdateStudentPhone(username, newPhone);
                     if (updateSuccessPhone)
                     {
-                        txtPhone.Text = newPhone;  
-                        lbNewPhone.Visible = false; 
+                        txtPhone.Text = newPhone;
+                        lbNewPhone.Visible = false;
                         txtNewP.Visible = false;
                     }
                 }
@@ -157,7 +158,7 @@ namespace OUM.View
                     updateSuccessAddress = dao.UpdateStudentAddress(username, newAddress);
                     if (updateSuccessAddress)
                     {
-                        txtDC.Text = newAddress;  
+                        txtDC.Text = newAddress;
                         lbNAddress.Visible = false;
                         txtNewAd.Visible = false;
                     }
@@ -172,8 +173,8 @@ namespace OUM.View
             {
                 MessageBox.Show("Không có thay đổi nào được cập nhật.");
             }
-
         }
+
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {

@@ -362,7 +362,7 @@ namespace OUM.Service.DataAccess
                     
                     var checkConstraintsCmd = connection.CreateCommand();
                     checkConstraintsCmd.CommandText = @"
-                        SELECT COUNT(*) FROM DANGKY WHERE MASV = :masv";
+                        SELECT COUNT(*) FROM pdb_admin.DANGKY WHERE MASV = :masv";
                     checkConstraintsCmd.Parameters.Add(new OracleParameter("masv", st.id.ToUpper()));
                     int dangkyCount = Convert.ToInt32(checkConstraintsCmd.ExecuteScalar());
 
@@ -375,14 +375,15 @@ namespace OUM.Service.DataAccess
 
                     
                     var deleteStudentCmd = connection.CreateCommand();
-                    deleteStudentCmd.CommandText = "DELETE FROM SINHVIEN WHERE MASV = :masv";
+                    deleteStudentCmd.CommandText = "DELETE FROM pdb_admin.SINHVIEN WHERE MASV = :masv";
                     deleteStudentCmd.Parameters.Add(new OracleParameter("masv", st.id.ToUpper()));
                     deleteStudentCmd.ExecuteNonQuery();
 
                     
                     
                     var dropUserCmd = connection.CreateCommand();
-                    dropUserCmd.CommandText = $"DROP USER {st.Username} CASCADE";
+                    var username = "SV" + st.id;
+                    dropUserCmd.CommandText = $"DROP USER {username} CASCADE";
                     dropUserCmd.ExecuteNonQuery();
                     
 
@@ -391,18 +392,28 @@ namespace OUM.Service.DataAccess
                 }
                 catch (Exception ex)
                 {
-                    string errorMessage = "Lỗi khi xóa sinh viên";
-
-                    if (ex.Message.Contains("integrity constraint"))
+                    if (ex.Message.Contains("ORA-01031") || ex.Message.Contains("ORA-00942"))
                     {
-                        errorMessage = "Không thể xóa sinh viên này vì còn dữ liệu liên quan trong hệ thống.";
+                        //NOTE: LỖI 00942 LÀ LỖI KHÔNG TÌM THẤY BẢNG DangKy ĐỂ KIỂM TRA FK, CÁC NV KHÁC KHÔNG ĐƯỢC CẤP QUYỀN TRUY CẬP BẢNG NÀY NÊN QUY CHUNG LÀ LỖI QUYỀN HẠN
+                        MessageBox.Show(
+                            $"Bạn không có quyền xóa dữ liệu sinh viên.",
+                            "Hạn Chế Quyền Của Vai Trò",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+                    }
+                    else if (ex.Message.Contains("integrity constraint"))
+                    {
+                        MessageBox.Show("Không thể xóa sinh viên này vì còn dữ liệu liên quan trong hệ thống.", 
+                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
-                        errorMessage += ":\n" + ex.Message;
+                        MessageBox.Show("Lỗi khi xóa sinh viên:\n" + ex.Message, 
+                            "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                     }
 
-                    MessageBox.Show(errorMessage, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

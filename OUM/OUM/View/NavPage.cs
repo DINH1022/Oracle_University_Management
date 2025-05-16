@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OUM.View.RegistrationCourseView;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -45,7 +46,7 @@ namespace OUM.View
 
         private void RevokeBtnNav_click(object sender, EventArgs e)
         {
-            LoadControl(new CourseOpenControl());
+            LoadControl(new RevokeAuthPageControl());
         }
 
         private void manageRole_Click(object sender, EventArgs e)
@@ -71,6 +72,11 @@ namespace OUM.View
         private void registrationCourseBtn(object sender, EventArgs e)
         {
             LoadControl(new RegistrationCoursePageControl());
+        }
+
+        private void CloseApp(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

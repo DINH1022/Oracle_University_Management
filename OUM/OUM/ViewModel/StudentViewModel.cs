@@ -49,11 +49,15 @@ namespace OUM.ViewModel
             }
             return success;
         }
-        public void UpdateStudent(Student st)
+        public bool UpdateStudent(Student st)
         {
             StudentDao dao = new StudentDao();
-            dao.UpdateStudent(st);
-            LoadData();
+            bool success = dao.UpdateStudent(st);
+            if (success)
+            {
+                LoadData();
+            }
+            return success;
         }
 
         public void DeleteStudent(Student st)

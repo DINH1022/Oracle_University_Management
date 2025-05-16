@@ -127,10 +127,12 @@ namespace OUM.View
                 StudentToEdit.status = comboTinhTrang.SelectedItem?.ToString();
 
                 StudentViewModel vm = new StudentViewModel();
-                vm.UpdateStudent(StudentToEdit);
-
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                bool success = vm.UpdateStudent(StudentToEdit);
+                if (success)
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {

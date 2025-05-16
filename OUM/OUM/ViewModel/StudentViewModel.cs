@@ -67,5 +67,17 @@ namespace OUM.ViewModel
             LoadData();
         }
 
+        public bool isOnlyEditContact(string id)
+        {
+            StudentDao dao = new StudentDao();
+            return dao.IsOnlyEditContact(id);
+        }
+
+        public bool isOnlyEditStatus()
+        {
+            StudentDao dao=new StudentDao();
+            return dao.IsOnlyEditStatus();
+        }
+
     }
 }

@@ -442,6 +442,208 @@ namespace OUM.Service.DataAccess
         }
 
 
+        //public bool UpdateStudent(Student st)
+        //{
+        //    using (var connection = GetOracleConnection())
+        //    {
+        //        try
+        //        {
+        //            connection.Open();
+
+        //            // Xác định người dùng hiện tại và vai trò
+        //            string currentUser = "";
+        //            using (var userCmd = new OracleCommand(
+        //                "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL", connection))
+        //            {
+        //                currentUser = userCmd.ExecuteScalar()?.ToString() ?? "";
+        //            }
+
+        //            // Kiểm tra nếu người dùng là admin
+        //            bool isAdmin = (currentUser.ToUpper() == "PDB_ADMIN");
+
+        //            // Lấy các vai trò của người dùng
+        //            List<string> userRoles = new List<string>();
+        //            using (var roleCmd = new OracleCommand(
+        //                "SELECT GRANTED_ROLE FROM USER_ROLE_PRIVS", connection))
+        //            {
+        //                using (var reader = roleCmd.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        userRoles.Add(reader["GRANTED_ROLE"].ToString().ToUpper());
+        //                    }
+        //                }
+        //            }
+
+        //            // Xác định quyền cập nhật dựa trên vai trò
+        //            bool canUpdateAll = isAdmin || userRoles.Contains("ROLE_NV_CTSV");
+        //            bool canUpdateTinhTrang = userRoles.Contains("ROLE_NV_PĐT");
+        //            bool isSelfUpdate = currentUser.ToUpper() == ("SV" + st.id).ToUpper();
+        //            bool canUpdateContactInfo = userRoles.Contains("ROLE_SV");
+
+        //            int rows = 0;
+
+        //            if (canUpdateAll)
+        //            {
+        //                // Admin hoặc ROLE_NV_CTSV: Có thể cập nhật tất cả các trường
+        //                var updateCmd = connection.CreateCommand();
+        //                updateCmd.CommandText = @"
+        //            UPDATE pdb_admin.SINHVIEN 
+        //            SET HOTEN = :name, 
+        //                PHAI = :gender, 
+        //                NGSINH = :dob, 
+        //                DT = :phone, 
+        //                KHOA = :department,
+        //                TINHTRANG = :status,
+        //                DCHI = :address
+        //            WHERE MASV = :id";
+
+        //                updateCmd.Parameters.Add(new OracleParameter("name", st.name));
+        //                updateCmd.Parameters.Add(new OracleParameter("gender", st.gender));
+        //                updateCmd.Parameters.Add(new OracleParameter("dob", st.dob));
+        //                updateCmd.Parameters.Add(new OracleParameter("phone", st.phone));
+        //                updateCmd.Parameters.Add(new OracleParameter("department", st.department));
+        //                updateCmd.Parameters.Add(new OracleParameter("status", st.status));
+        //                updateCmd.Parameters.Add(new OracleParameter("address", st.address));
+        //                updateCmd.Parameters.Add(new OracleParameter("id", st.id));
+
+        //                rows = updateCmd.ExecuteNonQuery();
+        //            }
+        //            else if (canUpdateTinhTrang)
+        //            {
+        //                // ROLE_NV_PĐT: Chỉ có thể cập nhật TINHTRANG
+        //                var updateCmd = connection.CreateCommand();
+        //                updateCmd.CommandText = @"
+        //            UPDATE pdb_admin.SINHVIEN 
+        //            SET TINHTRANG = :status
+        //            WHERE MASV = :id";
+
+        //                updateCmd.Parameters.Add(new OracleParameter("status", st.status));
+        //                updateCmd.Parameters.Add(new OracleParameter("id", st.id));
+
+        //                rows = updateCmd.ExecuteNonQuery();
+        //            }
+        //            else if (canUpdateContactInfo)
+        //            {
+        //                // ROLE_SV hoặc tự cập nhật: Chỉ có thể cập nhật thông tin liên hệ
+        //                var updateCmd = connection.CreateCommand();
+        //                updateCmd.CommandText = @"
+        //            UPDATE pdb_admin.SINHVIEN 
+        //            SET DT = :phone,
+        //                DCHI = :address
+        //            WHERE MASV = :id";
+
+        //                updateCmd.Parameters.Add(new OracleParameter("phone", st.phone));
+        //                updateCmd.Parameters.Add(new OracleParameter("address", st.address));
+        //                updateCmd.Parameters.Add(new OracleParameter("id", st.id));
+
+        //                rows = updateCmd.ExecuteNonQuery();
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show(
+        //                    "Bạn không có quyền cập nhật thông tin sinh viên này.",
+        //                    "Không Đủ Quyền",
+        //                    MessageBoxButtons.OK,
+        //                    MessageBoxIcon.Warning
+        //                );
+        //                return false;
+        //            }
+
+        //            if (rows == 0)
+        //            {
+        //                MessageBox.Show(
+        //                    $"Không tìm thấy sinh viên có mã số {st.id} để cập nhật hoặc bạn không có quyền cập nhật sinh viên này.",
+        //                    "Cập Nhật Không Thành Công",
+        //                    MessageBoxButtons.OK,
+        //                    MessageBoxIcon.Warning
+        //                );
+        //                return false;
+        //            }
+        //            else
+        //            {
+        //                if (canUpdateAll)
+        //                {
+        //                    MessageBox.Show(
+        //                        $"Đã cập nhật toàn bộ thông tin sinh viên {st.name} thành công.",
+        //                        "Cập Nhật Thành Công",
+        //                        MessageBoxButtons.OK,
+        //                        MessageBoxIcon.Information
+        //                    );
+        //                }
+        //                else if (canUpdateTinhTrang)
+        //                {
+        //                    MessageBox.Show(
+        //                        $"Đã cập nhật tình trạng của sinh viên thành công.",
+        //                        "Cập Nhật Thành Công",
+        //                        MessageBoxButtons.OK,
+        //                        MessageBoxIcon.Information
+        //                    );
+        //                }
+        //                else
+        //                {
+        //                    MessageBox.Show(
+        //                        "Đã cập nhật thông tin liên lạc thành công.",
+        //                        "Cập Nhật Thành Công",
+        //                        MessageBoxButtons.OK,
+        //                        MessageBoxIcon.Information
+        //                    );
+        //                }
+        //                return true;
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            if (ex.Message.Contains("ORA-01400"))
+        //            {
+        //                MessageBox.Show(
+        //                    "Thiếu thông tin bắt buộc. Vui lòng điền đầy đủ thông tin sinh viên.",
+        //                    "Lỗi Dữ Liệu",
+        //                    MessageBoxButtons.OK,
+        //                    MessageBoxIcon.Warning
+        //                );
+        //            }
+        //            else if (ex.Message.Contains("ORA-02290"))
+        //            {
+        //                MessageBox.Show(
+        //                    "Dữ liệu không hợp lệ. Vui lòng kiểm tra lại các thông tin như giới tính và tình trạng.",
+        //                    "Lỗi Dữ Liệu",
+        //                    MessageBoxButtons.OK,
+        //                    MessageBoxIcon.Warning
+        //                );
+        //            }
+        //            else if (ex.Message.Contains("ORA-02291"))
+        //            {
+        //                MessageBox.Show(
+        //                    "Khoa không tồn tại trong hệ thống. Vui lòng chọn khoa hợp lệ.",
+        //                    "Lỗi Ràng Buộc Dữ Liệu",
+        //                    MessageBoxButtons.OK,
+        //                    MessageBoxIcon.Warning
+        //                );
+        //            }
+        //            else if (ex.Message.Contains("ORA-01031") || ex.Message.Contains("ORA-00942"))
+        //            {
+        //                MessageBox.Show(
+        //                    "Bạn không có quyền cập nhật thông tin sinh viên này.",
+        //                    "Hạn Chế Quyền Của Vai Trò",
+        //                    MessageBoxButtons.OK,
+        //                    MessageBoxIcon.Warning
+        //                );
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show(
+        //                    $"Lỗi khi cập nhật sinh viên:\n{ex.Message}",
+        //                    "Lỗi Hệ Thống",
+        //                    MessageBoxButtons.OK,
+        //                    MessageBoxIcon.Error
+        //                );
+        //            }
+        //            return false;
+        //        }
+        //    }
+        //}
+
         public bool UpdateStudent(Student st)
         {
             using (var connection = GetOracleConnection())
@@ -450,53 +652,70 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
 
-                    // Xác định người dùng hiện tại và vai trò
-                    string currentUser = "";
-                    using (var userCmd = new OracleCommand(
-                        "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL", connection))
+                    bool canUpdateAll = false;
+                    bool canUpdateTinhTrang = false;
+                    bool canUpdateContactInfo = false;
+
+                    try
                     {
-                        currentUser = userCmd.ExecuteScalar()?.ToString() ?? "";
+                        using (var testCmd = new OracleCommand("UPDATE pdb_admin.SINHVIEN SET MASV = MASV WHERE ROWNUM = 0", connection))
+                        {
+                            testCmd.ExecuteNonQuery();
+                            canUpdateAll = true;
+                        }
+                    }
+                    catch
+                    {
+                        canUpdateAll = false;
                     }
 
-                    // Kiểm tra nếu người dùng là admin
-                    bool isAdmin = (currentUser.ToUpper() == "PDB_ADMIN");
-
-                    // Lấy các vai trò của người dùng
-                    List<string> userRoles = new List<string>();
-                    using (var roleCmd = new OracleCommand(
-                        "SELECT GRANTED_ROLE FROM USER_ROLE_PRIVS", connection))
+                    if (!canUpdateAll)
                     {
-                        using (var reader = roleCmd.ExecuteReader())
+                        try
                         {
-                            while (reader.Read())
+                            using (var testCmd = new OracleCommand("UPDATE pdb_admin.SINHVIEN SET TINHTRANG = TINHTRANG WHERE ROWNUM = 0", connection))
                             {
-                                userRoles.Add(reader["GRANTED_ROLE"].ToString().ToUpper());
+                                testCmd.ExecuteNonQuery();
+                                canUpdateTinhTrang = true;
                             }
+                        }
+                        catch
+                        {
+                            canUpdateTinhTrang = false;
                         }
                     }
 
-                    // Xác định quyền cập nhật dựa trên vai trò
-                    bool canUpdateAll = isAdmin || userRoles.Contains("ROLE_NV_CTSV");
-                    bool canUpdateTinhTrang = userRoles.Contains("ROLE_NV_PĐT");
-                    bool isSelfUpdate = currentUser.ToUpper() == ("SV" + st.id).ToUpper();
-                    bool canUpdateContactInfo = userRoles.Contains("ROLE_SV");
+                    if (!canUpdateAll && !canUpdateTinhTrang)
+                    {
+                        try
+                        {
+                            using (var testCmd = new OracleCommand("UPDATE pdb_admin.SINHVIEN SET DT = DT, DCHI = DCHI WHERE ROWNUM = 0", connection))
+                            {
+                                testCmd.ExecuteNonQuery();
+                                canUpdateContactInfo = true;
+                            }
+                        }
+                        catch
+                        {
+                            canUpdateContactInfo = false;
+                        }
+                    }
 
                     int rows = 0;
 
                     if (canUpdateAll)
                     {
-                        // Admin hoặc ROLE_NV_CTSV: Có thể cập nhật tất cả các trường
                         var updateCmd = connection.CreateCommand();
                         updateCmd.CommandText = @"
-                    UPDATE pdb_admin.SINHVIEN 
-                    SET HOTEN = :name, 
-                        PHAI = :gender, 
-                        NGSINH = :dob, 
-                        DT = :phone, 
-                        KHOA = :department,
-                        TINHTRANG = :status,
-                        DCHI = :address
-                    WHERE MASV = :id";
+                            UPDATE pdb_admin.SINHVIEN 
+                            SET HOTEN = :name, 
+                                PHAI = :gender, 
+                                NGSINH = :dob, 
+                                DT = :phone, 
+                                KHOA = :department,
+                                TINHTRANG = :status,
+                                DCHI = :address
+                            WHERE MASV = :id";
 
                         updateCmd.Parameters.Add(new OracleParameter("name", st.name));
                         updateCmd.Parameters.Add(new OracleParameter("gender", st.gender));
@@ -511,12 +730,11 @@ namespace OUM.Service.DataAccess
                     }
                     else if (canUpdateTinhTrang)
                     {
-                        // ROLE_NV_PĐT: Chỉ có thể cập nhật TINHTRANG
                         var updateCmd = connection.CreateCommand();
                         updateCmd.CommandText = @"
-                    UPDATE pdb_admin.SINHVIEN 
-                    SET TINHTRANG = :status
-                    WHERE MASV = :id";
+                            UPDATE pdb_admin.SINHVIEN 
+                            SET TINHTRANG = :status
+                            WHERE MASV = :id";
 
                         updateCmd.Parameters.Add(new OracleParameter("status", st.status));
                         updateCmd.Parameters.Add(new OracleParameter("id", st.id));
@@ -525,13 +743,12 @@ namespace OUM.Service.DataAccess
                     }
                     else if (canUpdateContactInfo)
                     {
-                        // ROLE_SV hoặc tự cập nhật: Chỉ có thể cập nhật thông tin liên hệ
                         var updateCmd = connection.CreateCommand();
                         updateCmd.CommandText = @"
-                    UPDATE pdb_admin.SINHVIEN 
-                    SET DT = :phone,
-                        DCHI = :address
-                    WHERE MASV = :id";
+                            UPDATE pdb_admin.SINHVIEN 
+                            SET DT = :phone,
+                                DCHI = :address
+                            WHERE MASV = :id";
 
                         updateCmd.Parameters.Add(new OracleParameter("phone", st.phone));
                         updateCmd.Parameters.Add(new OracleParameter("address", st.address));
@@ -565,7 +782,7 @@ namespace OUM.Service.DataAccess
                         if (canUpdateAll)
                         {
                             MessageBox.Show(
-                                $"Đã cập nhật toàn bộ thông tin sinh viên {st.name} thành công.",
+                                $"Đã cập nhật thông tin sinh viên {st.name} thành công.",
                                 "Cập Nhật Thành Công",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Information
@@ -643,6 +860,115 @@ namespace OUM.Service.DataAccess
                 }
             }
         }
+
+
+        public bool IsOnlyEditStatus()
+        {
+            using (var connection = GetOracleConnection())
+            {
+                try
+                {
+                    connection.Open();
+
+                    string currentUser = "";
+                    using (var userCmd = new OracleCommand(
+                        "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL", connection))
+                    {
+                        currentUser = userCmd.ExecuteScalar()?.ToString() ?? "";
+                    }
+
+                    bool isAdmin = (currentUser.ToUpper() == "PDB_ADMIN");
+                    if (isAdmin)
+                        return false;
+
+                    bool isPDT = false;
+                    try
+                    {
+                        using (var testCmd = new OracleCommand(
+                            "UPDATE pdb_admin.SINHVIEN SET TINHTRANG = TINHTRANG WHERE ROWNUM = 0", connection))
+                        {
+                            testCmd.ExecuteNonQuery();
+                            isPDT = true;
+                        }
+                    }
+                    catch
+                    {
+                        isPDT = false;
+                    }
+
+                    return isPDT;
+                }
+                catch (Exception)
+                {
+                    return true;
+                }
+            }
+        }
+
+        public bool IsOnlyEditContact(string studentId)
+        {
+            using (var connection = GetOracleConnection())
+            {
+                try
+                {
+                    connection.Open();
+
+                    string currentUser = "";
+                    using (var userCmd = new OracleCommand(
+                        "SELECT SYS_CONTEXT('USERENV', 'SESSION_USER') FROM DUAL", connection))
+                    {
+                        currentUser = userCmd.ExecuteScalar()?.ToString() ?? "";
+                    }
+
+                    // Admin can edit everything
+                    bool isAdmin = (currentUser.ToUpper() == "PDB_ADMIN");
+                    if (isAdmin)
+                        return false;
+
+                    bool hasFullAccess = false;
+                    try
+                    {
+                        using (var testCmd = new OracleCommand(
+                            "UPDATE pdb_admin.SINHVIEN SET MASV = MASV WHERE ROWNUM = 0", connection))
+                        {
+                            testCmd.ExecuteNonQuery();
+                            hasFullAccess = true;
+                        }
+                    }
+                    catch
+                    {
+                        hasFullAccess = false;
+                    }
+
+                    if (hasFullAccess)
+                        return false;
+
+                    bool canUpdateContact = false;
+                    try
+                    {
+                        using (var testCmd = new OracleCommand(
+                            "UPDATE pdb_admin.SINHVIEN SET DT = DT, DCHI = DCHI WHERE ROWNUM = 0", connection))
+                        {
+                            testCmd.ExecuteNonQuery();
+                            canUpdateContact = true;
+                        }
+                    }
+                    catch
+                    {
+                        canUpdateContact = false;
+                    }
+
+                    bool isSelfUpdate = (currentUser.ToUpper() == ("SV" + studentId).ToUpper());
+
+                    return canUpdateContact || isSelfUpdate;
+                }
+                catch (Exception)
+                {
+                    return true;
+                }
+            }
+        }
+
 
 
 

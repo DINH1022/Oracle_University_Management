@@ -68,6 +68,7 @@
             Regiterbutton.TabIndex = 4;
             Regiterbutton.Text = "Kết Quả Đăng Ký Học Phần";
             Regiterbutton.UseVisualStyleBackColor = false;
+            Regiterbutton.Click += Regiterbutton_Click;
             // 
             // Coursebutton
             // 
@@ -79,6 +80,7 @@
             Coursebutton.TabIndex = 3;
             Coursebutton.Text = "Mở môn";
             Coursebutton.UseVisualStyleBackColor = false;
+            Coursebutton.Click += Coursebutton_Click;
             // 
             // flowLayoutPanel1
             // 

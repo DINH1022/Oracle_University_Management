@@ -11,6 +11,13 @@ namespace OUM.Service.DataAccess
 {
     public class OpenCourseDAO
     {
+
+        public OpenCourseDAO()
+        {
+            user_role = GetUserRoles();
+
+            int i = 1;
+        }
         private const string PDBADMIN_USERNAME = "PDB_ADMIN";
 
         private const string MOMON_TABLE_NAME = "MOMON";
@@ -50,8 +57,7 @@ namespace OUM.Service.DataAccess
             {RoleEnum.ROLE_SV,MOMON_VIEW_SV }
         };
 
-        private string user_role= "ROLE_NV_PDT";
-
+        private string user_role;
 
         private Dictionary<int,int> TERM_TO_MONTH= new Dictionary<int, int>()
         {
@@ -65,6 +71,35 @@ namespace OUM.Service.DataAccess
 
         private OracleDAO oracleDAO = new OracleDAO();
 
+        public string GetUserRoles()
+        {
+            List<string> roles = new List<string>();
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(oracleDAO.GetConnectionString()))
+                {
+                    conn.Open();
+                    string query = "SELECT GRANTED_ROLE FROM USER_ROLE_PRIVS";
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            roles.Add(reader.GetString(0));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Ghi log nếu cần
+                MessageBox.Show("Lỗi khi truy vấn vai trò người dùng: " + ex.Message,
+                                "Lỗi hệ thống",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+            return roles[0];
+        }
         private Course buildCourseFromReader(OracleDataReader reader)
         {
             if (reader == null)

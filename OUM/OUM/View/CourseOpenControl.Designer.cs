@@ -72,10 +72,6 @@
             dataGridView1.Size = new Size(918, 352);
             dataGridView1.TabIndex = 2;
             // 
-            // oracleDAOBindingSource
-            // 
-            oracleDAOBindingSource.DataSource = typeof(Service.DataAccess.OracleDAO);
-            // 
             // panel2
             // 
             panel2.BackColor = Color.White;
@@ -178,6 +174,7 @@
             addBtn.TabIndex = 5;
             addBtn.Text = "Thêm";
             addBtn.UseVisualStyleBackColor = false;
+            addBtn.Click += addBtn_Click;
             // 
             // panel4
             // 

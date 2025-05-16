@@ -1,4 +1,5 @@
 ﻿using OUM.Model;
+using OUM.Model.enums;
 using OUM.Service.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,11 @@ namespace OUM.View
         private const string HEADERTEXT_MAGV = "MAGV";
         private const string HEADERTEXT_HK = "HK";
         private const string HEADERTEXT_NAM = "NAM";
+
+        
+
+
+        private string user_role = "ROLE_NV_PDT";
 
         private Dictionary<String, String> HEADERTEXT_TO_NAME = new Dictionary<String, String>()
         {
@@ -101,38 +107,116 @@ namespace OUM.View
             dataGridView2.Columns.Add(MAGVCol);
             dataGridView2.Columns.Add(HKCol);
             dataGridView2.Columns.Add(NAMCol);
-            dataGridView2.Columns.Add(createUpdateBtnColumn());
-            dataGridView2.Columns.Add(createDeleteBtnColumn());
+            if(user_role.Equals(RoleEnum.ROLE_NV_PDT, StringComparison.OrdinalIgnoreCase))
+            {
+                dataGridView2.Columns.Add(createUpdateBtnColumn());
+                dataGridView2.Columns.Add(createDeleteBtnColumn());
+            }
             dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
         private void CourseOpenControl_Load(object sender, EventArgs e)
         {
+            if (!user_role.Equals(RoleEnum.ROLE_NV_PDT,StringComparison.OrdinalIgnoreCase))
+            {
+                addBtn.Visible = false;
+            }
             refreshGridView();
             courses = openCourseDAO.getAllCourses();
             dataGridView2.DataSource = courses;
 
         }
-
+        private bool isClickingGivenColumn(DataGridViewCellEventArgs e,string name)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView2.Columns[name].Index)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool isClickingUpdate(DataGridViewCellEventArgs e)
+        {
+            string btnName = "UpdateButton";
+            if (isClickingGivenColumn(e, btnName))
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool isClickingDelete(DataGridViewCellEventArgs e)
+        {
+            string btnName = "DeleteButton";
+            if (isClickingGivenColumn(e, btnName))
+            {
+                return true;
+            }
+            return false;
+        }
+        private void refreshData()
+        {
+            courses = openCourseDAO.getAllCourses();
+            dataGridView2.DataSource = courses;
+        }
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (isClickingDelete(e))
+            {
+                int rowIndex = e.RowIndex;
+                string mamm = dataGridView2.Rows[rowIndex].Cells[HEADERTEXT_TO_NAME[HEADERTEXT_MAMM]].Value?.ToString();
+                var res = openCourseDAO.deleteCourse(mamm);
+                MessageBox.Show(res);
+                refreshData();
+                return;
+            }
+            if (isClickingUpdate(e))
+            {
+                int rowIndex = e.RowIndex;
+                string mamm = dataGridView2.Rows[rowIndex].Cells[HEADERTEXT_TO_NAME[HEADERTEXT_MAMM]].Value?.ToString();
+                string mahp = dataGridView2.Rows[rowIndex].Cells[HEADERTEXT_TO_NAME[HEADERTEXT_MAHP]].Value?.ToString();
+                string magv = dataGridView2.Rows[rowIndex].Cells[HEADERTEXT_TO_NAME[HEADERTEXT_MAGV]].Value?.ToString();
+                string hk = dataGridView2.Rows[rowIndex].Cells[HEADERTEXT_TO_NAME[HEADERTEXT_HK]].Value?.ToString();
+                string nam = dataGridView2.Rows[rowIndex].Cells[HEADERTEXT_TO_NAME[HEADERTEXT_NAM]].Value?.ToString();
 
+                Course editingCourse = new Course()
+                {
+                    MAMM = mamm,
+                    MAHP = mahp,
+                    MAGV = magv,
+                    HK = hk,
+                    NAM = nam
+                };
+                UpdateCourseForm updateCourse = new UpdateCourseForm(editingCourse);
+                if(updateCourse.ShowDialog()==DialogResult.OK)
+                {
+                    refreshData();
+                }
+                return;
+            }
         }
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
-            string theText=searchTextBox.Text;
+            string theText = searchTextBox.Text;
             if (theText.Length == 0)
             {
                 dataGridView2.DataSource = courses;
                 return;
             }
             List<Course> filteredCourses = courses
-                .Where(course => 
+                .Where(course =>
                         course.MAMM.Contains(theText, StringComparison.OrdinalIgnoreCase)
                         || course.MAHP.Contains(theText, StringComparison.OrdinalIgnoreCase)
                         || course.MAGV.Contains(theText, StringComparison.OrdinalIgnoreCase))
                 .ToList();
-            dataGridView2.DataSource= filteredCourses;
+            dataGridView2.DataSource = filteredCourses;
+        }
+
+        private void addBtn_Click(object sender, EventArgs e)
+        {
+            AddCourseForm addCourseForm=new AddCourseForm();
+            if (addCourseForm.ShowDialog() == DialogResult.OK)
+            {
+                refreshData();
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using OUM.Model;
+using OUM.Model.enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,56 @@ namespace OUM.Service.DataAccess
     public class OpenCourseDAO
     {
         private const string PDBADMIN_USERNAME = "PDB_ADMIN";
+
         private const string MOMON_TABLE_NAME = "MOMON";
         private const string COL_NAME_MAMM = "MAMM";
         private const string COL_NAME_MAHP = "MAHP";
         private const string COL_NAME_MAGV = "MAGV";
         private const string COL_NAME_HK = "HK";
         private const string COL_NAME_NAM = "NAM";
+        private const string COL_NAME_NGAY_MO = "NGAY_MO";
+
+        private const string EMPLOYEE_TABLE_NAME = "NHANVIEN";
+        private const string COL_NAME_MANLD = "MANLD";
+        private const string COL_NAME_VAITRO = "VAITRO";
+        //private const string COL_NAME_HOTEN = "HOTEN";
+        //private const string COL_NAME_PHAI = "PHAI";
+        //private const string COL_NAME_NGSINH = "NGSINH";
+        //private const string COL_NAME_LUONG = "LUONG";
+        //private const string COL_NAME_PHUCAP = "PHUCAP";
+        //private const string COL_NAME_DT = "DT
+        //private const string COL_NAME_MADV = "MADV";
+
+        private const string COURSE_TABLE_NAME = "HOCPHAN";
+        private const string COL_NAME_MAHP_TABLE_COURSE = "MAHP";
+
+        private const string MOMON_VIEW_NVPDT = "NV_PDT_MOMON_VIEW";
+        private const string MOMON_VIEW_TRGDV = "TRGDV_MOMON_VIEW";
+        private const string MOMON_VIEW_GV = "GV_SELF_MOMON_VIEW";
+        private const string MOMON_VIEW_SV = "SV_MOMON_VIEW";
+
+        private const string COMPUTE_NEXTMM_FUNCTION_NAME = "GET_NEXT_MM";
+
+        private Dictionary<string, string> ROLE_VIEW_MAPPING= new Dictionary<string, string>()
+        {
+            {RoleEnum.ROLE_TRGDV,MOMON_VIEW_TRGDV },
+            {RoleEnum.ROLE_NV_PDT,MOMON_VIEW_NVPDT },
+            {RoleEnum.ROLE_GV,MOMON_VIEW_GV },
+            {RoleEnum.ROLE_SV,MOMON_VIEW_SV }
+        };
+
+        private string user_role= "ROLE_NV_PDT";
+
+
+        private Dictionary<int,int> TERM_TO_MONTH= new Dictionary<int, int>()
+        {
+            {1,9},
+            {2,1},
+            {3,5 }
+        };
+
+
+        private const string TEACHER_ROLE = "GV";
 
         private OracleDAO oracleDAO = new OracleDAO();
 
@@ -41,6 +86,11 @@ namespace OUM.Service.DataAccess
                 
             };
         }
+        private string buildQuerySearchAllCourse()
+        {
+            string view = ROLE_VIEW_MAPPING[user_role];
+            return @$"SELECT * FROM {PDBADMIN_USERNAME}.{view}";
+        }
         public List<Course> getAllCourses()
         {
             string connectString = oracleDAO.GetConnectionString();
@@ -50,7 +100,7 @@ namespace OUM.Service.DataAccess
                 using (OracleConnection con = new OracleConnection(connectString))
                 {
                     con.Open();
-                    string query = @$"SELECT * FROM {PDBADMIN_USERNAME}.{MOMON_TABLE_NAME}";
+                    string query = buildQuerySearchAllCourse();
                     OracleCommand oracleCommand = new OracleCommand(query,con);
                     OracleDataReader reader=oracleCommand.ExecuteReader();
                     while (reader.Read())
@@ -66,5 +116,154 @@ namespace OUM.Service.DataAccess
                 return courses;
             }
         }
+
+        public List<string> getAllTeacherIDs()
+        {
+            string connectString = oracleDAO.GetConnectionString();
+            List<string> ids = new List<string>();
+            try
+            {
+                using (OracleConnection con = new OracleConnection(connectString))
+                {
+                    con.Open();
+                    string query = @$"SELECT * FROM {PDBADMIN_USERNAME}.{EMPLOYEE_TABLE_NAME} 
+                                    WHERE {COL_NAME_VAITRO} LIKE '{TEACHER_ROLE}'";
+                    OracleCommand oracleCommand = new OracleCommand(query, con);
+                    OracleDataReader reader = oracleCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string id = reader[COL_NAME_MANLD].ToString();
+                        ids.Add(id);
+                    }
+                }
+                return ids;
+            }
+            catch (Exception ex)
+            {
+                return ids;
+            }
+        }
+
+        public List<string> getAllCourseIDs()
+        {
+            string connectString = oracleDAO.GetConnectionString();
+            List<string> ids = new List<string>();
+            try
+            {
+                using (OracleConnection con = new OracleConnection(connectString))
+                {
+                    con.Open();
+                    string query = @$"SELECT * FROM {PDBADMIN_USERNAME}.{COURSE_TABLE_NAME}";
+                    OracleCommand oracleCommand = new OracleCommand(query, con);
+                    OracleDataReader reader = oracleCommand.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string id = reader[COL_NAME_MAHP_TABLE_COURSE].ToString();
+                        ids.Add(id);
+                    }
+                }
+                return ids;
+            }
+            catch (Exception ex)
+            {
+                return ids;
+            }
+        }
+
+        public Course create(Course newCourse)
+        {
+            string connectString = oracleDAO.GetConnectionString();
+            string NEXT_MM_TEXT = "NEXT_MM";
+            try
+            {
+                using (OracleConnection con = new OracleConnection(connectString))
+                {
+                    con.Open();
+                    string query = $@"SELECT {PDBADMIN_USERNAME}.{COMPUTE_NEXTMM_FUNCTION_NAME} AS {NEXT_MM_TEXT} FROM DUAL";
+                    OracleCommand oracleCommand = new OracleCommand(query, con);
+                    OracleDataReader reader=oracleCommand.ExecuteReader();
+                    reader.Read();
+                    int nextMAMM = int.Parse(reader[NEXT_MM_TEXT].ToString());
+                    string open_day = $@"01/0{TERM_TO_MONTH[int.Parse(newCourse.HK)]}/{newCourse.NAM}";
+                    newCourse.MAMM = nextMAMM.ToString();
+                    string view = ROLE_VIEW_MAPPING[user_role];
+                    query = @$"INSERT INTO {PDBADMIN_USERNAME}.{view} 
+                                    ({COL_NAME_MAMM},{COL_NAME_MAHP},{COL_NAME_MAGV},{COL_NAME_HK},{COL_NAME_NAM},{COL_NAME_NGAY_MO}) 
+                                    VALUES({newCourse.MAMM},'{newCourse.MAHP}','{newCourse.MAGV}',{newCourse.HK},{newCourse.NAM},TO_DATE('{open_day}','DD/MM/YYYY'))";
+                    oracleCommand = new OracleCommand(query, con);
+                    oracleCommand.ExecuteNonQuery();
+                }
+                Course savedCourse = new Course()
+                {
+                    MAMM = newCourse.MAMM,
+                    MAHP = newCourse.MAHP,
+                    MAGV = newCourse.MAGV,
+                    HK = newCourse.HK,
+                    NAM = newCourse.NAM,
+                };
+                return savedCourse;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public Course updateCourse(String courseId,Course newCourse)
+        {
+            string connectString = oracleDAO.GetConnectionString();
+            try
+            {
+                using (OracleConnection con = new OracleConnection(connectString))
+                {
+                    con.Open();
+                    string view = ROLE_VIEW_MAPPING[user_role];
+                    string query = @$"UPDATE {PDBADMIN_USERNAME}.{view}  
+                                    SET {COL_NAME_MAHP}='{newCourse.MAHP}',
+                                    {COL_NAME_MAGV}='{newCourse.MAGV}',{COL_NAME_HK}='{newCourse.HK}',{COL_NAME_NAM}='{newCourse.NAM}'
+                                    WHERE {COL_NAME_MAMM}={courseId}";
+                    OracleCommand oracleCommand = new OracleCommand(query, con);
+                    oracleCommand.ExecuteNonQuery();
+
+                }
+                Course updatedCourse = new Course()
+                {
+                    MAMM=newCourse.MAMM,
+                    MAHP=newCourse.MAHP,
+                    MAGV=newCourse.MAGV,
+                    HK=newCourse.HK,
+                    NAM=newCourse.NAM,
+                };
+                return updatedCourse;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public string deleteCourse(string mamm)
+        {
+            string connectString = oracleDAO.GetConnectionString();
+            try
+            {
+                using (OracleConnection con = new OracleConnection(connectString))
+                {
+                    con.Open();
+                    string view = ROLE_VIEW_MAPPING[user_role];
+                    string query = @$"DELETE FROM {PDBADMIN_USERNAME}.{view}  
+                                    WHERE {COL_NAME_MAMM}={mamm}";
+                    OracleCommand oracleCommand = new OracleCommand(query, con);
+                    oracleCommand.ExecuteNonQuery();
+
+                }
+                return "Xóa thành công";
+            }
+            catch (Exception ex)
+            {
+                return "Xảy ra lỗi, thử lại sau";
+            }
+        }
+
     }
 }

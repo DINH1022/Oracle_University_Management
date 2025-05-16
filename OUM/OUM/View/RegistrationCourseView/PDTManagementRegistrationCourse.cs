@@ -1,5 +1,6 @@
 ﻿using OUM.Model;
 using OUM.Service.DataAccess;
+using OUM.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,7 @@ namespace OUM.View.RegistrationCourseView
             courses = dao.getNewRegistrationCoursesByMASV("", "");
             setUpStudentDGW();
             setUpRegisteredCourseDGW();
+            setUpNewRegisterCourseDGW();
         }
 
         private void setUpStudentDGW()
@@ -45,6 +47,10 @@ namespace OUM.View.RegistrationCourseView
             listRegisteredCourse.DataSource = null;
             listRegisteredCourse.DataSource = registeredCourses;
             listRegisteredCourse.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            if (listRegisteredCourse.Columns.Contains("THAOTAC"))
+            {
+                listRegisteredCourse.Columns["THAOTAC"].Visible = new CheckValidDate().IsWithinRegistrationPeriod();
+            }
         }
         private void setUpNewRegisterCourseDGW()
         {
@@ -52,12 +58,15 @@ namespace OUM.View.RegistrationCourseView
             listCourse.DataSource = null;
             listCourse.DataSource = courses;
             listCourse.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            if (listCourse.Columns.Contains("THTAC"))
+            {
+                listCourse.Columns["THTAC"].Visible = new CheckValidDate().IsWithinRegistrationPeriod();
+            }
         }
         private void searchInputStudentTextChanged(object sender, EventArgs e)
         {
             string keyword = searchInputStudent.Text;
-            students = dao.GetAllStudent(keyword);
-            setUpStudentDGW();
+            UpDateStudentDGV(keyword);
         }
 
         private void studentSeletionChanged(object sender, EventArgs e)
@@ -68,10 +77,8 @@ namespace OUM.View.RegistrationCourseView
                 if (selectedStudent != null)
                 {
                     string keyword = searchInputRegisteredCourse.Text;
-                    registeredCourses = dao.getRegisteredCoursesByMASV(keyword, selectedStudent.id);
-                    courses = dao.getNewRegistrationCoursesByMASV(keyword, selectedStudent.id);
-                    setUpRegisteredCourseDGW();
-                    setUpNewRegisterCourseDGW();
+                    UpDateRegisteredDGV(keyword, selectedStudent.id);
+                    UpDateNewRegistraDGV(keyword, selectedStudent.id);
                 }
             }
         }
@@ -84,8 +91,7 @@ namespace OUM.View.RegistrationCourseView
                 if (selectedStudent != null)
                 {
                     string keyword = searchInputRegisteredCourse.Text;
-                    registeredCourses = dao.getRegisteredCoursesByMASV(keyword, selectedStudent.id);
-                    setUpRegisteredCourseDGW();
+                    UpDateRegisteredDGV(keyword, selectedStudent.id);
                 }
             }
         }
@@ -97,35 +103,78 @@ namespace OUM.View.RegistrationCourseView
                 var selectedStudent = listStudent.SelectedRows[0].DataBoundItem as Student;
                 if (selectedStudent != null)
                 {
-                    string keyword = searchInputRegisteredCourse.Text;
-                    courses = dao.getNewRegistrationCoursesByMASV(keyword, selectedStudent.id);
-                    setUpNewRegisterCourseDGW();
+                    string keyword = searchInputCourse.Text;
+                    UpDateNewRegistraDGV(keyword, selectedStudent.id);
+                }
+            }
+        }
+        private void registerCourseClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == listCourse.Columns["THTAC"].Index && e.RowIndex >= 0)
+            {
+                var selectedStudent = listStudent.SelectedRows[0].DataBoundItem as Student;
+                var selectedCourse = courses[e.RowIndex];
+                if (selectedStudent != null && selectedCourse != null)
+                {
+                    NewRegistrationCourse selecteCourse = courses[e.RowIndex];
+                    bool succes = dao.RegisterCourse(selecteCourse.MAMM, selectedStudent.id);
+                    if (succes)
+                    {
+                        MessageBox.Show("Đăng ký thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string keyword = searchInputCourse.Text;
+                        UpDateRegisteredDGV(keyword, selectedStudent.id);
+                        UpDateNewRegistraDGV(keyword, selectedStudent.id);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Đăng ký không thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void registeredCourseClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == listRegisteredCourse.Columns["THAOTAC"].Index && e.RowIndex >= 0)
+            {
+                var selectedStudent = listStudent.SelectedRows[0].DataBoundItem as Student;
+                var selectedRegisteredCourse = registeredCourses[e.RowIndex];
+                if (selectedStudent != null && selectedRegisteredCourse != null)
+                {
+                    NewRegistrationCourse selectedCourse = registeredCourses[e.RowIndex];
+                    bool succes = dao.CancelRegistrationCourse(selectedStudent.id, selectedRegisteredCourse.MAMM);
+                    if (succes)
+                    {
+                        MessageBox.Show("Hủy đăng ký thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string keyword = searchInputRegisteredCourse.Text;
+                        UpDateRegisteredDGV(keyword, selectedStudent.id);
+                        UpDateNewRegistraDGV(keyword, selectedStudent.id);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Có lỗi khi hủy đăng ký", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
 
+        private void UpDateStudentDGV(string keyword)
+        {
+            students = dao.GetAllStudent(keyword);
+            setUpStudentDGW();
+        }
+        private void UpDateRegisteredDGV(string keyword, string masv)
+        {
+            registeredCourses = dao.getRegisteredCoursesByMASV(keyword, masv);
+            setUpRegisteredCourseDGW();
+        }
+        private void UpDateNewRegistraDGV(string keyword, string masv)
+        {
+            courses = dao.getNewRegistrationCoursesByMASV(keyword, masv);
+            setUpNewRegisterCourseDGW();
+        }
 
-
-        //private void ListObjectDGV_SelectionChanged(object sender, EventArgs e)
-        //{
-        //    if (listObjectDGV.SelectedRows.Count > 0)
-        //    {
-        //        var selectedObject = listObjectDGV.SelectedRows[0].DataBoundItem as DatabaseObject;
-        //        if (selectedObject != null)
-        //        {
-        //            viewModel.SelectedObject = selectedObject;
-        //            viewModel.UpdatePrivileges(selectedObject.ObjectType);
-        //            privilegeCombox.DataSource = null;
-        //            privilegeCombox.DataSource = viewModel.Privileges;
-        //            UpadateColumnCheckboxes(selectedObject);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        flowLayoutPanel1.Controls.Clear();
-        //    }
-        //}
-
+       
     }
 }

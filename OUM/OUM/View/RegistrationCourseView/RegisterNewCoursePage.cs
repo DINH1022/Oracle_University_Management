@@ -1,5 +1,6 @@
 ﻿using OUM.Model;
 using OUM.Service.DataAccess;
+using OUM.Session;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -51,7 +52,7 @@ namespace OUM.View.RegistrationCourseView
             if (e.ColumnIndex == listCourses.Columns["THAOTAC"].Index && e.RowIndex >= 0)
             {
                 NewRegistrationCourse selectedCourse = courses[e.RowIndex];
-                bool success = dao.RegisterCourse(selectedCourse.MAMM);
+                bool success = dao.RegisterCourse(selectedCourse.MAMM,AdminSession.Username.Substring(2));
                 if (success)
                 {
                     MessageBox.Show("Đăng ký thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

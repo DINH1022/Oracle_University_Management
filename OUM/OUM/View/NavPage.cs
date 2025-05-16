@@ -71,7 +71,7 @@ namespace OUM.View
 
         private void registrationCourseBtn(object sender, EventArgs e)
         {
-            LoadControl(new PDTManagementRegistrationCourse());
+            LoadControl(new TeacherRegistrationCourse());
         }
 
         private void CloseApp(object sender, FormClosingEventArgs e)

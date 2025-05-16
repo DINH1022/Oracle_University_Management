@@ -92,7 +92,7 @@ namespace OUM.Service.DataAccess
                         N.VAITRO,
                         N.LUONG,
                         N.PHUCAP
-                    FROM PDB_ADMIN.NHANVIEN N
+                    FROM PDB_ADMIN.V_NVCB N
                     WHERE N.MANLD =:username";
 
                     using (var command = new OracleCommand(query, connection))
@@ -164,7 +164,7 @@ namespace OUM.Service.DataAccess
             {
                 connection.Open();
 
-                string query = "UPDATE PDB_ADMIN.NHANVIEN SET DT = :newPhone WHERE MANLD = :manld";
+                string query = "UPDATE PDB_ADMIN.V_NVCB SET DT = :newPhone WHERE MANLD = :manld";
                 using (var command = new OracleCommand(query, connection))
                 {
                     command.Parameters.Add(new OracleParameter(":newPhone", newPhone));

@@ -40,5 +40,11 @@ namespace OUM.View
         {
             LoadControl(new RegistrationCoursePageControl());
         }
+
+        private void Coursebutton_Click(object sender, EventArgs e)
+        {
+            LoadControl(new CourseOpenControl());
+        }
+
     }
 }

@@ -15,7 +15,7 @@ namespace OUM.Service.DataAccess
     public class RegistrationCourses
     {
         private OracleDAO dao = new OracleDAO();
-        private const string PDBADMIN_USERNAME = "PDB_ADMIN";
+        private const string PDBADMIN_USERNAME = "pdb_admin";
         private const string DANGKY_TABLE_NAME = "DANGKY";
 
 

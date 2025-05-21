@@ -35,5 +35,10 @@ namespace OUM.View
             LoginPage loginPage = new LoginPage();
             loginPage.Show();
         }
+
+        private void Regiterbutton_Click(object sender, EventArgs e)
+        {
+            LoadControl(new RegistrationCoursePageControl());
+        }
     }
 }

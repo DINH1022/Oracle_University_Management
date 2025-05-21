@@ -64,8 +64,9 @@
             Regiterbutton.Name = "Regiterbutton";
             Regiterbutton.Size = new Size(175, 69);
             Regiterbutton.TabIndex = 4;
-            Regiterbutton.Text = "Kết Quả Đăng Ký Học Phần";
+            Regiterbutton.Text = "Cập nhật điểm sinh viên";
             Regiterbutton.UseVisualStyleBackColor = false;
+            Regiterbutton.Click += Regiterbutton_Click;
             // 
             // flowLayoutPanel1
             // 

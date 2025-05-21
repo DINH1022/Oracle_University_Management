@@ -68,6 +68,7 @@
             Regiterbutton.TabIndex = 4;
             Regiterbutton.Text = "Kết Quả Đăng Ký Học Phần";
             Regiterbutton.UseVisualStyleBackColor = false;
+            Regiterbutton.Click += Regiterbutton_Click;
             // 
             // Coursebutton
             // 
@@ -138,9 +139,10 @@
             // 
             // panelMain
             // 
-            panelMain.Location = new Point(229, 0);
+            panelMain.Dock = DockStyle.Fill;
+            panelMain.Location = new Point(0, 0);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(953, 852);
+            panelMain.Size = new Size(1182, 853);
             panelMain.TabIndex = 0;
             // 
             // StudentNavPage

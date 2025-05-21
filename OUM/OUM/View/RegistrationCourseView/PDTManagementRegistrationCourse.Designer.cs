@@ -46,6 +46,13 @@
             FindBtnStudent = new Button();
             panel5 = new Panel();
             listRegisteredCourse = new DataGridView();
+            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn10 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn11 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn12 = new DataGridViewTextBoxColumn();
+            THAOTAC = new DataGridViewButtonColumn();
             panel6 = new Panel();
             label3 = new Label();
             panel9 = new Panel();
@@ -54,19 +61,6 @@
             findBtnRegisteredCourse = new Button();
             panel10 = new Panel();
             listCourse = new DataGridView();
-            panel11 = new Panel();
-            label4 = new Label();
-            panel12 = new Panel();
-            panel13 = new Panel();
-            searchInputCourse = new TextBox();
-            findBtnCourse = new Button();
-            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn9 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn10 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn11 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn12 = new DataGridViewTextBoxColumn();
-            THAOTAC = new DataGridViewButtonColumn();
             dataGridViewTextBoxColumn13 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn14 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn15 = new DataGridViewTextBoxColumn();
@@ -74,6 +68,12 @@
             dataGridViewTextBoxColumn17 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn18 = new DataGridViewTextBoxColumn();
             THTAC = new DataGridViewButtonColumn();
+            panel11 = new Panel();
+            label4 = new Label();
+            panel12 = new Panel();
+            panel13 = new Panel();
+            searchInputCourse = new TextBox();
+            findBtnCourse = new Button();
             panel3.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -269,6 +269,63 @@
             listRegisteredCourse.TabIndex = 16;
             listRegisteredCourse.CellClick += registeredCourseClick;
             // 
+            // dataGridViewTextBoxColumn7
+            // 
+            dataGridViewTextBoxColumn7.DataPropertyName = "MAMM";
+            dataGridViewTextBoxColumn7.HeaderText = "MAMM";
+            dataGridViewTextBoxColumn7.MinimumWidth = 6;
+            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            dataGridViewTextBoxColumn7.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            dataGridViewTextBoxColumn8.DataPropertyName = "MAHP";
+            dataGridViewTextBoxColumn8.HeaderText = "MAHP";
+            dataGridViewTextBoxColumn8.MinimumWidth = 6;
+            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            dataGridViewTextBoxColumn8.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            dataGridViewTextBoxColumn9.DataPropertyName = "TENHP";
+            dataGridViewTextBoxColumn9.HeaderText = "TÊN HỌC PHẦN";
+            dataGridViewTextBoxColumn9.MinimumWidth = 6;
+            dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            dataGridViewTextBoxColumn9.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            dataGridViewTextBoxColumn10.DataPropertyName = "SOTC";
+            dataGridViewTextBoxColumn10.HeaderText = "SỐ TC";
+            dataGridViewTextBoxColumn10.MinimumWidth = 6;
+            dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            dataGridViewTextBoxColumn10.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            dataGridViewTextBoxColumn11.DataPropertyName = "STTH";
+            dataGridViewTextBoxColumn11.HeaderText = "THỰC HÀNH";
+            dataGridViewTextBoxColumn11.MinimumWidth = 6;
+            dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            dataGridViewTextBoxColumn11.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            dataGridViewTextBoxColumn12.DataPropertyName = "STLT";
+            dataGridViewTextBoxColumn12.HeaderText = "LÝ THUYẾT";
+            dataGridViewTextBoxColumn12.MinimumWidth = 6;
+            dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            dataGridViewTextBoxColumn12.Width = 125;
+            // 
+            // THAOTAC
+            // 
+            THAOTAC.HeaderText = "THAO TÁC";
+            THAOTAC.MinimumWidth = 6;
+            THAOTAC.Name = "THAOTAC";
+            THAOTAC.Text = "Hủy đăng ký";
+            THAOTAC.UseColumnTextForButtonValue = true;
+            THAOTAC.Width = 125;
+            // 
             // panel6
             // 
             panel6.Controls.Add(label3);
@@ -356,6 +413,63 @@
             listCourse.TabIndex = 16;
             listCourse.CellClick += registerCourseClick;
             // 
+            // dataGridViewTextBoxColumn13
+            // 
+            dataGridViewTextBoxColumn13.DataPropertyName = "MAMM";
+            dataGridViewTextBoxColumn13.HeaderText = "MAMM";
+            dataGridViewTextBoxColumn13.MinimumWidth = 6;
+            dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            dataGridViewTextBoxColumn13.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            dataGridViewTextBoxColumn14.DataPropertyName = "MAHP";
+            dataGridViewTextBoxColumn14.HeaderText = "MAHP";
+            dataGridViewTextBoxColumn14.MinimumWidth = 6;
+            dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            dataGridViewTextBoxColumn14.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            dataGridViewTextBoxColumn15.DataPropertyName = "TENHP";
+            dataGridViewTextBoxColumn15.HeaderText = "TÊN HỌC PHẦN";
+            dataGridViewTextBoxColumn15.MinimumWidth = 6;
+            dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            dataGridViewTextBoxColumn15.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            dataGridViewTextBoxColumn16.DataPropertyName = "SOTC";
+            dataGridViewTextBoxColumn16.HeaderText = "SỐ TC";
+            dataGridViewTextBoxColumn16.MinimumWidth = 6;
+            dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            dataGridViewTextBoxColumn16.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            dataGridViewTextBoxColumn17.DataPropertyName = "STTH";
+            dataGridViewTextBoxColumn17.HeaderText = "THỰC HÀNH";
+            dataGridViewTextBoxColumn17.MinimumWidth = 6;
+            dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            dataGridViewTextBoxColumn17.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            dataGridViewTextBoxColumn18.DataPropertyName = "STLT";
+            dataGridViewTextBoxColumn18.HeaderText = "LÝ THUYẾT";
+            dataGridViewTextBoxColumn18.MinimumWidth = 6;
+            dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            dataGridViewTextBoxColumn18.Width = 125;
+            // 
+            // THTAC
+            // 
+            THTAC.HeaderText = "THAO TÁC";
+            THTAC.MinimumWidth = 6;
+            THTAC.Name = "THTAC";
+            THTAC.Text = "Đăng ký";
+            THTAC.UseColumnTextForButtonValue = true;
+            THTAC.Width = 125;
+            // 
             // panel11
             // 
             panel11.Controls.Add(label4);
@@ -419,120 +533,6 @@
             findBtnCourse.TabIndex = 0;
             findBtnCourse.Text = "Tìm kiếm";
             findBtnCourse.UseVisualStyleBackColor = false;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            dataGridViewTextBoxColumn7.DataPropertyName = "MAMM";
-            dataGridViewTextBoxColumn7.HeaderText = "MAMM";
-            dataGridViewTextBoxColumn7.MinimumWidth = 6;
-            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            dataGridViewTextBoxColumn7.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            dataGridViewTextBoxColumn8.DataPropertyName = "MAHP";
-            dataGridViewTextBoxColumn8.HeaderText = "MAHP";
-            dataGridViewTextBoxColumn8.MinimumWidth = 6;
-            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            dataGridViewTextBoxColumn8.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            dataGridViewTextBoxColumn9.DataPropertyName = "TENHP";
-            dataGridViewTextBoxColumn9.HeaderText = "TÊN HỌC PHẦN";
-            dataGridViewTextBoxColumn9.MinimumWidth = 6;
-            dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            dataGridViewTextBoxColumn9.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            dataGridViewTextBoxColumn10.DataPropertyName = "SOTC";
-            dataGridViewTextBoxColumn10.HeaderText = "SỐ TC";
-            dataGridViewTextBoxColumn10.MinimumWidth = 6;
-            dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            dataGridViewTextBoxColumn10.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn11
-            // 
-            dataGridViewTextBoxColumn11.DataPropertyName = "STTH";
-            dataGridViewTextBoxColumn11.HeaderText = "THỰC HÀNH";
-            dataGridViewTextBoxColumn11.MinimumWidth = 6;
-            dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-            dataGridViewTextBoxColumn11.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn12
-            // 
-            dataGridViewTextBoxColumn12.DataPropertyName = "STLT";
-            dataGridViewTextBoxColumn12.HeaderText = "LÝ THUYẾT";
-            dataGridViewTextBoxColumn12.MinimumWidth = 6;
-            dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-            dataGridViewTextBoxColumn12.Width = 125;
-            // 
-            // THAOTAC
-            // 
-            THAOTAC.HeaderText = "THAO TÁC";
-            THAOTAC.MinimumWidth = 6;
-            THAOTAC.Name = "THAOTAC";
-            THAOTAC.Text = "Hủy đăng ký";
-            THAOTAC.UseColumnTextForButtonValue = true;
-            THAOTAC.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            dataGridViewTextBoxColumn13.DataPropertyName = "MAMM";
-            dataGridViewTextBoxColumn13.HeaderText = "MAMM";
-            dataGridViewTextBoxColumn13.MinimumWidth = 6;
-            dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            dataGridViewTextBoxColumn13.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            dataGridViewTextBoxColumn14.DataPropertyName = "MAHP";
-            dataGridViewTextBoxColumn14.HeaderText = "MAHP";
-            dataGridViewTextBoxColumn14.MinimumWidth = 6;
-            dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            dataGridViewTextBoxColumn14.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn15
-            // 
-            dataGridViewTextBoxColumn15.DataPropertyName = "TENHP";
-            dataGridViewTextBoxColumn15.HeaderText = "TÊN HỌC PHẦN";
-            dataGridViewTextBoxColumn15.MinimumWidth = 6;
-            dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            dataGridViewTextBoxColumn15.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            dataGridViewTextBoxColumn16.DataPropertyName = "SOTC";
-            dataGridViewTextBoxColumn16.HeaderText = "SỐ TC";
-            dataGridViewTextBoxColumn16.MinimumWidth = 6;
-            dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            dataGridViewTextBoxColumn16.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            dataGridViewTextBoxColumn17.DataPropertyName = "STTH";
-            dataGridViewTextBoxColumn17.HeaderText = "THỰC HÀNH";
-            dataGridViewTextBoxColumn17.MinimumWidth = 6;
-            dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            dataGridViewTextBoxColumn17.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            dataGridViewTextBoxColumn18.DataPropertyName = "STLT";
-            dataGridViewTextBoxColumn18.HeaderText = "LÝ THUYẾT";
-            dataGridViewTextBoxColumn18.MinimumWidth = 6;
-            dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            dataGridViewTextBoxColumn18.Width = 125;
-            // 
-            // THTAC
-            // 
-            THTAC.HeaderText = "THAO TÁC";
-            THTAC.MinimumWidth = 6;
-            THTAC.Name = "THTAC";
-            THTAC.Text = "Đăng ký";
-            THTAC.UseColumnTextForButtonValue = true;
-            THTAC.Width = 125;
             // 
             // PDTManagementRegistrationCourse
             // 

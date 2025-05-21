@@ -127,6 +127,7 @@
             StudentBtn.TabIndex = 1;
             StudentBtn.Text = "Quản Lý Sinh Viên ";
             StudentBtn.UseVisualStyleBackColor = false;
+            StudentBtn.Click += StudentBtn_Click;
             // 
             // InfoBtn
             // 

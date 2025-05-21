@@ -70,6 +70,7 @@
             Regiterbutton.TabIndex = 4;
             Regiterbutton.Text = "Kết Quả Đăng Ký Học Phần";
             Regiterbutton.UseVisualStyleBackColor = false;
+            Regiterbutton.Click += Regiterbutton_Click;
             // 
             // Coursebutton
             // 
@@ -152,9 +153,9 @@
             // 
             // panelMain
             // 
-            panelMain.Location = new Point(228, 0);
+            panelMain.Location = new Point(229, 0);
             panelMain.Name = "panelMain";
-            panelMain.Size = new Size(954, 853);
+            panelMain.Size = new Size(953, 853);
             panelMain.TabIndex = 0;
             // 
             // AcademicAdminNavPage
@@ -166,6 +167,7 @@
             Controls.Add(panelMainContent);
             Name = "AcademicAdminNavPage";
             Text = "AcademicAdminNavPage";
+            FormClosing += CloseApp;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panelMainContent.ResumeLayout(false);

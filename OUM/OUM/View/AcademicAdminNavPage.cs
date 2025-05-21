@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using OUM.View.RegistrationCourseView;
 namespace OUM.View
 {
     public partial class AcademicAdminNavPage : Form
@@ -35,6 +35,16 @@ namespace OUM.View
             this.Close();
             LoginPage loginPage = new LoginPage();
             loginPage.Show();
+        }
+
+        private void Regiterbutton_Click(object sender, EventArgs e)
+        {
+            LoadControl(new PDTManagementRegistrationCourse());
+        }
+
+        private void CloseApp(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

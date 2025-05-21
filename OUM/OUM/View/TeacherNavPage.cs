@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OUM.View.RegistrationCourseView;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,6 +35,11 @@ namespace OUM.View
             this.Close();
             LoginPage loginPage = new LoginPage();
             loginPage.Show();
+        }
+
+        private void StudentBtn_Click(object sender, EventArgs e)
+        {
+            LoadControl(new TeacherRegistrationCourse());
         }
     }
 }

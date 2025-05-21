@@ -58,12 +58,12 @@ namespace OUM.View
 
         private void AddCourseForm_Load_1(object sender, EventArgs e)
         {
-            teacherIds = openCourseDAO.getAllTeacherIDs();
-            courseIds = openCourseDAO.getAllCourseIDs();
+            List<string> teacherIds = openCourseDAO.getAllTeacherIDs();
+            List<string> courseIds = openCourseDAO.getAllCourseIDs();
             comboBox1.DataSource = courseIds;
             comboBox2.DataSource = teacherIds;
-            comboBox1.SelectedItem = courseIds[0];
-            comboBox2.SelectedItem = teacherIds[0];
+            comboBox1.SelectedItem = courseIds.Count>0? courseIds[0]:"";
+            comboBox2.SelectedItem = teacherIds.Count>0? teacherIds[0]:"";
             int currentTerm = compute_current_Term();
             textBox3.Text = currentTerm.ToString();
             int currentYear = compute_current_Year();

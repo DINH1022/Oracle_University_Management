@@ -82,6 +82,7 @@
             Coursebutton.TabIndex = 3;
             Coursebutton.Text = "Mở môn";
             Coursebutton.UseVisualStyleBackColor = false;
+            Coursebutton.Click += Coursebutton_Click;
             // 
             // flowLayoutPanel1
             // 

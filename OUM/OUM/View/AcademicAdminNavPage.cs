@@ -46,5 +46,9 @@ namespace OUM.View
         {
             Application.Exit();
         }
+
+        private void Coursebutton_Click(object sender, EventArgs e)
+        {
+        }
     }
 }

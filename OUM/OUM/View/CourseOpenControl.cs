@@ -28,10 +28,10 @@ namespace OUM.View
         private const string HEADERTEXT_HK = "HK";
         private const string HEADERTEXT_NAM = "NAM";
 
-        
 
 
-        private string user_role = "ROLE_NV_PDT";
+
+        private string user_role;
 
         private Dictionary<String, String> HEADERTEXT_TO_NAME = new Dictionary<String, String>()
         {
@@ -116,6 +116,7 @@ namespace OUM.View
         }
         private void CourseOpenControl_Load(object sender, EventArgs e)
         {
+            user_role=openCourseDAO.GetUserRole();
             if (!user_role.Equals(RoleEnum.ROLE_NV_PDT,StringComparison.OrdinalIgnoreCase))
             {
                 addBtn.Visible = false;

@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace OUM.View
 {
-    public partial class NavPage : Form
+    public partial class AdminNavBar : Form
     {
-        public NavPage()
+        public AdminNavBar()
         {
             InitializeComponent();
             LoadControl(new ManageStudentControl());
@@ -76,7 +76,12 @@ namespace OUM.View
 
         private void CloseApp(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+
+        }
+
+        private void Coursebutton_Click(object sender, EventArgs e)
+        {
+            LoadControl(new CourseOpenControl());
         }
     }
 }

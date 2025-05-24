@@ -16,6 +16,34 @@ namespace OUM
             viewModel = new AdminViewModel();
             userNameTextBox.DataBindings.Add("Text", viewModel, "username", false, DataSourceUpdateMode.OnPropertyChanged);
             passWordTextBox.DataBindings.Add("Text", viewModel, "password", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            this.FormClosing += LoginPage_FormClosing;
+        }
+
+        private void LoginPage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+               
+                DialogResult result = MessageBox.Show(
+                    "Bạn có chắc chắn muốn thoát khỏi ứng dụng?",
+                    "Xác nhận thoát",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    
+                    Application.Exit();
+                }
+                else
+                {
+                    
+                    e.Cancel = true;
+                }
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -90,31 +118,12 @@ namespace OUM
 
                 if (AdminSession.Username.Equals("pdb_admin", StringComparison.OrdinalIgnoreCase))
                 {
-                    navPage = new NavPage();
+                    navPage = new AdminNavBar();
                 }
-
                 else
                 {
-                    List<string> roles = GetUserRoles();
-
-
-
-                    if (roles.Contains("ROLE_SV"))
-                        navPage = new StudentNavPage();
-                    else if (roles.Contains("ROLE_GV"))
-                        navPage = new TeacherNavPage();
-                    else if (roles.Contains("ROLE_NVCB"))
-                        navPage = new StaffNavPage();
-                    else if (roles.Contains("ROLE_NV_PĐT"))
-                        navPage = new AcademicAdminNavPage();
-                    else if (roles.Contains("ROLE_NV_PKT"))
-                        navPage = new ExamStaffNavPage();
-                    else if (roles.Contains("ROLE_NV_TCHC"))
-                        navPage = new AdminOfficeNavPage();
-                    else if (roles.Contains("ROLE_NV_CTSV"))
-                        navPage = new StudentAffairNavPage();
-                    else if (roles.Contains("ROLE_TRGDV"))
-                        navPage = new DepartmentHeadNavPage();
+                    navPage = new UserNavBar();
+                    
                 }
 
                 if (navPage != null)

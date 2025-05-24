@@ -1,6 +1,6 @@
 ﻿namespace OUM.View
 {
-    partial class NavPage
+    partial class AdminNavBar
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NavPage));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminNavBar));
             panel1 = new Panel();
             button3 = new Button();
             button2 = new Button();
@@ -41,6 +41,7 @@
             EmpBtn = new Button();
             StudentBtn = new Button();
             panelMainContent = new Panel();
+            Coursebutton = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -49,6 +50,7 @@
             // 
             panel1.BackColor = Color.LightGoldenrodYellow;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(Coursebutton);
             panel1.Controls.Add(button3);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
@@ -68,7 +70,7 @@
             // 
             button3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.DarkGreen;
-            button3.Location = new Point(27, 659);
+            button3.Location = new Point(27, 674);
             button3.Name = "button3";
             button3.Size = new Size(175, 49);
             button3.TabIndex = 7;
@@ -80,7 +82,7 @@
             // 
             button2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.DarkGreen;
-            button2.Location = new Point(27, 495);
+            button2.Location = new Point(27, 400);
             button2.Name = "button2";
             button2.Size = new Size(175, 49);
             button2.TabIndex = 6;
@@ -92,7 +94,7 @@
             // 
             button1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.DarkGreen;
-            button1.Location = new Point(27, 417);
+            button1.Location = new Point(27, 455);
             button1.Name = "button1";
             button1.Size = new Size(175, 49);
             button1.TabIndex = 5;
@@ -104,7 +106,7 @@
             // 
             RevokeBtnNav.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             RevokeBtnNav.ForeColor = Color.DarkGreen;
-            RevokeBtnNav.Location = new Point(27, 574);
+            RevokeBtnNav.Location = new Point(27, 510);
             RevokeBtnNav.Name = "RevokeBtnNav";
             RevokeBtnNav.Size = new Size(175, 49);
             RevokeBtnNav.TabIndex = 4;
@@ -116,7 +118,7 @@
             // 
             RoleBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             RoleBtn.ForeColor = Color.DarkGreen;
-            RoleBtn.Location = new Point(27, 341);
+            RoleBtn.Location = new Point(27, 304);
             RoleBtn.Name = "RoleBtn";
             RoleBtn.Size = new Size(175, 49);
             RoleBtn.TabIndex = 3;
@@ -162,7 +164,7 @@
             // 
             EmpBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             EmpBtn.ForeColor = Color.DarkGreen;
-            EmpBtn.Location = new Point(27, 266);
+            EmpBtn.Location = new Point(27, 249);
             EmpBtn.Name = "EmpBtn";
             EmpBtn.Size = new Size(175, 49);
             EmpBtn.TabIndex = 1;
@@ -174,7 +176,7 @@
             // 
             StudentBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             StudentBtn.ForeColor = Color.DarkGreen;
-            StudentBtn.Location = new Point(27, 191);
+            StudentBtn.Location = new Point(27, 194);
             StudentBtn.Name = "StudentBtn";
             StudentBtn.Size = new Size(175, 49);
             StudentBtn.TabIndex = 0;
@@ -191,14 +193,26 @@
             panelMainContent.TabIndex = 1;
             panelMainContent.Paint += panelMainContent_Paint;
             // 
-            // NavPage
+            // Coursebutton
+            // 
+            Coursebutton.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Coursebutton.ForeColor = Color.DarkGreen;
+            Coursebutton.Location = new Point(27, 619);
+            Coursebutton.Name = "Coursebutton";
+            Coursebutton.Size = new Size(175, 49);
+            Coursebutton.TabIndex = 8;
+            Coursebutton.Text = "Danh sách lớp mở";
+            Coursebutton.UseVisualStyleBackColor = false;
+            Coursebutton.Click += Coursebutton_Click;
+            // 
+            // AdminNavBar
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 853);
             Controls.Add(panelMainContent);
             Controls.Add(panel1);
-            Name = "NavPage";
+            Name = "AdminNavBar";
             FormClosing += CloseApp;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
@@ -219,5 +233,6 @@
         private Button button1;
         private Button button2;
         private Button button3;
+        private Button Coursebutton;
     }
 }

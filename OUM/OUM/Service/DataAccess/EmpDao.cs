@@ -592,9 +592,10 @@ namespace OUM.Service.DataAccess
                                 role: reader["VAITRO"].ToString()
                             );
 
-                            
+
                             emp.Username = reader["USERNAME"]?.ToString() ?? "";
                             emp.CreatedTime = reader["THOIGIANTAO"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["THOIGIANTAO"]);
+
 
                             employees.Add(emp);
                         }

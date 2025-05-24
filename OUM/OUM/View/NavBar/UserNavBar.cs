@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OUM.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +11,9 @@ using System.Windows.Forms;
 
 namespace OUM.View
 {
-    public partial class AdminOfficeNavPage : Form
+    public partial class UserNavBar : Form
     {
-        public AdminOfficeNavPage()
+        public UserNavBar()
         {
             InitializeComponent();
         }
@@ -34,6 +35,31 @@ namespace OUM.View
             this.Close();
             LoginPage loginPage = new LoginPage();
             loginPage.Show();
+        }
+
+        private void StudentBtn_Click(object sender, EventArgs e)
+        {
+            LoadControl(new ManageStudentControl());
+        }
+
+        private void EmpBtn_Click(object sender, EventArgs e)
+        {
+            LoadControl(new ManageEmployeeControl());
+        }
+
+        private void Coursebutton_Click(object sender, EventArgs e)
+        {
+            LoadControl(new CourseOpenControl());
+        }
+
+        private void Regiterbutton_Click(object sender, EventArgs e)
+        {
+            LoadControl(new RegistrationCoursePageControl());
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

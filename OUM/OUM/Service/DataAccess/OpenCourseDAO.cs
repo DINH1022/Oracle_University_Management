@@ -14,9 +14,7 @@ namespace OUM.Service.DataAccess
 
         public OpenCourseDAO()
         {
-            user_role = GetUserRoles();
-
-            int i = 1;
+            user_role = GetUserRole();
         }
         private const string PDBADMIN_USERNAME = "PDB_ADMIN";
 
@@ -71,7 +69,7 @@ namespace OUM.Service.DataAccess
 
         private OracleDAO oracleDAO = new OracleDAO();
 
-        public string GetUserRoles()
+        public string GetUserRole()
         {
             List<string> roles = new List<string>();
             try
@@ -296,9 +294,11 @@ namespace OUM.Service.DataAccess
             }
             catch (Exception ex)
             {
-                return "Xảy ra lỗi, thử lại sau";
+                return "Bạn không có quyền xóa thử lại sau";
             }
         }
+
+       
 
     }
 }

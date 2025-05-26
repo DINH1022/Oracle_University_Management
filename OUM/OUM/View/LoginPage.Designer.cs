@@ -119,7 +119,7 @@ namespace OUM
             LoginBtn.Click += button1_Click;
             LoginBtn.MouseClick += LoginBtn_MouseClick;
             // 
-            // Form1
+            // LoginPage
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -133,9 +133,9 @@ namespace OUM
             Controls.Add(label3);
             Controls.Add(label2);
             MaximizeBox = false;
-            Name = "Form1";
+            Name = "LoginPage";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "LoginPage";
             Load += button1_Click;
             ResumeLayout(false);
             PerformLayout();

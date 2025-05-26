@@ -66,5 +66,6 @@ namespace OUM.View
         {
             LoadControl(new NoticeControl());
         }
+
     }
 }

@@ -187,7 +187,7 @@
             Controls.Add(panelMain);
             Controls.Add(panel1);
             Name = "UserNavBar";
-            Text = "AcademicAdminNavPage";
+            Text = "UserPage";
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             ResumeLayout(false);

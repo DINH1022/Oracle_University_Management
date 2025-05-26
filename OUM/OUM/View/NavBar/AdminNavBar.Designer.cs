@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminNavBar));
             panel1 = new Panel();
+            Coursebutton = new Button();
             button3 = new Button();
             button2 = new Button();
             button1 = new Button();
@@ -41,7 +42,6 @@
             EmpBtn = new Button();
             StudentBtn = new Button();
             panelMainContent = new Panel();
-            Coursebutton = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -65,6 +65,18 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(231, 853);
             panel1.TabIndex = 0;
+            // 
+            // Coursebutton
+            // 
+            Coursebutton.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Coursebutton.ForeColor = Color.DarkGreen;
+            Coursebutton.Location = new Point(27, 619);
+            Coursebutton.Name = "Coursebutton";
+            Coursebutton.Size = new Size(175, 49);
+            Coursebutton.TabIndex = 8;
+            Coursebutton.Text = "Danh sách lớp mở";
+            Coursebutton.UseVisualStyleBackColor = false;
+            Coursebutton.Click += Coursebutton_Click;
             // 
             // button3
             // 
@@ -193,18 +205,6 @@
             panelMainContent.TabIndex = 1;
             panelMainContent.Paint += panelMainContent_Paint;
             // 
-            // Coursebutton
-            // 
-            Coursebutton.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Coursebutton.ForeColor = Color.DarkGreen;
-            Coursebutton.Location = new Point(27, 619);
-            Coursebutton.Name = "Coursebutton";
-            Coursebutton.Size = new Size(175, 49);
-            Coursebutton.TabIndex = 8;
-            Coursebutton.Text = "Danh sách lớp mở";
-            Coursebutton.UseVisualStyleBackColor = false;
-            Coursebutton.Click += Coursebutton_Click;
-            // 
             // AdminNavBar
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -213,6 +213,7 @@
             Controls.Add(panelMainContent);
             Controls.Add(panel1);
             Name = "AdminNavBar";
+            Text = "AdminPage";
             FormClosing += CloseApp;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);

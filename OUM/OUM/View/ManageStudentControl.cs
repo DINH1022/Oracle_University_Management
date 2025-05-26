@@ -38,6 +38,9 @@ namespace OUM.View
                 dataGridView1.Columns["department"].HeaderText = "Khoa";
                 dataGridView1.Columns["status"].HeaderText = "Tình trạng";
                 dataGridView1.Columns["address"].HeaderText = "Địa chỉ";
+
+                dataGridView1.Columns["address"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
             }
         }
 

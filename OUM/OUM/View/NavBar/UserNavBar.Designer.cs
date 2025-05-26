@@ -73,6 +73,7 @@
             NoticeBtn.TabIndex = 6;
             NoticeBtn.Text = "Thông Báo";
             NoticeBtn.UseVisualStyleBackColor = false;
+            NoticeBtn.Click += NoticeBtn_Click;
             // 
             // EmpBtn
             // 

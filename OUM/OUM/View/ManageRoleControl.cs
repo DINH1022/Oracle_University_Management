@@ -41,6 +41,10 @@ namespace OUM.View
             {
                 dataGridView1.Columns["roleName"].HeaderText = "Tên Role";
                 dataGridView1.Columns["userCount"].HeaderText = "Số lượng User";
+
+                dataGridView1.Columns["roleName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns["userCount"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
             }
         }
 

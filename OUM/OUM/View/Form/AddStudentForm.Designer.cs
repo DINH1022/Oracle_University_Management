@@ -157,7 +157,7 @@
             // 
             comboTinhTrang.Dock = DockStyle.Fill;
             comboTinhTrang.FormattingEnabled = true;
-            comboTinhTrang.Items.AddRange(new object[] { "đang học", "nghỉ học", "bảo lưu" });
+            comboTinhTrang.Items.AddRange(new object[] { "đang học", "nghỉ học", "bảo lưu", "đang cập nhật" });
             comboTinhTrang.Location = new Point(103, 0);
             comboTinhTrang.Name = "comboTinhTrang";
             comboTinhTrang.Size = new Size(127, 28);

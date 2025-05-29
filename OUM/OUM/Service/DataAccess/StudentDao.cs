@@ -881,6 +881,24 @@ namespace OUM.Service.DataAccess
                     if (isAdmin)
                         return false;
 
+                    bool isCTSV = false;
+                    try
+                    {
+                        using (var testCmd = new OracleCommand(
+                            "UPDATE pdb_admin.SINHVIEN SET HOTEN = HOTEN WHERE ROWNUM = 0", connection))
+                        {
+                            testCmd.ExecuteNonQuery();
+                            isCTSV = true;
+                        }
+                    }
+                    catch
+                    {
+                        isCTSV = false;
+                    }
+
+                    if (isCTSV)
+                        return false;
+
                     bool isPDT = false;
                     try
                     {

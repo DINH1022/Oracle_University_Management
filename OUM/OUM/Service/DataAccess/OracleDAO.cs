@@ -453,7 +453,7 @@ namespace OUM.Service.DataAccess
                 {
                     connection.Open();
 
-                    string query = "SELECT granted_role FROM user_role_privs";  // Truy vấn lấy roles
+                    string query = "SELECT DISTINCT granted_role\r\nFROM dba_role_privs\r\nWHERE granted_role LIKE 'ROLE%'";  // Truy vấn lấy roles
                     using (var command = new OracleCommand(query, connection))
                     using (var reader = command.ExecuteReader())
                     {

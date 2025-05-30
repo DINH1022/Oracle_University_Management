@@ -92,7 +92,7 @@ namespace OUM.View
                 txtKhoa.Text = student.department;
                 txtStatus.Text = student.status;
                 txtDC.Text = student.address;
-                dateTimePickerdob.Text = student.dob.ToString("yyyy-MM-dd");
+                dateTimePickerdob.Value = student.dob;
             }
         }
 
@@ -150,6 +150,8 @@ private void button2_Click(object sender, EventArgs e)
                         txtPhone.Text = newPhone;
                         lbNewPhone.Visible = false;
                         txtNewP.Visible = false;
+                        lbNAddress.Visible = false;
+                        txtNewAd.Visible = false;
                     }
                 }
 

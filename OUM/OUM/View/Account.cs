@@ -109,6 +109,7 @@ namespace OUM.View
                 txtKhoa.Text = employee.madv;
                 txtSalary.Text = employee.salary.ToString();
                 txtPC.Text = employee.allowance.ToString();
+                dateTimePickerdob.Value = employee.dob;
             }
         }
 

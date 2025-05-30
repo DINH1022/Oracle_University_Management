@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using OUM.View.RegistrationCourseView;
 namespace OUM.View
 {
     public partial class UserNavBar : Form
@@ -67,5 +67,19 @@ namespace OUM.View
             LoadControl(new NoticeControl());
         }
 
+        private void ManagerCourse(object sender, EventArgs e)
+        {
+            LoadControl(new PDTManagementRegistrationCourse());
+        }
+
+        private void UpdateGrade(object sender, EventArgs e)
+        {
+            LoadControl(new UpdateStudentGrade());
+        }
+
+        private void CourseGrade(object sender, EventArgs e)
+        {
+            LoadControl(new TeacherRegistrationCourse());
+        }
     }
 }

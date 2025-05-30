@@ -46,7 +46,7 @@ namespace OUM.View
 
         private void RevokeBtnNav_click(object sender, EventArgs e)
         {
-            LoadControl(new CourseOpenControl());
+            LoadControl(new RevokeAuthPageControl());
         }
 
         private void manageRole_Click(object sender, EventArgs e)

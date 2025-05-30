@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using OUM.Session;
 namespace OUM.View.RegistrationCourseView
 {
     public partial class RegisteredCoursePage : UserControl
@@ -45,7 +45,18 @@ namespace OUM.View.RegistrationCourseView
             if(e.ColumnIndex== listRegisteredCourses.Columns["cancelBtn"].Index && e.RowIndex >= 0)
             {
                 RegisteredCourse selectedCourse = registeredCourses[e.RowIndex];
-                // THEM SU KIEN XOA HOC PHAN O DAY
+                bool succes = dao.CancelRegistrationCourse(AdminSession.Username.Substring(2), selectedCourse.MAMM);
+                if (succes)
+                {
+                    MessageBox.Show("Hủy đăng ký thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    registeredCourses.Clear();
+                    registeredCourses = dao.getAllRegisteredCourses();
+                    setUpListRegisteredCourseDataGridView();
+                }
+                else
+                {
+                    MessageBox.Show("Không thể hủy đăng ký", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

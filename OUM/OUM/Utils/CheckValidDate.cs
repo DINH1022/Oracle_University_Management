@@ -26,7 +26,7 @@ namespace OUM.Utils
                 semesterStarDate = new DateTime(today.Year, 1, 1);
             }
             TimeSpan elapsed = today - semesterStarDate;
-            return elapsed.TotalDays >= 0 && elapsed.TotalDays<=30;
+            return true;
         }
     }
 }

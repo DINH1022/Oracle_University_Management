@@ -89,8 +89,8 @@ namespace OUM.Service.DataAccess
                 using (OracleConnection conn = getOracleConnection())
                 {
                     //permision on whole table,view
-                    string queryString1 = $@"SELECT * FROM USER_TAB_PRIVS
-                             WHERE GRANTEE NOT LIKE '{PREFIX_ROLE}%'";
+                    string queryString1 = $@"SELECT * FROM DBA_TAB_PRIVS
+                             WHERE OWNER='{PDBADMIN_USERNAME}' AND GRANTEE NOT LIKE '{PREFIX_ROLE}%'";
                     using (OracleCommand cmd1 = new OracleCommand(queryString1, conn))
                     using (OracleDataReader reader1 = cmd1.ExecuteReader())
                     {
@@ -102,8 +102,8 @@ namespace OUM.Service.DataAccess
                     }
 
                     //permission on col
-                    string queryString2 = $@"SELECT * FROM USER_COL_PRIVS CPRIVS
-                             WHERE GRANTEE NOT LIKE '{PREFIX_ROLE}%'
+                    string queryString2 = $@"SELECT * FROM DBA_COL_PRIVS CPRIVS
+                             WHERE OWNER='{PDBADMIN_USERNAME}' AND GRANTEE NOT LIKE '{PREFIX_ROLE}%'
                              AND NOT EXISTS
                                  (SELECT 1 FROM USER_TAB_PRIVS TPRIVS
                                   WHERE CPRIVS.GRANTEE=TPRIVS.GRANTEE
@@ -135,8 +135,8 @@ namespace OUM.Service.DataAccess
                 using (OracleConnection conn = getOracleConnection())
                 {
                     // Permission on whole table/view for roles matching the prefix
-                    string queryString1 = $@"SELECT * FROM USER_TAB_PRIVS
-                             WHERE GRANTEE LIKE '{PREFIX_ROLE}%'";
+                    string queryString1 = $@"SELECT * FROM DBA_TAB_PRIVS
+                             WHERE OWNER='{PDBADMIN_USERNAME}' AND GRANTEE LIKE '{PREFIX_ROLE}%'";
                     using (OracleCommand cmd1 = new OracleCommand(queryString1, conn))
                     using (OracleDataReader reader1 = cmd1.ExecuteReader())
                     {
@@ -146,8 +146,8 @@ namespace OUM.Service.DataAccess
                             grantInformations.Add(newGrantInfor);
                         }
                     }
-                    string queryString2 = $@"SELECT * FROM USER_COL_PRIVS CPRIVS
-                             WHERE GRANTEE LIKE '{PREFIX_ROLE}%'
+                    string queryString2 = $@"SELECT * FROM DBA_COL_PRIVS CPRIVS
+                             WHERE OWNER='{PDBADMIN_USERNAME}' AND GRANTEE LIKE '{PREFIX_ROLE}%'
                              AND NOT EXISTS
                                  (SELECT 1 FROM USER_TAB_PRIVS TPRIVS
                                   WHERE CPRIVS.GRANTEE=TPRIVS.GRANTEE

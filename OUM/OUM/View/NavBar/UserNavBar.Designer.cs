@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserNavBar));
             panel1 = new Panel();
+            button2 = new Button();
+            button1 = new Button();
             NoticeBtn = new Button();
             EmpBtn = new Button();
             Regiterbutton = new Button();
@@ -40,6 +42,7 @@
             StudentBtn = new Button();
             InfoBtn = new Button();
             panelMain = new Panel();
+            button3 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
@@ -48,6 +51,9 @@
             // 
             panel1.BackColor = Color.LightGoldenrodYellow;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(button3);
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(button1);
             panel1.Controls.Add(NoticeBtn);
             panel1.Controls.Add(EmpBtn);
             panel1.Controls.Add(Regiterbutton);
@@ -63,13 +69,37 @@
             panel1.TabIndex = 6;
             panel1.Paint += panel1_Paint;
             // 
+            // button2
+            // 
+            button2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.DarkGreen;
+            button2.Location = new Point(27, 581);
+            button2.Name = "button2";
+            button2.Size = new Size(175, 49);
+            button2.TabIndex = 8;
+            button2.Text = "Cập nhật điểm sv";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += UpdateGrade;
+            // 
+            // button1
+            // 
+            button1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.DarkGreen;
+            button1.Location = new Point(27, 519);
+            button1.Name = "button1";
+            button1.Size = new Size(175, 49);
+            button1.TabIndex = 7;
+            button1.Text = "Quản lý học phần";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += ManagerCourse;
+            // 
             // NoticeBtn
             // 
             NoticeBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             NoticeBtn.ForeColor = Color.DarkGreen;
-            NoticeBtn.Location = new Point(27, 681);
+            NoticeBtn.Location = new Point(27, 705);
             NoticeBtn.Name = "NoticeBtn";
-            NoticeBtn.Size = new Size(175, 50);
+            NoticeBtn.Size = new Size(175, 49);
             NoticeBtn.TabIndex = 6;
             NoticeBtn.Text = "Thông Báo";
             NoticeBtn.UseVisualStyleBackColor = false;
@@ -79,7 +109,7 @@
             // 
             EmpBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             EmpBtn.ForeColor = Color.DarkGreen;
-            EmpBtn.Location = new Point(27, 397);
+            EmpBtn.Location = new Point(27, 333);
             EmpBtn.Name = "EmpBtn";
             EmpBtn.Size = new Size(175, 49);
             EmpBtn.TabIndex = 5;
@@ -91,9 +121,9 @@
             // 
             Regiterbutton.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Regiterbutton.ForeColor = Color.DarkGreen;
-            Regiterbutton.Location = new Point(27, 584);
+            Regiterbutton.Location = new Point(27, 457);
             Regiterbutton.Name = "Regiterbutton";
-            Regiterbutton.Size = new Size(175, 50);
+            Regiterbutton.Size = new Size(175, 49);
             Regiterbutton.TabIndex = 4;
             Regiterbutton.Text = "Đăng Ký Học Phần";
             Regiterbutton.UseVisualStyleBackColor = false;
@@ -103,7 +133,7 @@
             // 
             Coursebutton.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Coursebutton.ForeColor = Color.DarkGreen;
-            Coursebutton.Location = new Point(27, 489);
+            Coursebutton.Location = new Point(27, 395);
             Coursebutton.Name = "Coursebutton";
             Coursebutton.Size = new Size(175, 49);
             Coursebutton.TabIndex = 3;
@@ -150,7 +180,7 @@
             // 
             StudentBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             StudentBtn.ForeColor = Color.DarkGreen;
-            StudentBtn.Location = new Point(27, 308);
+            StudentBtn.Location = new Point(27, 271);
             StudentBtn.Name = "StudentBtn";
             StudentBtn.Size = new Size(175, 49);
             StudentBtn.TabIndex = 1;
@@ -162,7 +192,7 @@
             // 
             InfoBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             InfoBtn.ForeColor = Color.DarkGreen;
-            InfoBtn.Location = new Point(27, 219);
+            InfoBtn.Location = new Point(27, 209);
             InfoBtn.Name = "InfoBtn";
             InfoBtn.Size = new Size(175, 49);
             InfoBtn.TabIndex = 0;
@@ -178,6 +208,18 @@
             panelMain.Name = "panelMain";
             panelMain.Size = new Size(951, 853);
             panelMain.TabIndex = 7;
+            // 
+            // button3
+            // 
+            button3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.ForeColor = Color.DarkGreen;
+            button3.Location = new Point(27, 643);
+            button3.Name = "button3";
+            button3.Size = new Size(175, 49);
+            button3.TabIndex = 9;
+            button3.Text = "Bảng điểm sv";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += CourseGrade;
             // 
             // UserNavBar
             // 
@@ -206,5 +248,8 @@
         private Button EmpBtn;
         private Button NoticeBtn;
         private Panel panelMain;
+        private Button button1;
+        private Button button2;
+        private Button button3;
     }
 }

@@ -571,14 +571,33 @@ namespace OUM.Service.DataAccess
         }
 
 
-
-
-
-
-
-
-
-
-
+        public List<string> GetUserRoles()
+        {
+            List<string> roles = new List<string>();
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(GetConnectionString()))
+                {
+                    conn.Open();
+                    string query = "SELECT GRANTED_ROLE FROM USER_ROLE_PRIVS";
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    using (OracleDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            roles.Add(reader.GetString(0));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi truy vấn vai trò người dùng: " + ex.Message,
+                                "Lỗi hệ thống",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+            return roles;
+        }
     }
 }

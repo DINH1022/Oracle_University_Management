@@ -30,20 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserNavBar));
             panel1 = new Panel();
-            button2 = new Button();
-            button1 = new Button();
-            NoticeBtn = new Button();
-            EmpBtn = new Button();
-            Regiterbutton = new Button();
-            Coursebutton = new Button();
+            panel3 = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel2 = new Panel();
             LogoutBtn = new Button();
-            StudentBtn = new Button();
-            InfoBtn = new Button();
             panelMain = new Panel();
-            button3 = new Button();
+            flowLayoutPanel2 = new FlowLayoutPanel();
             panel1.SuspendLayout();
+            panel3.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -51,102 +45,30 @@
             // 
             panel1.BackColor = Color.LightGoldenrodYellow;
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(button3);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(NoticeBtn);
-            panel1.Controls.Add(EmpBtn);
-            panel1.Controls.Add(Regiterbutton);
-            panel1.Controls.Add(Coursebutton);
-            panel1.Controls.Add(flowLayoutPanel1);
+            panel1.Controls.Add(flowLayoutPanel2);
+            panel1.Controls.Add(panel3);
             panel1.Controls.Add(panel2);
-            panel1.Controls.Add(StudentBtn);
-            panel1.Controls.Add(InfoBtn);
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(231, 853);
             panel1.TabIndex = 6;
-            panel1.Paint += panel1_Paint;
             // 
-            // button2
+            // panel3
             // 
-            button2.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.DarkGreen;
-            button2.Location = new Point(27, 581);
-            button2.Name = "button2";
-            button2.Size = new Size(175, 49);
-            button2.TabIndex = 8;
-            button2.Text = "Cập nhật điểm sv";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += UpdateGrade;
-            // 
-            // button1
-            // 
-            button1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.DarkGreen;
-            button1.Location = new Point(27, 519);
-            button1.Name = "button1";
-            button1.Size = new Size(175, 49);
-            button1.TabIndex = 7;
-            button1.Text = "Quản lý học phần";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += ManagerCourse;
-            // 
-            // NoticeBtn
-            // 
-            NoticeBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            NoticeBtn.ForeColor = Color.DarkGreen;
-            NoticeBtn.Location = new Point(27, 705);
-            NoticeBtn.Name = "NoticeBtn";
-            NoticeBtn.Size = new Size(175, 49);
-            NoticeBtn.TabIndex = 6;
-            NoticeBtn.Text = "Thông Báo";
-            NoticeBtn.UseVisualStyleBackColor = false;
-            NoticeBtn.Click += NoticeBtn_Click;
-            // 
-            // EmpBtn
-            // 
-            EmpBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            EmpBtn.ForeColor = Color.DarkGreen;
-            EmpBtn.Location = new Point(27, 333);
-            EmpBtn.Name = "EmpBtn";
-            EmpBtn.Size = new Size(175, 49);
-            EmpBtn.TabIndex = 5;
-            EmpBtn.Text = "Quản Lý Nhân Viên";
-            EmpBtn.UseVisualStyleBackColor = false;
-            EmpBtn.Click += EmpBtn_Click;
-            // 
-            // Regiterbutton
-            // 
-            Regiterbutton.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Regiterbutton.ForeColor = Color.DarkGreen;
-            Regiterbutton.Location = new Point(27, 457);
-            Regiterbutton.Name = "Regiterbutton";
-            Regiterbutton.Size = new Size(175, 49);
-            Regiterbutton.TabIndex = 4;
-            Regiterbutton.Text = "Đăng Ký Học Phần";
-            Regiterbutton.UseVisualStyleBackColor = false;
-            Regiterbutton.Click += Regiterbutton_Click;
-            // 
-            // Coursebutton
-            // 
-            Coursebutton.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Coursebutton.ForeColor = Color.DarkGreen;
-            Coursebutton.Location = new Point(27, 395);
-            Coursebutton.Name = "Coursebutton";
-            Coursebutton.Size = new Size(175, 49);
-            Coursebutton.TabIndex = 3;
-            Coursebutton.Text = "Danh sách lớp mở";
-            Coursebutton.UseVisualStyleBackColor = false;
-            Coursebutton.Click += Coursebutton_Click;
+            panel3.Controls.Add(flowLayoutPanel1);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(229, 192);
+            panel3.TabIndex = 4;
             // 
             // flowLayoutPanel1
             // 
             flowLayoutPanel1.BackColor = Color.Transparent;
             flowLayoutPanel1.BackgroundImage = (Image)resources.GetObject("flowLayoutPanel1.BackgroundImage");
             flowLayoutPanel1.BackgroundImageLayout = ImageLayout.Zoom;
-            flowLayoutPanel1.Location = new Point(49, 39);
+            flowLayoutPanel1.Location = new Point(51, 59);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(130, 130);
             flowLayoutPanel1.TabIndex = 1;
@@ -176,31 +98,6 @@
             LogoutBtn.TextChanged += LogoutBtn_Click;
             LogoutBtn.Click += LogoutBtn_Click;
             // 
-            // StudentBtn
-            // 
-            StudentBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            StudentBtn.ForeColor = Color.DarkGreen;
-            StudentBtn.Location = new Point(27, 271);
-            StudentBtn.Name = "StudentBtn";
-            StudentBtn.Size = new Size(175, 49);
-            StudentBtn.TabIndex = 1;
-            StudentBtn.Text = "Quản Lý Sinh Viên ";
-            StudentBtn.UseVisualStyleBackColor = false;
-            StudentBtn.Click += StudentBtn_Click;
-            // 
-            // InfoBtn
-            // 
-            InfoBtn.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            InfoBtn.ForeColor = Color.DarkGreen;
-            InfoBtn.Location = new Point(27, 209);
-            InfoBtn.Name = "InfoBtn";
-            InfoBtn.Size = new Size(175, 49);
-            InfoBtn.TabIndex = 0;
-            InfoBtn.Text = "Thông tin cá nhân";
-            InfoBtn.UseVisualStyleBackColor = false;
-            InfoBtn.TextChanged += InfoBtn_Click;
-            InfoBtn.Click += InfoBtn_Click;
-            // 
             // panelMain
             // 
             panelMain.Dock = DockStyle.Fill;
@@ -209,17 +106,13 @@
             panelMain.Size = new Size(951, 853);
             panelMain.TabIndex = 7;
             // 
-            // button3
+            // flowLayoutPanel2
             // 
-            button3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.DarkGreen;
-            button3.Location = new Point(27, 643);
-            button3.Name = "button3";
-            button3.Size = new Size(175, 49);
-            button3.TabIndex = 9;
-            button3.Text = "Bảng điểm sv";
-            button3.UseVisualStyleBackColor = false;
-            button3.Click += CourseGrade;
+            flowLayoutPanel2.Dock = DockStyle.Top;
+            flowLayoutPanel2.Location = new Point(0, 192);
+            flowLayoutPanel2.Name = "flowLayoutPanel2";
+            flowLayoutPanel2.Size = new Size(229, 601);
+            flowLayoutPanel2.TabIndex = 5;
             // 
             // UserNavBar
             // 
@@ -231,6 +124,7 @@
             Name = "UserNavBar";
             Text = "UserPage";
             panel1.ResumeLayout(false);
+            panel3.ResumeLayout(false);
             panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -238,18 +132,11 @@
         #endregion
 
         private Panel panel1;
-        private Button Regiterbutton;
-        private Button Coursebutton;
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel2;
         private Button LogoutBtn;
-        private Button StudentBtn;
-        private Button InfoBtn;
-        private Button EmpBtn;
-        private Button NoticeBtn;
         private Panel panelMain;
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Panel panel3;
+        private FlowLayoutPanel flowLayoutPanel2;
     }
 }

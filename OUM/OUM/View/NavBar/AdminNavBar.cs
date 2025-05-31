@@ -68,20 +68,9 @@ namespace OUM.View
         {
             LoadControl(new PermissionInfo());
         }
-
-        private void registrationCourseBtn(object sender, EventArgs e)
-        {
-            LoadControl(new RegistrationCoursePageControl());
-        }
-
         private void CloseApp(object sender, FormClosingEventArgs e)
         {
 
-        }
-
-        private void Coursebutton_Click(object sender, EventArgs e)
-        {
-            LoadControl(new CourseOpenControl());
         }
     }
 }

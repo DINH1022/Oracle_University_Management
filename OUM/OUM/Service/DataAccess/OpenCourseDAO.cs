@@ -26,7 +26,7 @@ namespace OUM.Service.DataAccess
         private const string COL_NAME_NAM = "NAM";
         private const string COL_NAME_NGAY_MO = "NGAY_MO";
 
-        private const string EMPLOYEE_TABLE_NAME = "NHANVIEN";
+        private const string TEACHER_LIST_MANLD_TABLE_NAME = "VIEW_PDT_MANLDS";
         private const string COL_NAME_MANLD = "MANLD";
         private const string COL_NAME_VAITRO = "VAITRO";
         //private const string COL_NAME_HOTEN = "HOTEN";
@@ -46,6 +46,10 @@ namespace OUM.Service.DataAccess
         private const string MOMON_VIEW_SV = "SV_MOMON_VIEW";
 
         private const string COMPUTE_NEXTMM_FUNCTION_NAME = "GET_NEXT_MM";
+
+        private const string ORACLE_ERROR_CODE_VIOLATE_FOREIGN_KEY = "ORA-02292"; 
+
+        private const string ORACLE_ERROR_CODE_VIEW_NOT_EXIST = "ORA-00942";
 
         private Dictionary<string, string> ROLE_VIEW_MAPPING= new Dictionary<string, string>()
         {
@@ -159,8 +163,7 @@ namespace OUM.Service.DataAccess
                 using (OracleConnection con = new OracleConnection(connectString))
                 {
                     con.Open();
-                    string query = @$"SELECT * FROM {PDBADMIN_USERNAME}.{EMPLOYEE_TABLE_NAME} 
-                                    WHERE {COL_NAME_VAITRO} LIKE '{TEACHER_ROLE}'";
+                    string query = @$"SELECT * FROM {PDBADMIN_USERNAME}.{TEACHER_LIST_MANLD_TABLE_NAME}";
                     OracleCommand oracleCommand = new OracleCommand(query, con);
                     OracleDataReader reader = oracleCommand.ExecuteReader();
                     while (reader.Read())
@@ -294,7 +297,16 @@ namespace OUM.Service.DataAccess
             }
             catch (Exception ex)
             {
-                return "Bạn không có quyền xóa thử lại sau";
+                if (ex.Message.ToLower().Contains(ORACLE_ERROR_CODE_VIOLATE_FOREIGN_KEY.ToLower()))
+                {
+                    return "Mở môn này đang được sử dụng trong bảng đăng ký, vui lòng xóa hết dữ liệu trong bảng đăng ký trước";
+                }
+                if (ex.Message.ToLower().Contains(ORACLE_ERROR_CODE_VIEW_NOT_EXIST.ToLower()))
+                {
+                    return "Bạn không có quyền";
+                }
+                return "Có lỗi hệ thống";
+
             }
         }
 

@@ -134,5 +134,10 @@ namespace OUM.View
         {
             //hk
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

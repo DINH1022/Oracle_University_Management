@@ -140,7 +140,8 @@
             label2.Name = "label2";
             label2.Size = new Size(602, 20);
             label2.TabIndex = 1;
-            label2.Text = "Nhập thông tin để tạo mở môn mới dùng mới trong hệ thống";
+            label2.Text = "Điều chỉnh lại thông tin môn học";
+            label2.Click += label2_Click;
             // 
             // label1
             // 

@@ -32,7 +32,7 @@ namespace OUM.Service.DataAccess
                 try
                 {
                     connection.Open();
-                    string query = "SELECT ID, NOIDUNG, CREATED_AT, ROW_LABEL FROM pdb_admin.THONGBAO";
+                    string query = "SELECT ID, CONTENT, CREATED_AT, LABEL FROM pdb_admin.THONGBAO";
 
 
                     using (var command = new OracleCommand(query, connection))
@@ -42,9 +42,9 @@ namespace OUM.Service.DataAccess
                         {
                             Notification n = new Notification(
                                 id: reader["ID"] == DBNull.Value ? 0 : Convert.ToInt32(reader["ID"]),
-                                content: reader["NOIDUNG"]?.ToString() ?? "",
+                                content: reader["CONTENT"]?.ToString() ?? "",
                                 created_date: reader["CREATED_AT"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(reader["CREATED_AT"]),
-                                label: reader["ROW_LABEL"]?.ToString() ?? ""
+                                label: reader["LABEL"]?.ToString() ?? ""
                             );
                                 
 

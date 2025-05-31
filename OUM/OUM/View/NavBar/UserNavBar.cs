@@ -49,12 +49,12 @@ namespace OUM.View
             Button btn = new Button
             {
                 Text = text,
-                Size = new Size(200, 40),
+                Size = new Size(208, 40),
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Color.LightBlue,
                 ForeColor = Color.Black,
                 Font = new Font("Arial", 10, FontStyle.Regular),
-                Margin = new Padding(5,15,5,15),
+                Margin = new Padding(0,15,0,15),
                 UseVisualStyleBackColor = false
             };
 

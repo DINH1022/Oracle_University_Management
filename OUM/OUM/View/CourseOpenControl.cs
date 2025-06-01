@@ -128,7 +128,10 @@ namespace OUM.View
         }
         private bool isClickingGivenColumn(DataGridViewCellEventArgs e,string name)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView2.Columns[name].Index)
+            if (e != null && dataGridView2 != null &&
+                dataGridView2.Columns.Contains(name) &&
+                e.RowIndex >= 0 &&
+                e.ColumnIndex == dataGridView2.Columns[name].Index)
             {
                 return true;
             }
